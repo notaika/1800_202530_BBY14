@@ -56,7 +56,11 @@ elmo-hikes/
 
 ## Contributors
 
+<<<<<<< HEAD
+- **Quinn** - BCIT CST Student with a newly required passion for cooking and user-friendly applications. Fun fact: Has an expansive interest in board games.
+=======
 - **Aika M.** - BCIT CST Student whose life revolves around two Golden Retrievers and caffeine.
+>>>>>>> main
 
 ---
 
