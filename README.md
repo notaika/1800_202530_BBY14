@@ -55,12 +55,9 @@ elmo-hikes/
 ---
 
 ## Contributors
-
-<<<<<<< HEAD
+- **Mayvee** - BCIT CST Student with a passion for outdoor adventures and user-friendly applications. Fun fact: Loves solving Rubik's Cubes in under a minute.
 - **Quinn** - BCIT CST Student with a newly required passion for cooking and user-friendly applications. Fun fact: Has an expansive interest in board games.
-=======
 - **Aika M.** - BCIT CST Student whose life revolves around two Golden Retrievers and caffeine.
->>>>>>> main
 
 ---
 
