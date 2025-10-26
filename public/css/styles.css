@@ -8,17 +8,18 @@
   --dark-berry:  #6e1e3a;
 
   /* Core app colors */
-  --bg: var(--forest-green);       /* main background */
-  --text: #ffffff;                 /* default text on dark bg */
+  --bg: #ffffff;       /* main background */
+  --text: #1e2e27;                 /* default text on light bg */
 
   /* Surfaces */
   --surface: #ffffff;              /* bars, cards */
   --surface-soft: #fff8d2;         /* subtle card variation */
-  --surface-border: rgba(0,0,0,.10);
+  --surface-border: rgba(0,0,0,.30);
 
   /* Accents */
   --accent: var(--forest-green);   /* icon/title for non-active */
   --accent-active: var(--dark-berry); /* active tab & focus state */
+  --nav-active: var(--lemon-curd); /* nav item on hover/active */
   --accent-soft: rgba(110,30,58,.25);
 
   --topbar-h: 56px;
@@ -48,14 +49,14 @@ html, body {
   height: 56px;
   display: flex;
   align-items: center;
-  background: var(--surface);
+  background: var(--accent);
   border-bottom: 1px solid var(--surface-border);
 }
 .topbar .app-title {
   font-weight: 700;
   font-size: 1.35rem;
   letter-spacing: .5px;
-  color: var(--accent);            
+  color: #ffffff;;            
 }
 
 /* Space for content below the top bar */
@@ -95,6 +96,7 @@ html, body {
 }
 .craft-stick-nav .nav-item:hover {
   transform: translateY(-1px);
+  color: var(--nav-active);
 }
 .craft-stick-nav .nav-item i {
   font-size: 1.25rem; line-height: 1;
@@ -165,9 +167,9 @@ html, body {
   margin-top: .3rem;
   padding: .25rem .65rem;
   border-radius: 999px;
-  background: var(--dark-berry); /* new */
+  background: rgb(236, 236, 236);
   border: none; /* cleaner bubble */
-  color: #ffffff; /* white text inside the berry pill */
+  color: var(--dark-berry);
   font-size: .72rem;
   font-weight: 600;
 }
