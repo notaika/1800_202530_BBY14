@@ -1,0 +1,203 @@
+/* Load the Quicksand font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+:root {
+  /* Brand colors */
+  --lemon-curd:  #fadd8b;
+  --forest-green:#25533f;
+  --dark-berry:  #6e1e3a;
+
+  /* Core app colors */
+  --bg: var(--forest-green);       /* main background */
+  --text: #ffffff;                 /* default text on dark bg */
+
+  /* Surfaces */
+  --surface: #ffffff;              /* bars, cards */
+  --surface-soft: #fff8d2;         /* subtle card variation */
+  --surface-border: rgba(0,0,0,.10);
+
+  /* Accents */
+  --accent: var(--forest-green);   /* icon/title for non-active */
+  --accent-active: var(--dark-berry); /* active tab & focus state */
+  --accent-soft: rgba(110,30,58,.25);
+
+  --topbar-h: 56px;
+  --search-gap: 12px;
+}
+
+/* --------------------------------------
+   GLOBAL BASE STYLES
+   -------------------------------------- */
+html, body {
+  background: var(--bg) !important;
+  color: var(--text);
+  font-family: 'Quicksand', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* --------------------------------------
+   TOP BAR (app title/header)
+   -------------------------------------- */
+.topbar {
+  position: sticky;
+  top: 0; 
+  z-index: 1100;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border-bottom: 1px solid var(--surface-border);
+}
+.topbar .app-title {
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: .5px;
+  color: var(--accent);            
+}
+
+/* Space for content below the top bar */
+.main-with-topbar { padding-top: .75rem; }
+
+/* --------------------------------------
+   FLOATING BOTTOM NAV ("craft stick")
+   -------------------------------------- */
+.craft-stick-nav {
+  position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%);
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  align-items: center; justify-items: center;
+  width: min(560px, 92vw);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  padding: .5rem .75rem .25rem;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 6px 20px;
+  z-index: 1050; overflow: hidden;
+}
+
+/* Sliding dot under active icon */
+.nav-indicator {
+  position: absolute; left: 0; bottom: 6px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  transition: transform 240ms cubic-bezier(.27,.46,.45,1);
+}
+
+/* Nav item base + hover/active feel */
+.craft-stick-nav .nav-item {
+  display: flex; flex-direction: column; align-items: center;
+  text-decoration: none; color: var(--text);
+  font-size: .78rem; padding: .25rem 0; border-radius: .75rem;
+  transition: color 180ms ease, transform 150ms ease;
+  color: var(--accent);
+}
+.craft-stick-nav .nav-item:hover {
+  transform: translateY(-1px);
+}
+.craft-stick-nav .nav-item i {
+  font-size: 1.25rem; line-height: 1;
+  transition: transform .18s ease, color .18s ease;
+}
+.craft-stick-nav .nav-item.active {
+  font-weight: 700; color: var(--accent); 
+  transform: none;
+}
+.craft-stick-nav .nav-item.active i {
+  transform: translateY(-2px);
+  color: var(--accent);
+}
+
+/* --------------------------------------
+   FLOATING SEARCH BAR (Home only)
+   -------------------------------------- */
+.floating-search {
+  position: sticky;
+  top: calc(var(--topbar-h) + var(--search-gap) + env(safe-area-inset-top, 0px));
+  z-index: 1040;
+}
+.floating-search .search-form {
+  height: 46px; background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.06);
+  padding-inline: .5rem;
+}
+.floating-search .search-form:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);  
+}
+.floating-search .form-control { color: var(--text); }
+.floating-search .form-control::placeholder {
+  color: rgba(30,46,39,.55); font-style: italic;
+}
+
+/* --------------------------------------
+   FEED LAYOUT HELPERS
+   -------------------------------------- */
+.feed { padding-bottom: 96px; }
+
+/* --------------------------------------
+   RECIPE CARDS
+   -------------------------------------- */
+.recipe-card {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.recipe-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.10);
+}
+.recipe-card .card-body { padding: .65rem .8rem; }
+.recipe-card .card-title {
+  font-weight: 700; 
+  margin: 0; 
+  color: var(--accent); 
+}
+
+/* Author chip/tag look */
+.author-chip {
+  display: inline-block;
+  margin-top: .3rem;
+  padding: .25rem .65rem;
+  border-radius: 999px;
+  background: var(--dark-berry); /* new */
+  border: none; /* cleaner bubble */
+  color: #ffffff; /* white text inside the berry pill */
+  font-size: .72rem;
+  font-weight: 600;
+}
+
+/* Always-square recipe images */
+.square-media { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+
+/* --------------------------------------
+   UTILITIES
+   -------------------------------------- */
+.text-accent { color: var(--accent); }
+.text-dark   { color: var(--text); }
+
+/* --------------------------------------
+   PAGE TRANSITIONS (fade in/out)
+   -------------------------------------- */
+.page-fade {
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.page-fade.page-active { opacity: 1; transform: translateY(0); }
+.fade-out {
+  opacity: 0 !important; transform: translateY(4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+/* Soft scroll snapping for vertical feeds */
+.feed .row { scroll-snap-type: y proximity; }
+.recipe-card { scroll-snap-align: start; }
+
+/* Utility spacing you already use */
+.pb-5 { padding-bottom: 5rem !important; }
+.browse-feed .card-title { font-size: 1.05rem; }
