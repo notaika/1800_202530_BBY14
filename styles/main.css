@@ -1,0 +1,43 @@
+body {
+  height: 100vh;
+}
+
+#grid {
+  grid-template-areas: 100vh;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--lemon-curd);
+}
+
+.landing-graphic {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.landing-bot {
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-main h2 {
+  color: var(--forest-green);
+}
+
+.buttons-top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.buttons-top button {
+  height: 5em;
+  margin-bottom: 1em;
+  width: 48%;
+}
+
+.buttons-top + button {
+  height: 5em;
+}
