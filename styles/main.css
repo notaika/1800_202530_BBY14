@@ -1,43 +1,49 @@
-body {
-  height: 100vh;
+html {
+  height: 100%;
 }
 
-#grid {
-  grid-template-areas: 100vh;
+.component-box {
+  background-color: #e0e0e0;
+  color: #333;
 }
 
-button {
-  border: none;
-  border-radius: 5px;
+.btn-custom {
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.btn-custom:hover {
+  background-color: var(--dark-berry);
+  color: #fff;
+}
+
+.profile-pic {
+  max-height: 3em;
+  transition: 0.3s ease-in-out;
+}
+
+.profile-pic:hover {
+  transform: scale(1.05);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: 0.3s ease-in-out;
+}
+
+.berry-red {
+  background-color: var(--dark-berry);
+}
+
+.lemon-curd {
   background-color: var(--lemon-curd);
 }
 
-.landing-graphic {
-  width: 100%;
-  border-radius: 10px;
+.forest-green {
+  background-color: var(--forest-green);
 }
 
-.landing-bot {
-  display: flex;
-  flex-direction: column;
-}
-
-.landing-main h2 {
-  color: var(--forest-green);
-}
-
-.buttons-top {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.buttons-top button {
-  height: 5em;
-  margin-bottom: 1em;
-  width: 48%;
-}
-
-.buttons-top + button {
-  height: 5em;
+.banner {
+  object-fit: cover;
 }
