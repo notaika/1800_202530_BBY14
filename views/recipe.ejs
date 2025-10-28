@@ -1,1 +1,21 @@
-<section class="py-4"><h5 class="mb-0">Recipe</h5><p class="text-secondary">Coming soon…</p></section>
+
+<div class="saved-main feed">
+
+    <% recipes.forEach(function(r, idx){ %>
+
+        <button class="saved-card">
+
+            <div>
+                <img src="<%= r.thumbUrl %>" class="saved-thumbnail" alt="Thumbnail could not be found">
+            </div>
+
+            <div class="saved-body">
+                <h6 class="card-title mb-1"><%= r.title %></h6>
+                <span class="author-chip">@<%= r.author %></span>
+            </div>
+
+        </button>
+
+    <% }) %>
+
+</div>

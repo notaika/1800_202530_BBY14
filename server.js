@@ -91,7 +91,8 @@ app.get('/create', (req, res) => {
 
 // Recipe page (single recipe info in future)
 app.get('/recipe', (req, res) => {
-  res.render('recipe', { active: 'recipe' });
+  let recipes = shuffle(loadRecipes());
+  res.render('recipe', { recipes, active: 'recipe' });
 });
 
 // Profile page (future)
