@@ -31,3 +31,15 @@
   src: url(../src/assets/fonts/Quicksand-Bold.ttf) format("truetype");
   font-weight: 700;
 }
+
+.berry-red {
+  background-color: var(--dark-berry);
+}
+
+.lemon-curd {
+  background-color: var(--lemon-curd);
+}
+
+.forest-green {
+  background-color: var(--forest-green);
+}
