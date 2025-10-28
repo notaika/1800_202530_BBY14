@@ -178,6 +178,60 @@ html, body {
 .square-media { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
 
 /* --------------------------------------
+   CREATE FORM
+   -------------------------------------- */
+
+.create-image{
+  width: 100%;
+  border-radius: 20px;
+}
+
+.create-form{
+  margin-bottom: 80px;
+  background-color: var(--bg);
+}
+.create-input{
+  background: var(--surface);
+  color: var(--text);
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 6px;
+  resize: none;
+  border-radius: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow: hidden;
+}
+.create-label{
+  margin-left: 8px;
+  margin-top: 10px;
+}
+.create-button{
+  background-color: var(--forest-green);
+  color: var(--lemon-curd);
+  margin-left: 20%;
+  margin-left: 20%;
+  width: 60%;
+  padding: 12px;
+  border: var(--accent-soft);
+}
+.create-button:active{
+  background-color: var(--lemon-curd);
+  color: var(--forest-green);
+}
+.create-image-button{
+  position: relative;
+  display: inline;
+  bottom: 60px;
+  border-radius: 20px;
+  width: 40%;
+  margin-left: 30%;
+  margin-left: 30%;
+  border: var(--accent-soft);
+}
+
+/* --------------------------------------
    UTILITIES
    -------------------------------------- */
 .text-accent { color: var(--accent); }
