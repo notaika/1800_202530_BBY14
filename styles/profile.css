@@ -9,7 +9,7 @@ body {
 
 .btn-custom,
 .footer-custom {
-  background-color: var(--dark-berry);
+  background-color: var(--forest-green);
   color: #f7f7f7;
   font-weight: 500;
 }

@@ -2,22 +2,22 @@ html {
   height: 100%;
 }
 
-.component-box {
-  background-color: #e0e0e0;
+.user-info-container {
+  background-color: #e8e8e8;
   color: #333;
 }
 
 .btn-custom {
-  background-color: #e0e0e0;
-  color: #333;
-  font-weight: 500;
+  background-color: var(--forest-green);
+  color: #ffffff;
+  font-weight: 600;
   font-size: 1.1rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
 .btn-custom:hover {
-  background-color: var(--dark-berry);
+  background-color: var(--forest-green);
   color: #fff;
 }
 
