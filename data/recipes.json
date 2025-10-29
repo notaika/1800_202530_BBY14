@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Avocado Toast",
+    "author": "MaisOuiMayvee",
+    "imageUrl": "https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "thumbUrl": "https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "description": "Crispy toast with smashed avocado, lemon, and chili flakes."
+  },
+  {
+    "id": 2,
+    "title": "Poke Bowl",
+    "author": "MaisOuiMayvee",
+    "imageUrl": "https://images.unsplash.com/photo-1670816978291-a5cf23d87968?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "thumbUrl": "https://images.unsplash.com/photo-1670816978291-a5cf23d87968?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "description": "A fresh bowl with tuna, rice, edamame, and sesame."
+  },
+  {
+    "id": 3,
+    "title": "Garlic Butter Shrimp Pasta",
+    "author": "QuinntessentialChef",
+    "imageUrl": "https://images.unsplash.com/photo-1638933482397-bc6189939ef3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1171",
+    "thumbUrl": "https://images.unsplash.com/photo-1638933482397-bc6189939ef3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1171",
+    "description": "Quick weeknight pasta tossed in garlic butter and parsley."
+  },
+  {
+    "id": 4,
+    "title": "Chicken Fried Rice",
+    "author": "AikaEats",
+    "imageUrl": "https://images.unsplash.com/photo-1715692727499-cd7ba190587c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "thumbUrl": "https://images.unsplash.com/photo-1715692727499-cd7ba190587c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "description": "Day-old rice stir-fried with chicken, egg, and peas."
+  },
+  {
+    "id": 5,
+    "title": "Caprese Salad",
+    "author": "AikaEats",
+    "imageUrl": "https://images.unsplash.com/photo-1595587870672-c79b47875c6a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1046",
+    "thumbUrl": "https://images.unsplash.com/photo-1595587870672-c79b47875c6a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1046",
+    "description": "Tomatoes, mozzarella, basil\\simple and perfect."
+  },
+  {
+    "id": 6,
+    "title": "Blueberry Pancakes",
+    "author": "QuinntessentialChef",
+    "imageUrl": "https://images.unsplash.com/photo-1528198622811-0842b4e50787?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "thumbUrl": "https://images.unsplash.com/photo-1528198622811-0842b4e50787?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "description": "Fluffy pancakes with juicy blueberries and maple syrup."
+  }
+]
