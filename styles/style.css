@@ -1,1 +1,112 @@
+@font-face {
+  font-family: Quicksand;
+  src: url(../src/assets/fonts/Quicksand-Light.ttf) format("truetype");
+  font-weight: 300;
+}
 
+@font-face {
+  font-family: Quicksand;
+  src: url(../src/assets/fonts/Quicksand-Regular.ttf) format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Quicksand;
+  src: url(../src/assets/fonts/Quicksand-SemiBold.ttf) format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Quicksand;
+  src: url(../src/assets/fonts/Quicksand-Bold.ttf) format("truetype");
+  font-weight: 700;
+}
+
+:root {
+  --lemon-curd: #fadd8b;
+  --forest-green: #25533f;
+  --dark-berry: #6e1e3a;
+}
+
+* {
+  font-family: Quicksand;
+}
+
+/* easy colours */
+
+.berry-red {
+  background-color: var(--dark-berry);
+}
+
+.lemon-curd {
+  background-color: var(--lemon-curd);
+}
+
+.forest-green {
+  background-color: var(--forest-green);
+}
+
+/* RE-USABLE NAVBAR */
+
+.craft-stick-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  justify-items: center;
+  width: min(560px, 92vw);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  padding: 0.5rem 0.75rem 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 6px 20px;
+  z-index: 1050;
+  overflow: hidden;
+}
+
+/* Sliding dot under active icon */
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 240ms cubic-bezier(0.27, 0.46, 0.45, 1);
+}
+
+/* Nav item base + hover/active feel */
+.craft-stick-nav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.78rem;
+  padding: 0.25rem 0;
+  border-radius: 0.75rem;
+  transition: color 180ms ease, transform 150ms ease;
+  color: var(--accent);
+}
+.craft-stick-nav .nav-item:hover {
+  transform: translateY(-1px);
+  color: var(--nav-active);
+}
+.craft-stick-nav .nav-item i {
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+.craft-stick-nav .nav-item.active {
+  font-weight: 700;
+  color: var(--accent);
+  transform: none;
+}
+.craft-stick-nav .nav-item.active i {
+  transform: translateY(-2px);
+  color: var(--accent);
+}
