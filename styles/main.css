@@ -1,0 +1,49 @@
+html {
+  height: 100%;
+}
+
+.user-info-container {
+  background-color: #e8e8e8;
+  color: #333;
+}
+
+.btn-custom {
+  background-color: var(--forest-green);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.btn-custom:hover {
+  background-color: var(--forest-green);
+  color: #fff;
+}
+
+.profile-pic {
+  max-height: 3em;
+  transition: 0.3s ease-in-out;
+}
+
+.profile-pic:hover {
+  transform: scale(1.05);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: 0.3s ease-in-out;
+}
+
+.berry-red {
+  background-color: var(--dark-berry);
+}
+
+.lemon-curd {
+  background-color: var(--lemon-curd);
+}
+
+.forest-green {
+  background-color: var(--forest-green);
+}
+
+.banner {
+  object-fit: cover;
+}

@@ -1,0 +1,43 @@
+body {
+  background-color: #f8f8f8;
+  overflow-x: hidden;
+}
+
+.profile-pic {
+  min-height: 4em;
+}
+
+.btn-custom,
+.footer-custom {
+  background-color: var(--forest-green);
+  color: #f7f7f7;
+  font-weight: 500;
+}
+
+.btn-custom {
+  font-size: 1.2rem;
+}
+
+.content-grid {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.img-square {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post:hover {
+  border: 1px solid rgb(226, 226, 226);
+  border-radius: 3px;
+}
+
+.badge {
+  background-color: #e0e0e0;
+}
+
+.btn:hover {
+  background-color: #c0c0c0;
+}
