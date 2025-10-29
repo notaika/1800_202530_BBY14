@@ -1,69 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome Back, _______</title>
-  </head>
-  <body>
-    <div id="grid">
-      <header>
-        <nav>
-          <div class="nav-container">
-            <div class="nav-logo">
-              <h1 class="nav-title">PotLuck</h1>
-              <img src="" alt="" class="hero-img" />
-            </div>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Welcome Back, Quinn!</title>
 
-            <div class="nav-list">
-              <ul>
-                <li>
-                  <a href="" class="nav-link">
-                    Home
-                    <img src="" alt="" class="nav-link-img" />
-                  </a>
-                </li>
-                <li>
-                  <a href="" class="nav-link">
-                    Browse
-                    <img src="" alt="" class="nav-link-img" />
-                  </a>
-                </li>
-                <li>
-                  <a href="" class="nav-link">
-                    Create
-                    <img src="" alt="" class="nav-link-img" />
-                  </a>
-                </li>
-                <li>
-                  <a href="" class="nav-link">
-                    Recipe
-                    <img src="" alt="" class="nav-link-img" />
-                  </a>
-                </li>
-                <li>
-                  <a href="" class="nav-link">
-                    Profile
-                    <img src="" alt="" class="nav-link-img" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <link rel="stylesheet" href="../../styles/style.css" />
+  </head>
+  <body class="vh-100">
+    <div class="text-dark d-flex flex-column h-100">
+      <header
+        class="d-flex justify-content-between align-items-center mb-1 forest-green p-2"
+      >
+        <h2 class="user-greeting h1 mb-1 text-light">Hi, Quinn</h2>
+
+        <div class="rounded-circle bg-light mb-1">
+          <a href="../pages/profile.html">
+            <img
+              src="../assets/images/placeholder.png"
+              class="profile-pic img-fluid rounded-circle hover-zoom"
+              alt="Profile picture"
+            />
+          </a>
+        </div>
       </header>
 
-      <main class="content">
-        <div class="landing-main">
-          <h2>Hi Quinn</h2>
-          <div class="landing-top">
-            <img src="" alt="" class="landing-graphic" />
-            <p class="landing-quote">Text area here :)
-            </p>
-            
+      <main class="text-dark d-flex flex-column h-100 p-3">
+        <div class="banner-container flex-grow-1 mb-3">
+          <img
+            src="../assets/images/banner.png"
+            class="banner-image img-fluid rounded mb-3 h-100 banner"
+            alt="Banner image"
+          />
+        </div>
+
+        <hr class="mb-3 mt-0" />
+
+        <div class="user-info-container p-3 rounded mb-3">
+          <p class="daily-quote mb-3 small">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.
+          </p>
+
+          <p class="user-stats mb-3 small">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </div>
+
+        <div class="btn-container container-fluid px-0">
+          <div class="row g-3 mb-3">
+            <div class="col-6">
+              <a href="#" class="profile-btn btn btn-custom d-block w-100">
+                Profile
+              </a>
+            </div>
+            <div class="col-6">
+              <a href="#" class="browse-btn btn btn-custom d-block w-100">
+                Browse Recipes
+              </a>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <a href="#" class="community-btn btn btn-custom d-block w-100">
+                Explore My Community
+              </a>
+            </div>
           </div>
         </div>
       </main>
     </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
