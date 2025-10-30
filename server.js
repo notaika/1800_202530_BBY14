@@ -16,6 +16,8 @@ const __dirname = path.dirname(__filename);        // Folder that contains this 
 const app = express();
 const PORT = process.env.PORT || 3000;        // Use production port OR default 3000
 
+app.use("/img", express.static("src/assets/images"));
+
 // ------------------------------------------
 // Enable EJS Layouts (like a master page)
 // ------------------------------------------
