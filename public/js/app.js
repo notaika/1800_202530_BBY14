@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav  = document.querySelector(".craft-stick-nav"); // bottom navbar
   const indicatorDot = nav?.querySelector(".nav-indicator"); // sliding dot
 
+
   // -------------------------
   // Animate page when it loads
   // -------------------------

@@ -26,6 +26,16 @@
   --search-gap: 12px;
 }
 
+.berry-red {
+  background-color: var(--dark-berry);
+}
+.lemon-curd {
+  background-color: var(--lemon-curd);
+}
+.forest-green {
+  background-color: var(--forest-green);
+}
+
 /* --------------------------------------
    GLOBAL BASE STYLES
    -------------------------------------- */
@@ -176,6 +186,170 @@ html, body {
 
 /* Always-square recipe images */
 .square-media { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+
+/* --------------------------------------
+   MAIN PAGE
+   -------------------------------------- */
+.user-info-container {
+  background-color: #e8e8e8;
+  color: #333;
+}
+.btn-custom {
+  background-color: var(--forest-green);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.btn-custom:hover {
+  background-color: var(--forest-green);
+  color: #fff;
+}
+.profile-pic {
+  max-height: 3em;
+  transition: 0.3s ease-in-out;
+}
+.profile-pic:hover {
+  transform: scale(1.05);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: 0.3s ease-in-out;
+}
+.berry-red {
+  background-color: var(--dark-berry);
+}
+.lemon-curd {
+  background-color: var(--lemon-curd);
+}
+.forest-green {
+  background-color: var(--forest-green);
+}
+.banner {
+  object-fit: cover;
+}
+
+/* --------------------------------------
+   CREATE FORM
+   -------------------------------------- */
+.create-image{
+  width: 100%;
+  border-radius: 20px;
+}
+.create-form{
+  margin-bottom: 80px;
+  background-color: var(--bg);
+}
+.create-input{
+  background: var(--surface);
+  color: var(--text);
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 6px;
+  resize: none;
+  border-radius: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow: hidden;
+}
+.create-label{
+  margin-left: 8px;
+  margin-top: 10px;
+}
+.create-button{
+  background-color: var(--forest-green);
+  color: var(--lemon-curd);
+  margin-left: 20%;
+  margin-left: 20%;
+  width: 60%;
+  padding: 12px;
+  border: var(--accent-soft);
+}
+.create-button:active{
+  background-color: var(--lemon-curd);
+  color: var(--forest-green);
+}
+.create-image-button{
+  position: relative;
+  display: inline;
+  bottom: 60px;
+  border-radius: 20px;
+  width: 40%;
+  margin-left: 30%;
+  margin-left: 30%;
+  border: var(--accent-soft);
+}
+
+/* --------------------------------------
+   SAVED RECIPES
+   -------------------------------------- */
+
+.saved-card{
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.saved-card:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.10);
+}
+.saved-thumbnail{
+  aspect-ratio: 1 / 1; 
+  width: 30%;
+  object-fit: cover;
+  border-radius: 20px;
+  padding: 5px;
+  float: left;
+}
+.saved-body{
+  width: 70%;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 20px;
+  float: left;
+  color: var(--forest-green);
+}
+
+/* --------------------------------------
+   PROFILE
+   -------------------------------------- */
+.profile-pic {
+  min-height: 4em;
+}
+.btn-custom,
+.footer-custom {
+  background-color: var(--forest-green);
+  color: #f7f7f7;
+  font-weight: 500;
+}
+.btn-custom {
+  font-size: 1.2rem;
+}
+.content-grid {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.img-square {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post:hover {
+  border: 1px solid rgb(226, 226, 226);
+  border-radius: 3px;
+}
+.badge {
+  background-color: #e0e0e0;
+}
+.btn:hover {
+  background-color: #c0c0c0;
+}
+
 
 /* --------------------------------------
    UTILITIES
