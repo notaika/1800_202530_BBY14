@@ -1,51 +1,98 @@
-<figure  >
-    
-    <img src="https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" 
-    class="square-media create-image" alt="there should be a image here" id="create-image">
+<%- include('partials/head') %> <%- include('partials/header') %>
 
-    <input type="button" class="create-image-button create-button" id="create-add-button" value="Add">
+<!-- Main content for the Create page -->
+<main class="p-1">
+  <figure class="create-recipe-image">
+    <img
+      src="https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
+      class="square-media create-image"
+      alt="there should be a image here"
+      id="create-image"
+    />
 
-</figure>
+    <input
+      type="button"
+      class="create-image-button create-button"
+      id="create-add-button"
+      value="Insert Photo"
+    />
+  </figure>
 
-<form action="" class="create-form">
-
+  <form action="" class="create-form">
     <h5 class="mb-0 create-label">Title</h5>
-    <textarea class="create-input create-text-area" name="Recipe Name" id="create-name" placeholder="Name" autofocus required></textarea>
+    <textarea
+      class="create-input create-text-area"
+      name="Recipe Name"
+      id="create-name"
+      placeholder="Name"
+      autofocus
+      required
+    ></textarea>
 
     <h5 class="mb-0 create-label">Description</h5>
-    <textarea class="create-input create-text-area" name="Recipe Description" id="create-description" placeholder="Description" required></textarea>
+    <textarea
+      class="create-input create-text-area"
+      name="Recipe Description"
+      id="create-description"
+      placeholder="Description"
+      required
+    ></textarea>
 
     <h5 class="mb-0 create-label">Ingredients</h5>
-    <textarea class="create-input create-text-area" name="Recipe Ingredients" id="create-ingredients" placeholder="Ingredients" required></textarea>
+    <textarea
+      class="create-input create-text-area"
+      name="Recipe Ingredients"
+      id="create-ingredients"
+      placeholder="Ingredients"
+      required
+    ></textarea>
 
     <h5 class="mb-0 create-label">Instructions</h5>
-    <textarea class="create-input create-text-area" name="Recipe Instructions" id="create-instructions" placeholder="Instructions" required></textarea>
+    <textarea
+      class="create-input create-text-area"
+      name="Recipe Instructions"
+      id="create-instructions"
+      placeholder="Instructions"
+      required
+    ></textarea>
 
     <h5 class="mb-0 create-label">Tags</h5>
-    <textarea class="create-input create-text-area" name="Recipe Tags" id="create-tags" placeholder="Tags"></textarea>
+    <textarea
+      class="create-input create-text-area"
+      name="Recipe Tags"
+      id="create-tags"
+      placeholder="Tags"
+    ></textarea>
 
+    <input
+      type="button"
+      class="create-input create-button"
+      value="Submit"
+      id="create-submit"
+    />
+  </form>
+</main>
+<!-- End of main content -->
 
-    <input type="button" class="create-input create-button" value="Submit" id="create-submit">
-
-    
-
-</form>
-
+<!-- This script runs only on this page -->
 <script>
   function resizeTextarea(textarea) {
-    textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const textareas = document.querySelectorAll('textarea');
+  document.addEventListener("DOMContentLoaded", () => {
+    const textareas = document.querySelectorAll("textarea.create-text-area");
 
-    textareas.forEach(textarea => {
+    textareas.forEach((textarea) => {
       // Initial resize
       resizeTextarea(textarea);
 
       // Resize on input
-      textarea.addEventListener('input', () => resizeTextarea(textarea));
+      textarea.addEventListener("input", () => resizeTextarea(textarea));
     });
   });
 </script>
+
+<%- include('partials/navbar', {active: 'create'}) %> <%-
+include('partials/footer') %> <%- include('partials/scripts') %>

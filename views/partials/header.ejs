@@ -1,0 +1,59 @@
+<!-- 
+  This is the top "PotLuck" header partial.
+  It includes a link to the logo using the /assets route.
+  (Assuming your logo is in /public/assets/images/logo.png)
+-->
+<nav class="navbar forest-green shadow-sm">
+  <div class="container-fluid text-light d-flex justify-content-between">
+    <a class="potluck-logo navbar-brand d-flex" href="/">
+      <!-- Example of using an image from your assets folder -->
+      <!-- <img src="/assets/images/logo.png" alt="Logo" width="30"> -->
+      <i class="bi bi-chevron-left text-light"></i>
+    </a>
+
+    <strong class="app-title">PotLuck</strong>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle settings bar"
+    >
+      <span class="bi bi-gear text-light"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-light" aria-current="page" href="#"
+            >Account</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Community</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Support</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-light"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Language
+          </a>
+          <ul class="dropdown-menu bg-light">
+            <li><a class="dropdown-item" href="#">English</a></li>
+            <li><a class="dropdown-item" href="#">French</a></li>
+            <li><a class="dropdown-item" href="#">Spanish</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,21 +1,31 @@
+<%- include('partials/head') %> <%- include('partials/header') %>
 
-<div class="saved-main feed">
+<div class="d-flex flex-column feed px-1">
+  <% if (locals.recipes && recipes.length) { %> <% recipes.forEach(function(r,
+  idx){ %>
 
-    <% recipes.forEach(function(r, idx){ %>
+  <button class="saved-card">
+    <div>
+      <img
+        src="<%= r.thumbUrl %>"
+        class="saved-thumbnail"
+        alt="Thumbnail could not be found"
+        onerror="this.src='https://placehold.co/100x100/eee/aaa?text=Thumb'"
+      />
+    </div>
 
-        <button class="saved-card">
+    <div class="saved-body">
+      <h6 class="card-title mb-1"><%= r.title %></h6>
+      <span class="author-chip">@<%= r.author %></span>
+    </div>
+  </button>
 
-            <div>
-                <img src="<%= r.thumbUrl %>" class="saved-thumbnail" alt="Thumbnail could not be found">
-            </div>
-
-            <div class="saved-body">
-                <h6 class="card-title mb-1"><%= r.title %></h6>
-                <span class="author-chip">@<%= r.author %></span>
-            </div>
-
-        </button>
-
-    <% }) %>
-
+  <% }) %> <% } else { %>
+  <div class="col-12">
+    <p class="p-3 text-center">No saved recipes found.</p>
+  </div>
+  <% } %>
 </div>
+
+<%- include('partials/navbar', {active: 'recipe'}) %> <%-
+include('partials/footer') %> <%- include('partials/scripts') %>
