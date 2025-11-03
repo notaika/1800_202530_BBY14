@@ -1,0 +1,14 @@
+[
+  {
+    "id": "u1",
+    "email": "demo@potluck.app",
+    "displayName": "Demo User",
+    "password": "demo123"
+  },
+  {
+    "id": "u2",
+    "email": "testy1@gmail.com",
+    "displayName": "testy1",
+    "password": "testy1"
+  }
+]

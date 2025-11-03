@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<div class="auth-viewport">
+  <div class="auth-bubble">
+    <h1 class="mb-3 text-dark text-center">Welcome Back!</h1>
+
+    <% if (typeof error === 'string' && error) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/login" class="row g-3">
+      <div class="col-12">
+        <label class="form-label">Email</label>
+        <input name="email" type="email" class="form-control" required>
+      </div>
+      <div class="col-12">
+        <label class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" required>
+      </div>
+      <div class="col-12 d-flex flex-column align-items-center gap-2 mt-3">
+        <button class="btn btn-outline-forest w-100" type="submit">Login</button>
+        <a class="btn btn-outline-forest w-100" href="/signup">Sign Up</a>
+      </div>
+    </form>
+  </div>
+</div>
+<%- include('partials/scripts') %>
