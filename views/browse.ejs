@@ -1,17 +1,19 @@
-<!-- Floating search bar (only shown on Home page) -->
-<div class="floating-search">
+<%- include('partials/head') %> <%- include('partials/header') %>
 
+<!-- Floating search bar (only shown on Home page) -->
+<div class="floating-search px-2">
   <!-- Search form container (pill shape handled in CSS) -->
   <form class="search-form d-flex align-items-center">
-
     <!-- Search icon on the left -->
     <i class="bi bi-search fs-5 ms-2"></i>
 
     <!-- Search text input -->
-    <input type="search" 
-           class="form-control border-0 bg-transparent" 
-           placeholder="Search" 
-           aria-label="Search">
+    <input
+      type="search"
+      class="form-control border-0 bg-transparent"
+      placeholder="Search"
+      aria-label="Search"
+    />
 
     <!-- Search button on the right (return icon) -->
     <button class="btn btn-link me-2" type="submit" aria-label="Search">
@@ -20,56 +22,70 @@
   </form>
 </div>
 
-
 <!-- ===================================================
      Recipe Feed Area (Home Page)
      Shows 2 cards per row, alternating layout
      =================================================== -->
-<div class="feed pt-4 pb-5 browse-feed">
-
+<div class="feed pt-4 pb-5 browse-feed px-1">
   <!-- Bootstrap grid: 2 columns wide -->
   <div class="row row-cols-2 g-3">
-
     <!-- Loop through recipe list passed from the server -->
-    <% recipes.forEach(function(r, idx){ %>
+    <% if (locals.recipes && recipes.length) { %> <% recipes.forEach(function(r,
+    idx){ %>
 
-      <!-- A single recipe column -->
-      <div class="col">
-
-        <!-- 
+    <!-- A single recipe column -->
+    <div class="col">
+      <!-- 
           card-left  → text above image
           card-right → image above text
           Based on even/odd index in the grid
         -->
-        <% const leftStyle = (idx % 2 === 0); %>
+      <% const leftStyle = (idx % 2 === 0); %>
 
-        <div class="card h-100 overflow-hidden recipe-card <%= leftStyle ? 'card-left' : 'card-right' %>">
+      <div
+        class="card h-100 overflow-hidden recipe-card <%= leftStyle ? 'card-left' : 'card-right' %>"
+      >
+        <!-- If card is on the RIGHT column, image goes at the TOP -->
+        <% if(!leftStyle){ %>
+        <img
+          src="<%= r.imageUrl %>"
+          class="card-img-top square-media"
+          alt="<%= r.title %>"
+        />
+        <% } %>
 
-          <!-- If card is on the RIGHT column, image goes at the TOP -->
-          <% if(!leftStyle){ %>
-            <img src="<%= r.imageUrl %>" class="card-img-top square-media" alt="">
-          <% } %>
+        <!-- Recipe text content -->
+        <div class="card-body py-2">
+          <!-- Small title text -->
+          <h6 class="card-title mb-1"><%= r.title %></h6>
 
-          <!-- Recipe text content -->
-          <div class="card-body py-2">
-            <!-- Small title text -->
-            <h6 class="card-title mb-1"><%= r.title %></h6>
+          <!-- Author username tag -->
+          <span class="author-chip">@<%= r.author %></span>
+        </div>
 
-            <!-- Author username tag -->
-            <span class="author-chip">@<%= r.author %></span>
-          </div>
+        <!-- If card is on the LEFT column, image goes at the BOTTOM -->
+        <% if(leftStyle){ %>
+        <img
+          src="<%= r.imageUrl %>"
+          class="card-img-bottom square-media"
+          alt="<%= r.title %>"
+        />
+        <% } %>
+      </div>
+      <!-- end recipe-card -->
+    </div>
+    <!-- end col -->
 
-          <!-- If card is on the LEFT column, image goes at the BOTTOM -->
-          <% if(leftStyle){ %>
-            <img src="<%= r.imageUrl %>" class="card-img-bottom square-media" alt="">
-          <% } %>
+    <% }) %> <% } else { %>
+    <div class="col-12">
+      <p class="p-3 text-center">No recipes found.</p>
+    </div>
+    <% } %>
+    <!-- end loop -->
+  </div>
+  <!-- end row -->
+</div>
+<!-- end feed -->
 
-        </div> <!-- end recipe-card -->
-
-      </div> <!-- end col -->
-
-    <% }) %> <!-- end loop -->
-
-  </div> <!-- end row -->
-
-</div> <!-- end feed -->
+<%- include('partials/navbar', {active: 'browse'}) %> <%-
+include('partials/footer') %> <%- include('partials/scripts') %>
