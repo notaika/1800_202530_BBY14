@@ -43,8 +43,8 @@
       <% const leftStyle = (idx % 2 === 0); %>
 
       <div
-        class="card h-100 overflow-hidden recipe-card <%= leftStyle ? 'card-left' : 'card-right' %>"
-      >
+        class="card h-100 overflow-hidden recipe-card recipe-button <%= leftStyle ? 'card-left' : 'card-right' %>"
+        recipeID="<%= r.id%>">
         <!-- If card is on the RIGHT column, image goes at the TOP -->
         <% if(!leftStyle){ %>
         <img

@@ -92,11 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".recipe-button").forEach(function(b){
     b.addEventListener('click', (event) => {
       const recipeID = event.target.getAttribute("recipeid");
+      console.log(recipeID)
       openRecipePreview(recipeID);
     })
   })
 
-  const recipeOriginal = document.getElementById("recipe-preview").innerHTML;//Save orijinal state of preview.ejs
+  //Save orijinal state of preview.ejs
+  const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
 
   function openRecipePreview(id){
     
