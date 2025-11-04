@@ -306,9 +306,9 @@ body {
   transform: translate(-50%, 0);
 }
 .recipe-preview-image{
-  
-
-
+  width: 100%;
+  padding-bottom: 10px;
+  border-radius: 20px;
 }
 .recipe-preview-content{
   height: 100%;

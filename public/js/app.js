@@ -112,60 +112,77 @@ document.addEventListener("DOMContentLoaded", () => {
     "description": "Crispy toast with smashed avocado, lemon, and chili flakes.",
     "ingredients": "Test"
     }
-    const recipePreview = document.getElementById("recipe-preview");
-    
-    if(recipeOriginal){
+    // This code should work when Firebase is added
+    // const recipesDocRef = collection(db, "recipes", id);
+    try{
+      // const docSnap = await getDoc(recipesDocRef);
+      // const currentRecipe = docSnap.data;
 
-      recipePreview.innerHTML = recipeOriginal;
+      const recipePreview = document.getElementById("recipe-preview");
+      
+      if(recipeOriginal){
 
-    }
-    
-    const recipePreviewContent = document.getElementById("recipe-preview-content");
-    recipePreview.style.display = "block";
+        recipePreview.innerHTML = recipeOriginal;
 
-    document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title;
-    document.getElementById("recipe-preview-author").innerHTML = currentRecipe.author;
+      }
+      
+      const recipePreviewContent = document.getElementById("recipe-preview-content");
+      recipePreview.style.display = "block";
 
-    if (currentRecipe.description){
+      document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title;
+      document.getElementById("recipe-preview-author").innerHTML = currentRecipe.author;
 
-      recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
-      <h3>Description</h3>
-      <p id="recipe-preview-description">Place holder</p>`
+      if (currentRecipe.imageUrl){
 
-      document.getElementById("recipe-preview-description").innerHTML = currentRecipe.description;
-    }
-    
-    if (currentRecipe.ingredients){
+        document.getElementById("recipe-preview-image").src = currentRecipe.imageUrl
 
-      recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
-      <h3>Ingredients</h3>
-      <p id="recipe-preview-ingredients">Place holder</p>`
+      }
 
-      document.getElementById("recipe-preview-ingredients").innerHTML = currentRecipe.ingredients;
-    }
-    
-    if(currentRecipe.instructions){
+      if (currentRecipe.description){
 
-      recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
-      <h3>Instructions</h3>
-      <p id="recipe-preview-instructions">Place holder</p>`
+        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+        <h3>Description</h3>
+        <p id="recipe-preview-description">Place holder</p>`
 
-      document.getElementById("recipe-preview-instructions").innerHTML = currentRecipe.instructions;
-    }
+        document.getElementById("recipe-preview-description").innerHTML = currentRecipe.description;
+      }
+      
+      if (currentRecipe.ingredients){
 
-    if (currentRecipe.tags){
+        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+        <h3>Ingredients</h3>
+        <p id="recipe-preview-ingredients">Place holder</p>`
 
-      recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
-      <h3>Tags</h3>
-      <p id="recipe-preview-tags">Place holder</p>`
+        document.getElementById("recipe-preview-ingredients").innerHTML = currentRecipe.ingredients;
+      }
+      
+      if(currentRecipe.instructions){
 
-      document.getElementById("recipe-preview-tags").innerHTML = currentRecipe.tags;
-    }
+        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+        <h3>Instructions</h3>
+        <p id="recipe-preview-instructions">Place holder</p>`
 
-    //Link the back button of recipe preview, must be done after recipe-preview.innerHTML is set to recipeOriginal
-    document.getElementById("recipe-preview-back").addEventListener('click', (event) => {
-    closeRecipePreview();
-  })
+        document.getElementById("recipe-preview-instructions").innerHTML = currentRecipe.instructions;
+      }
+
+      if (currentRecipe.tags){
+
+        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+        <h3>Tags</h3>
+        <p id="recipe-preview-tags">Place holder</p>`
+
+        document.getElementById("recipe-preview-tags").innerHTML = currentRecipe.tags;
+      }
+
+      //Link the back button of recipe preview, must be done after recipe-preview.innerHTML is set to recipeOriginal
+      document.getElementById("recipe-preview-back").addEventListener('click', (event) => {
+        closeRecipePreview();
+      })
+
+  } catch (error){
+    console.error("Error previewing recipe ", error);
+  }
+
   }
 
   function closeRecipePreview(){
