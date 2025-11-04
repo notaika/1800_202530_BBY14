@@ -86,4 +86,91 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // --------------------------------------
+  // Link recipe cards to recipe preview
+  // --------------------------------------
+  document.querySelectorAll(".recipe-button").forEach(function(b){
+    b.addEventListener('click', (event) => {
+      const recipeID = event.target.getAttribute("recipeid");
+      openRecipePreview(recipeID);
+    })
+  })
+
+  const recipeOriginal = document.getElementById("recipe-preview").innerHTML;//Save orijinal state of preview.ejs
+
+  function openRecipePreview(id){
+    
+    //Will be updated to reference actual entries in the firebase
+    const currentRecipe = {
+    "id": 1,
+    "title": "Avocado Toast",
+    "author": "MaisOuiMayvee",
+    "imageUrl": "https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "thumbUrl": "https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    "description": "Crispy toast with smashed avocado, lemon, and chili flakes.",
+    "ingredients": "Test"
+    }
+    const recipePreview = document.getElementById("recipe-preview");
+    
+    if(recipeOriginal){
+
+      recipePreview.innerHTML = recipeOriginal;
+
+    }
+    
+    const recipePreviewContent = document.getElementById("recipe-preview-content");
+    recipePreview.style.display = "block";
+
+    document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title;
+    document.getElementById("recipe-preview-author").innerHTML = currentRecipe.author;
+
+    if (currentRecipe.description){
+
+      recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+      <h3>Description</h3>
+      <p id="recipe-preview-description">Place holder</p>`
+
+      document.getElementById("recipe-preview-description").innerHTML = currentRecipe.description;
+    }
+    
+    if (currentRecipe.ingredients){
+
+      recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+      <h3>Ingredients</h3>
+      <p id="recipe-preview-ingredients">Place holder</p>`
+
+      document.getElementById("recipe-preview-ingredients").innerHTML = currentRecipe.ingredients;
+    }
+    
+    if(currentRecipe.instructions){
+
+      recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+      <h3>Instructions</h3>
+      <p id="recipe-preview-instructions">Place holder</p>`
+
+      document.getElementById("recipe-preview-instructions").innerHTML = currentRecipe.instructions;
+    }
+
+    if (currentRecipe.tags){
+
+      recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+      <h3>Tags</h3>
+      <p id="recipe-preview-tags">Place holder</p>`
+
+      document.getElementById("recipe-preview-tags").innerHTML = currentRecipe.tags;
+    }
+
+    //Link the back button of recipe preview, must be done after recipe-preview.innerHTML is set to recipeOriginal
+    document.getElementById("recipe-preview-back").addEventListener('click', (event) => {
+    closeRecipePreview();
+  })
+  }
+
+  function closeRecipePreview(){
+    const recipePreview = document.getElementById("recipe-preview");
+    recipePreview.style.display = "none";
+
+  }
+
 });
+
