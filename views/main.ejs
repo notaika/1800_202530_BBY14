@@ -2,18 +2,19 @@
 
 <div class="text-dark saved-main d-flex flex-column vh-100">
   <header
-    class="d-flex justify-content-between align-items-center mb-1 forest-green p-2"
-  >
-    <h2 class="user-greeting h1 mb-1 text-light">Hi, Quinn</h2>
+    class="d-flex justify-content-between align-items-center mb-1 forest-green p-2">
+    <h2 class="user-greeting h1 mb-1 text-light" id="user-greeting">
+      Hi, User...
+    </h2>
 
     <div class="rounded-circle bg-light mb-1">
       <!-- Updated link to /profile route -->
       <a href="/profile">
         <img
+          id="profile-pic-main"
           src="/assets/images/placeholder.png"
           class="profile-pic img-fluid rounded-circle hover-zoom"
-          alt="Profile picture"
-        />
+          alt="Profile picture" />
       </a>
     </div>
   </header>
@@ -24,8 +25,7 @@
       <img
         src="/assets/images/banner.png"
         class="banner-image img-fluid rounded mb-3 h-100 banner"
-        alt="Banner image"
-      />
+        alt="Banner image" />
     </div>
 
     <hr class="mb-3 mt-0" />
