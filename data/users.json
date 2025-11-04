@@ -10,5 +10,11 @@
     "email": "testy1@gmail.com",
     "displayName": "testy1",
     "password": "testy1"
+  },
+  {
+    "id": "u3",
+    "email": "newUser@gmail.com",
+    "displayName": "newUser",
+    "password": "newUser"
   }
 ]
