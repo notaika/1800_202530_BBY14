@@ -42,10 +42,8 @@ app.get("/signup", (req, res) => {
 
 // Home Page
 app.get("/", (req, res) => {
-  let recipes = shuffle(loadRecipes());
   // This renders views/index.ejs
   res.render("index", {
-    recipes,
     active: "home",
     firebaseConfig: firebaseConfig,
   });
@@ -57,9 +55,7 @@ app.get("/main", (req, res) => {
 
 // Browse Page
 app.get("/browse", (req, res) => {
-  let recipes = shuffle(loadRecipes());
   res.render("browse", {
-    recipes,
     active: "browse",
     firebaseConfig: firebaseConfig,
   });
@@ -72,9 +68,7 @@ app.get("/create", (req, res) => {
 
 // Recipe page
 app.get("/recipe", (req, res) => {
-  let recipes = shuffle(loadRecipes());
   res.render("recipe", {
-    recipes,
     active: "recipe",
     firebaseConfig: firebaseConfig,
   });

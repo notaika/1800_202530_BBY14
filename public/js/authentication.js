@@ -52,9 +52,9 @@ export async function signupUser(displayName, email, password) {
       username: displayName,
       firstName: "",
       lastName: "",
-      bio: "",
+      bio: "New PotLuck user!", // default bio
       email: user.email,
-      profilePicUrl: "",
+      profilePicUrl: "/assets/images/profile-pic-placeholder.jpg", // default-pic
       favouriteRecipeIDs: [],
       communityId: "",
     };

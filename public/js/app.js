@@ -3,6 +3,8 @@ import { db } from "./firebaseConfig.js";
 import {
   doc,
   getDoc,
+  getDocs,
+  collection,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 onAuthReady(async (user) => {
@@ -40,6 +42,8 @@ onAuthReady(async (user) => {
       } else {
         console.error("No user document found for logged-in user!");
       }
+
+      displayRecipes(); // displays recipes from db
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -50,6 +54,8 @@ onAuthReady(async (user) => {
     if (headerLoginLink) headerLoginLink.classList.remove("d-none");
     if (headerLogoutButton) headerLogoutButton.classList.add("d-none");
     console.log("No user signed in, redirecting to login.");
+
+    displayRecipes(); // displays recipes from db
 
     // protect these pages and redirect to login if no user detected
     const currentPage = window.location.pathname;
@@ -67,6 +73,7 @@ onAuthReady(async (user) => {
 // find all elements with ids and fill elements w/ user data
 function populateUserData(userData, authUser) {
   // get user's username
+  // Use 'username' from your schema
   const name = userData.username || authUser.displayName;
 
   // seed main.ejs elems
@@ -95,6 +102,60 @@ function populateUserData(userData, authUser) {
   if (profileProfilePic && userData.profilePicUrl) {
     profileProfilePic.src = userData.profilePicUrl;
   }
+}
+
+// dynamically displays recipes
+async function displayRecipes() {
+  //gets container in recipe.ejs
+  const container = document.getElementById("recipe-card-container");
+  if (!container) return; // don't run if container is not on page
+
+  // get all documents from the "recipe" collection
+  const querySnapshot = await getDocs(collection(db, "recipe"));
+
+  const recipePromises = querySnapshot.docs.map(async (recipeDoc) => {
+    const recipe = recipeDoc.data();
+    const recipeId = recipeDoc.id;
+    let authorName = "unknown";
+
+    // fetch author for this specific recipe
+    if (recipe.submittedByUserID) {
+      try {
+        const userDocRef = doc(db, "users", recipe.submittedByUserID);
+        const userDocSnap = await getDoc(userDocRef);
+        if (userDocSnap.exists()) {
+          authorName = `@${userDocSnap.data().username}`;
+        }
+      } catch (err) {
+        console.error("Error fetching author for card:", err);
+      }
+    }
+
+    // container
+    return `
+      <div class="col">
+        <div class="card h-100 overflow-hidden recipe-card">
+          <a href="/recipe?id=${recipeId}" class="text-decoration-none">
+            <img
+              src="${recipe.imageUrl || "/assets/images/placeholder.png"}"
+              class="card-img-top square-media"
+              alt="${recipe.name}"
+            />
+            <div class="card-body py-2">
+              <h6 class="card-title mb-1 text-dark">${recipe.name}</h6>
+              <span class="author-chip">${authorName}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    `;
+  });
+
+  // wait for all fetches and promises to finish
+  const allCardsHtml = await Promise.all(recipePromises);
+
+  // add all recipes to page
+  container.innerHTML = allCardsHtml.join("");
 }
 
 // MAYVEE STUFF
