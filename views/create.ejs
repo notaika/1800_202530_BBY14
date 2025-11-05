@@ -7,15 +7,13 @@
       src="https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
       class="square-media create-image"
       alt="there should be a image here"
-      id="create-image"
-    />
+      id="create-image" />
 
     <input
       type="button"
       class="create-image-button create-button"
       id="create-add-button"
-      value="Insert Photo"
-    />
+      value="Insert Photo" />
   </figure>
 
   <form action="" class="create-form">
@@ -26,8 +24,7 @@
       id="create-name"
       placeholder="Name"
       autofocus
-      required
-    ></textarea>
+      required></textarea>
 
     <h5 class="mb-0 create-label">Description</h5>
     <textarea
@@ -35,8 +32,7 @@
       name="Recipe Description"
       id="create-description"
       placeholder="Description"
-      required
-    ></textarea>
+      required></textarea>
 
     <h5 class="mb-0 create-label">Ingredients</h5>
     <textarea
@@ -44,8 +40,7 @@
       name="Recipe Ingredients"
       id="create-ingredients"
       placeholder="Ingredients"
-      required
-    ></textarea>
+      required></textarea>
 
     <h5 class="mb-0 create-label">Instructions</h5>
     <textarea
@@ -53,23 +48,20 @@
       name="Recipe Instructions"
       id="create-instructions"
       placeholder="Instructions"
-      required
-    ></textarea>
+      required></textarea>
 
     <h5 class="mb-0 create-label">Tags</h5>
     <textarea
       class="create-input create-text-area"
       name="Recipe Tags"
       id="create-tags"
-      placeholder="Tags"
-    ></textarea>
+      placeholder="Tags"></textarea>
 
     <input
       type="button"
       class="create-input create-button"
       value="Submit"
-      id="create-submit"
-    />
+      id="create-submit" />
   </form>
 </main>
 <!-- End of main content -->
@@ -93,6 +85,9 @@
     });
   });
 </script>
+
+<!-- create recipe functions -->
+<script type="module" src="/js/createRecipe.js"></script>
 
 <%- include('partials/navbar', {active: 'create'}) %> <%-
 include('partials/footer') %> <%- include('partials/scripts') %>
