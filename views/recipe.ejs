@@ -1,5 +1,6 @@
 <%- include('partials/head') %> <%- include('partials/header') %>
 
+<<<<<<< HEAD
     <div class="d-flex flex-column feed px-1">
       <% if (locals.recipes && recipes.length) { %>
         <% recipes.forEach(function(r, idx){ %>
@@ -28,3 +29,30 @@
 
     <%- include('partials/navbar', {active: 'recipe' }) %> <%- include('partials/footer') %> <%-
           include('partials/scripts') %> <%- include('partials/preview') %>
+=======
+<div class="d-flex flex-column feed px-3 py-2">
+  <div class="recipe-full-card">
+    <img
+      src="/assets/images/place-5.png"
+      class="square-media create-image mb-2"
+      alt="Recipe Image"
+      id="recipe-image" />
+
+    <h3 id="recipe-name" class="mb-0">Loading...</h3>
+    <span class="author-chip mb-3" id="recipe-author">by...</span>
+
+    <h5 class="mt-2 mb-1">Description</h5>
+    <p id="recipe-description" class="text-dark small">...</p>
+
+    <h5 class="mt-2 mb-1">Ingredients</h5>
+    <p id="recipe-ingredients" class="text-dark small">...</p>
+
+    <h5 class="mt-2 mb-1">Instructions</h5>
+    <p id="recipe-instructions" class="text-dark small">...</p>
+  </div>
+</div>
+
+<script type="module" src="/js/recipeDetail.js"></script>
+<%- include('partials/navbar', {active: 'recipe'}) %> <%-
+include('partials/footer') %> <%- include('partials/scripts') %>
+>>>>>>> main

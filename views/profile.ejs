@@ -3,15 +3,17 @@
 <div class="d-flex flex-column px-1">
   <header class="profile-info-container d-flex align-items-center p-3">
     <img
-      src="/assets/images/placeholder.png"
+      src="/assets/images/profile-pic-placeholder.jpg"
+      id="profile-pic-profile"
       class="profile-pic img-fluid rounded-circle profile-pic border rounded-2"
-      alt="Profile picture"
-    />
+      alt="Profile picture" />
     <div class="ms-4">
-      <span class="profile-title badge text-dark fs-6 rounded-pill px-3 py-2">
+      <span
+        class="profile-title badge text-dark fs-6 rounded-pill px-3 py-2"
+        id="profile-title">
         Quinn's Cookbook
       </span>
-      <p class="description py-2 small">
+      <p class="description py-2 small" id="profile-bio">
         📍 Vancouver, BC <br />
         Welcome to my recipe page!
       </p>
@@ -43,8 +45,7 @@
             <img
               src="<%= post.imageUrl %>"
               class="post-img img-square rounded"
-              alt="<%= post.alt %>"
-            />
+              alt="<%= post.alt %>" />
           </div>
         </div>
         <% }) %> <% } else { %>

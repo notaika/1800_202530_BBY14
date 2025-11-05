@@ -6,6 +6,13 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+const firebaseConfig = {
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+  appId: process.env.VITE_FIREBASE_APP_ID,
+};
+
 // import helpers from server-helpers.js
 const {
   loadRecipes,
@@ -23,43 +30,61 @@ app.set("views", "./views");
 app.set("view engine", "ejs");
 
 // PAGE ROUTES
+// Login page
+app.get("/login", (req, res) => {
+  res.render("login", { firebaseConfig: firebaseConfig });
+});
+
+// Signup page
+app.get("/signup", (req, res) => {
+  res.render("signup", { firebaseConfig: firebaseConfig });
+});
+
 // Home Page
 app.get("/", (req, res) => {
-  let recipes = shuffle(loadRecipes());
   // This renders views/index.ejs
-  res.render("index", { recipes, active: "home" });
+  res.render("index", {
+    active: "home",
+    firebaseConfig: firebaseConfig,
+  });
 });
 
 app.get("/main", (req, res) => {
-  let recipes = shuffle(loadRecipes());
-  // This renders views/index.ejs
-  res.render("main");
+  res.render("main", { active: "home", firebaseConfig: firebaseConfig });
 });
 
 // Browse Page
 app.get("/browse", (req, res) => {
-  let recipes = shuffle(loadRecipes());
-  res.render("browse", { recipes, active: "browse" });
+  res.render("browse", {
+    active: "browse",
+    firebaseConfig: firebaseConfig,
+  });
 });
 
 // Create recipe page
 app.get("/create", (req, res) => {
-  res.render("create", { active: "create" });
+  res.render("create", { active: "create", firebaseConfig: firebaseConfig });
 });
 
 // Recipe page
 app.get("/recipe", (req, res) => {
-  let recipes = shuffle(loadRecipes());
-  res.render("recipe", { recipes, active: "recipe" });
+  res.render("recipe", {
+    active: "recipe",
+    firebaseConfig: firebaseConfig,
+  });
 });
 
 // Profile page
 app.get("/profile", (req, res) => {
   let profilePosts = loadProfileFeed();
-  res.render("profile", { posts: profilePosts, active: "profile" });
+  res.render("profile", {
+    posts: profilePosts,
+    active: "profile",
+    firebaseConfig: firebaseConfig,
+  });
 });
 
-// Error for page not found (from your class example)
+// Error for page not found
 app.use(function (req, res, next) {
   res
     .status(404)

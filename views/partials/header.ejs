@@ -6,8 +6,6 @@
 <nav class="navbar forest-green shadow-sm">
   <div class="container-fluid text-light d-flex justify-content-between">
     <a class="potluck-logo navbar-brand d-flex" href="/">
-      <!-- Example of using an image from your assets folder -->
-      <!-- <img src="/assets/images/logo.png" alt="Logo" width="30"> -->
       <i class="bi bi-chevron-left text-light"></i>
     </a>
 
@@ -20,8 +18,7 @@
       data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent"
       aria-expanded="false"
-      aria-label="Toggle settings bar"
-    >
+      aria-label="Toggle settings bar">
       <span class="bi bi-gear text-light"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -43,8 +40,7 @@
             href="#"
             role="button"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+            aria-expanded="false">
             Language
           </a>
           <ul class="dropdown-menu bg-light">
@@ -52,6 +48,21 @@
             <li><a class="dropdown-item" href="#">French</a></li>
             <li><a class="dropdown-item" href="#">Spanish</a></li>
           </ul>
+        </li>
+
+        <!-- Auth Section -->
+        <li class="nav-item" id="header-login-link">
+          <a class="nav-link dropdown-item auth-item" href="/login">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+          </a>
+        </li>
+
+        <!-- Logout Button (hidden by default) -->
+        <li class="nav-item d-none" id="header-logout-button">
+          <!-- We changed this from a <form> to a <button> -->
+          <button class="nav-link dropdown-item auth-item logout" type="button">
+            <i class="bi bi-box-arrow-right me-1"></i> Logout
+          </button>
         </li>
       </ul>
     </div>
