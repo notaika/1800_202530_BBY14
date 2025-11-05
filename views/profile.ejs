@@ -11,12 +11,11 @@
       <span
         class="profile-title badge text-dark fs-6 rounded-pill px-3 py-2"
         id="profile-title">
-        Quinn's Cookbook
       </span>
-      <p class="description py-2 small" id="profile-bio">
-        📍 Vancouver, BC <br />
-        Welcome to my recipe page!
-      </p>
+      <div class="profile-names ms-2 mt-1">
+        <span class="profile-first-name" id="profile-full-name">Aikuwu</span>
+      </div>
+      <p class="description ms-2 mb-2 small" id="profile-bio"></p>
     </div>
   </header>
 
@@ -36,7 +35,7 @@
 
     <hr class="mt-0 mb-2" />
 
-    <div class="post-content-grid">
+    <div class="post-content-grid" id="post-content-grid">
       <div class="row g-1">
         <% if (locals.posts && posts.length) { %> <%
         posts.forEach(function(post) { %>

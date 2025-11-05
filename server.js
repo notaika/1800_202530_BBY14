@@ -74,7 +74,7 @@ app.get("/recipe", (req, res) => {
   });
 });
 
-// Profile page
+// Profile Page
 app.get("/profile", (req, res) => {
   let profilePosts = loadProfileFeed();
   res.render("profile", {
@@ -83,6 +83,22 @@ app.get("/profile", (req, res) => {
     firebaseConfig: firebaseConfig,
   });
 });
+
+// Edit Profile Information Page
+app.get("/profile/edit", (req, res) => {
+  res.render("edit-profile", {
+    active: "profile",
+    firebaseConfig: firebaseConfig,
+  });
+});
+
+// Edit Account Info Page
+// app.get("/profile/account", (req, res) => {
+//   res.render("profile", {
+//     active: "profile",
+//     firebaseConfig: firebaseConfig,
+//   });
+// });
 
 // Error for page not found
 app.use(function (req, res, next) {
