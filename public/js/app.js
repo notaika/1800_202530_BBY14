@@ -259,81 +259,124 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  //Save orijinal state of preview.ejs
+  //Save original state of preview.ejs
   const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
 
-  function openRecipePreview(id){
-    
-    //Will be updated to reference actual entries in the firebase
-    const currentRecipe = {
-    "id": 1,
-    "title": "Avocado Toast",
-    "author": "MaisOuiMayvee",
-    "imageUrl": "https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
-    "thumbUrl": "https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
-    "description": "Crispy toast with smashed avocado, lemon, and chili flakes.",
-    "ingredients": "Test"
-    }
+  async function openRecipePreview(id){
     // This code should work when Firebase is added
-    // const recipesDocRef = collection(db, "recipes", id);
     try{
-      // const docSnap = await getDoc(recipesDocRef);
-      // const currentRecipe = docSnap.data;
-
-      const recipePreview = document.getElementById("recipe-preview");
       
-      if(recipeOriginal){
-
-        recipePreview.innerHTML = recipeOriginal;
-
-      }
+      const recipesDocRef = doc(db, "recipe", id);
+      const docSnap = await getDoc(recipesDocRef);
       
-      const recipePreviewContent = document.getElementById("recipe-preview-content");
-      recipePreview.style.display = "block";
 
-      document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title;
-      document.getElementById("recipe-preview-author").innerHTML = currentRecipe.author;
+      if(docSnap.exists()){
 
-      if (currentRecipe.imageUrl){
+        const currentRecipe = docSnap.data();
+        const recipePreview = document.getElementById("recipe-preview");
+        
+        if(recipeOriginal){
+          //Avoid duplicate information
+          recipePreview.innerHTML = recipeOriginal;
 
-        document.getElementById("recipe-preview-image").src = currentRecipe.imageUrl
+        }
+        
+        const recipePreviewContent = document.getElementById("recipe-preview-content");
+        recipePreview.style.display = "block";
 
-      }
+        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.name;
 
-      if (currentRecipe.description){
+        //Author name needs to be retrived from users collection.
+        var authorName = "deleted";
+        const authorDocRef = doc(db, "users", currentRecipe.submittedByUserID);
+        const authorSnap = await getDoc(authorDocRef);
 
-        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
-        <h3>Description</h3>
-        <p id="recipe-preview-description">Place holder</p>`
+        if(authorSnap.exists()){
 
-        document.getElementById("recipe-preview-description").innerHTML = currentRecipe.description;
-      }
-      
-      if (currentRecipe.ingredients){
+          authorName = authorSnap.data().username;
 
-        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
-        <h3>Ingredients</h3>
-        <p id="recipe-preview-ingredients">Place holder</p>`
+          //Author ID is saved incase we need to link to their profile.
+          document.getElementById("recipe-preview-author").setAttribute("userId", currentRecipe.submittedByUserID);
 
-        document.getElementById("recipe-preview-ingredients").innerHTML = currentRecipe.ingredients;
-      }
-      
-      if(currentRecipe.instructions){
+        }
+        document.getElementById("recipe-preview-author").innerHTML = "@" + authorName;
 
-        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
-        <h3>Instructions</h3>
-        <p id="recipe-preview-instructions">Place holder</p>`
 
-        document.getElementById("recipe-preview-instructions").innerHTML = currentRecipe.instructions;
-      }
+        //All values aside from: name and submittedByUserID are optional.
+        if (currentRecipe.imageUrl){
 
-      if (currentRecipe.tags){
+          document.getElementById("recipe-preview-image").src = currentRecipe.imageUrl
 
-        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
-        <h3>Tags</h3>
-        <p id="recipe-preview-tags">Place holder</p>`
+        }
 
-        document.getElementById("recipe-preview-tags").innerHTML = currentRecipe.tags;
+        if (currentRecipe.submittedTimestamp){
+
+          //Date() takes miliseconds as a input.
+          const currentTimeStamp = new Date(currentRecipe.submittedTimestamp.seconds * 1000);
+
+          //Format of date, we may want to standardise this somehow.
+          const options = {
+            month: "long",
+            year: "numeric",
+            day: "numeric"
+          }
+          const recipeTimestamp = currentTimeStamp.toLocaleDateString("en-US", options);
+
+          console.log(document.getElementById("recipe-preview-timestamp"));
+          
+          document.getElementById("recipe-preview-timestamp").innerHTML = recipeTimestamp;
+
+        }
+
+        if (currentRecipe.description){
+
+          recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+          <h3>Description</h3>
+          <p id="recipe-preview-description">Place holder</p>`
+
+          document.getElementById("recipe-preview-description").innerHTML = currentRecipe.description;
+        }
+
+        if (currentRecipe.difficulty){
+
+          recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+          <h3>Difficulty</h3>
+          <p id="recipe-preview-difficulty">Place holder</p>`
+
+          document.getElementById("recipe-preview-difficulty").innerHTML = currentRecipe.difficulty;
+        }
+
+        if(currentRecipe.prepTime){
+
+          recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+          <h3>Prep Time</h3>
+          <p id="recipe-preview-prep-time">Place holder</p>`
+
+          //temporary We will need to format the time unit either on write or read.
+          document.getElementById("recipe-preview-prep-time").innerHTML = currentRecipe.prepTime;
+          
+        }
+
+        if (currentRecipe.ingredients){
+
+          recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+          <h3>Ingredients</h3>
+          <p id="recipe-preview-ingredients">Place holder</p>`
+
+          document.getElementById("recipe-preview-ingredients").innerHTML = currentRecipe.ingredients;
+        }
+        
+        if(currentRecipe.instructions){
+
+          recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+          <h3>Instructions</h3>
+          <p id="recipe-preview-instructions">Place holder</p>`
+
+          document.getElementById("recipe-preview-instructions").innerHTML = currentRecipe.instructions;
+        }
+
+      } else {
+        console.warn("Recipe not found: ", id)
       }
 
       //Link the back button of recipe preview, must be done after recipe-preview.innerHTML is set to recipeOriginal
@@ -341,7 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closeRecipePreview();
       })
 
-  } catch (error){
+    } catch (error){
     console.error("Error previewing recipe ", error);
   }
 
