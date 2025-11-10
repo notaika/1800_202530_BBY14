@@ -6,62 +6,12 @@
   pb-5  → bottom padding so the last card isn't covered
   browse-feed → page-specific styling in CSS
 -->
-<div class="pt-2 pb-5 browse-feed px-1">
-  <!--
-    Create a Bootstrap row
-    g-3 → "gap 3" adds spacing between columns and rows
-  -->
-  <div class="row g-3">
-    <% if (locals.recipes && recipes.length) { %> <%
-    recipes.forEach(function(r){ %>
-
-    <!--
-        Each recipe takes the full row width (col-12)
-        So 1 card per row when browsing
-      -->
-    <div class="col-12">
-      <!-- The recipe card box -->
-      <div class="recipe-card">
-        <!--
-            Square recipe image on top
-            .square-media forces a perfect square crop
-          -->
-        <img
-          src="<%= r.imageUrl %>"
-          class="square-media"
-          alt="<%= r.title %>"
-        />
-
-        <!-- Card body contains text info -->
-        <div class="card-body">
-          <!-- Recipe title -->
-          <h5 class="card-title"><%= r.title %></h5>
-
-          <!-- Author tag/chip -->
-          <span class="author-chip">@<%= r.author %></span>
-
-          <!--
-              Description of dish
-              small text, darker styling
-            -->
-          <p class="mt-2 mb-0 small text-dark"><%= r.description %></p>
-        </div>
-        <!-- end card-body -->
-      </div>
-      <!-- end recipe-card -->
-    </div>
-    <!-- end col-12 -->
-
-    <% }) %> <% } else { %>
-    <div class="col-12">
-      <p class="p-3 text-center">No recipes found.</p>
-    </div>
-    <% } %>
-    <!-- end loop -->
-  </div>
+<div class="feed pt-4 pb-5 browse-feed px-1">
+  <div class="row row-cols-1 g-3" id="home-grid"></div>
+</div>
   <!-- end row -->
 </div>
 <!-- end browse-feed wrapper -->
 
-<%- include('partials/navbar', {active: 'home'}) %> <%-
-include('partials/footer') %> <%- include('partials/scripts') %>
+<%- include('partials/navbar', {active: 'home'}) %> 
+<%- include('partials/footer') %> <%- include('partials/scripts') %>

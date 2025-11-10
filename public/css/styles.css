@@ -186,11 +186,9 @@ body {
    FLOATING SEARCH BAR (Home only)
    -------------------------------------- */
 .floating-search {
-  position: sticky;
-  top: calc(
-    var(--topbar-h) + var(--search-gap) + env(safe-area-inset-top, 0px)
-  );
-  z-index: 1040;
+  position: static; 
+  margin-top: 12px; 
+  z-index: 1;
 }
 .floating-search .search-form {
   height: 46px;
