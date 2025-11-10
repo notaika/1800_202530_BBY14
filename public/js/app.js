@@ -1,11 +1,15 @@
 import { onAuthReady, logoutUser } from "./authentication.js";
-import { db } from "./firebaseConfig.js";
+import { db, auth } from "./firebaseConfig.js";
 import {
   doc,
   getDoc,
   getDocs,
   collection,
+  updateDoc ,
+  arrayUnion, 
+  arrayRemove
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 onAuthReady(async (user) => {
   // all auth elements
@@ -252,10 +256,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Link recipe cards to recipe preview
   // --------------------------------------
   document.querySelectorAll(".recipe-button").forEach(function(b){
+
     b.addEventListener('click', (event) => {
+
+      //All items that are on top of the card should have the css property pointer-events: none.
       const recipeID = event.target.getAttribute("recipeid");
-      console.log(recipeID)
       openRecipePreview(recipeID);
+
     })
   })
 
@@ -263,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
 
   async function openRecipePreview(id){
-    // This code should work when Firebase is added
+    
     try{
       
       const recipesDocRef = doc(db, "recipe", id);
@@ -276,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const recipePreview = document.getElementById("recipe-preview");
         
         if(recipeOriginal){
-          //Avoid duplicate information
+          //Avoids duplicate information
           recipePreview.innerHTML = recipeOriginal;
 
         }
@@ -284,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const recipePreviewContent = document.getElementById("recipe-preview-content");
         recipePreview.style.display = "block";
 
-        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.name;
+        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title;
 
         //Author name needs to be retrived from users collection.
         var authorName = "deleted";
@@ -314,15 +321,13 @@ document.addEventListener("DOMContentLoaded", () => {
           //Date() takes miliseconds as a input.
           const currentTimeStamp = new Date(currentRecipe.submittedTimestamp.seconds * 1000);
 
-          //Format of date, we may want to standardise this somehow.
+          //Format of date, we may want to standardize this somehow.
           const options = {
             month: "long",
             year: "numeric",
             day: "numeric"
           }
           const recipeTimestamp = currentTimeStamp.toLocaleDateString("en-US", options);
-
-          console.log(document.getElementById("recipe-preview-timestamp"));
           
           document.getElementById("recipe-preview-timestamp").innerHTML = recipeTimestamp;
 
@@ -352,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <h3>Prep Time</h3>
           <p id="recipe-preview-prep-time">Place holder</p>`
 
-          //temporary We will need to format the time unit either on write or read.
+          //We will need to format the time unit either on write or read.
           document.getElementById("recipe-preview-prep-time").innerHTML = currentRecipe.prepTime;
           
         }
@@ -375,14 +380,70 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("recipe-preview-instructions").innerHTML = currentRecipe.instructions;
         }
 
+        //Determine if the user has allready saved this recipe.
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            try {
+              // reference to the user document
+              const userRef = doc(db, "users", user.uid);
+              const userSnap = await getDoc(userRef);
+
+              if (userSnap.exists()) {
+                const userData = userSnap.data();
+
+                const userSavedRecipes = userSnap.data().favouriteRecipeIDs;
+                console.log(userSavedRecipes);
+
+                //Link save button to savePreviewedRecipe().
+                //console.log(recipeCanSave(id, userSavedRecipes))
+
+                const newEntry = recipeCanSave(id, userSavedRecipes);
+
+                document.getElementById("recipe-preview-save").addEventListener('click', (event) => {
+                  
+                  savePreviewedRecipe(id, newEntry);
+                
+                })  
+              }
+            
+            } catch(error) {
+              console.error("Error retreiving user information: ",error)
+            }
+          }
+        })
+
       } else {
         console.warn("Recipe not found: ", id)
       }
 
       //Link the back button of recipe preview, must be done after recipe-preview.innerHTML is set to recipeOriginal
       document.getElementById("recipe-preview-back").addEventListener('click', (event) => {
+        
         closeRecipePreview();
-      })
+      
+      })   
+
+       
+
+      function recipeCanSave(id, savedArray){
+        //Returns true if id is not present in savedArray.
+        const previewSavedIcon = document.getElementById("recipe-preview-save-icon");
+
+        if(savedArray.includes(id)){
+          
+          previewSavedIcon.classList.remove("bi-bookmark");
+          previewSavedIcon.classList.add("bi-bookmark-check");
+
+          return false;
+
+        } else{
+
+          return true;
+
+        }
+
+      }
+      
 
     } catch (error){
     console.error("Error previewing recipe ", error);
@@ -393,6 +454,70 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeRecipePreview(){
     const recipePreview = document.getElementById("recipe-preview");
     recipePreview.style.display = "none";
+
+  }
+
+  async function savePreviewedRecipe(id, addEntry){
+
+    onAuthStateChanged(auth, async (user) => {
+
+      try {
+        // reference to the user document
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+
+          const savedArray = userSnap.data().favouriteRecipeIDs;
+
+          if(savedArray.includes(id)){
+
+            //Should be removing a existing entry.
+            if(!addEntry){
+
+              const newSavedList = savedArray.filter(function(currentRecipe) {
+                return currentRecipe !== id;
+              })
+              
+
+              await updateDoc(userRef, {favouriteRecipeIDs : arrayRemove(id)});
+
+              openRecipePreview(id);
+
+            } else{
+
+              console.error("Recipe not found saved");
+              openRecipePreview(id);
+
+            }
+
+          } else{
+
+            //Should be adding a new entry.
+            if(addEntry){
+              console.log("New saved pushed")
+              await updateDoc(userRef, {favouriteRecipeIDs : arrayUnion(id)});
+
+              openRecipePreview(id);
+
+            } else{
+
+              console.error("Recipe found allready saved");
+              openRecipePreview(id);
+
+            }
+
+          }
+
+        }
+      
+      }catch (error){
+
+        console.error("Error finding user: ", error);
+
+      }
+
+    })
 
   }
 

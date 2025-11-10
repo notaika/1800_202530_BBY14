@@ -284,25 +284,28 @@ body {
 }
 .recipe-preview-top{
   position: sticky;
+  width: 100%;
   border-bottom: 2px solid var(--forest-green);
   background-color: rgb(236, 236, 236);
   border-radius: 20px 20px 0px 0px;
   padding: 10px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 }
-.recipe-preview-back{
+.recipe-preview-back, .recipe-preview-save{
   flex-shrink: 0;
   background-color: var(--surface);
   border-radius: 999px;
   border-color: var(--forest-green);
   aspect-ratio: 1 / 1;
 }
+.recipe-preview-save{
+  float: right;
+}
 .recipe-preview-title{
-  position: absolute;
-  left: 50%;
   font-weight: 700;
-  transform: translate(-50%, 0);
+  flex-grow: 1;
+  text-align: center;
 }
 .recipe-preview-image{
   width: 100%;
