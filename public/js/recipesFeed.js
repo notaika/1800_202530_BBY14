@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initFavouritesUI } from "./favourites.js";
 
 /**
  * Fetch all recipes and their author usernames
@@ -66,6 +67,10 @@ function renderHomeFeed(recipes) {
         <div class="card-body">
           <h5 class="card-title">${r.name || r.title}</h5>
           <span class="author-chip">@${r.author}</span>
+          <button class="fav-toggle" data-id="${r.id}" aria-pressed="false" aria-label="Add to favourites">
+          <i class="bi bi-heart-fill"></i>
+          </button>
+
           <p class="mt-2 mb-0 small text-dark">${r.description || ""}</p>
         </div>
       </div>
@@ -93,6 +98,9 @@ function renderBrowseFeed(recipes) {
         <div class="card-body py-2">
           <h6 class="card-title mb-1">${r.name || r.title}</h6>
           <span class="author-chip">@${r.author}</span>
+          <button class="fav-toggle" data-id="${r.id}" aria-pressed="false" aria-label="Add to favourites">
+          <i class="bi bi-heart-fill"></i>
+          </button>
         </div>
         ${left ? `<img src="${r.imageUrl}" class="card-img-bottom square-media" alt="${r.name || r.title}">` : ""}
       </div>
@@ -101,4 +109,7 @@ function renderBrowseFeed(recipes) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", loadRecipes);
+document.addEventListener("DOMContentLoaded", () => {
+  initFavouritesUI();   
+  loadRecipes();       
+});

@@ -21,6 +21,14 @@
   </form>
 </div>
 
+  <!-- Favourites button and drawer -->
+<div class="page-toolbar d-flex justify-content-end align-items-center gap-2 px-2">
+  <button class="btn btn-outline-forest fav-open">
+    <i class="bi bi-heart-fill me-1"></i> Favourites
+  </button>
+</div>
+
+
 <!-- ===================================================
      Recipe Feed Area (Home Page)
      Shows 2 cards per row, alternating layout
@@ -30,4 +38,5 @@
 </div>
 
 <%- include('partials/navbar', {active: 'browse'}) %>
+<%- include('partials/favourites') %>
 <%- include('partials/footer') %> <%- include('partials/scripts') %>
