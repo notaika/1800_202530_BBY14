@@ -13,7 +13,9 @@ function getRecipeIdFromUrl() {
 async function displayRecipeInfo() {
   const recipeId = getRecipeIdFromUrl();
   if (!recipeId) {
-    document.getElementById("recipe-name").textContent = "Recipe not found.";
+    // fixed error with printing message for missing content when no id provided
+    const nameElement = document.getElementById("recipe-name");
+    if (nameElement) nameElement.textContent = "Recipe not found.";
     return;
   }
 

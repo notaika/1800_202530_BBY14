@@ -1,13 +1,18 @@
 <%- include('partials/head') %> <%- include('partials/header') %>
 
+<div class="page-toolbar d-flex justify-content-end align-items-center gap-2 px-2">
+  <button class="btn btn-outline-forest fav-open">
+    <i class="bi bi-heart-fill me-1"></i> Favourites
+  </button>
+</div>
 <!--
   Container for the Browse recipe feed
   pt-2  → small space at the top
   pb-5  → bottom padding so the last card isn't covered
   browse-feed → page-specific styling in CSS
 -->
-<div class="feed pt-4 pb-5 browse-feed px-1">
-  <div class="row row-cols-1 g-3" id="home-grid"></div>
+<div class="feed pt-4 pb-2 px-1">
+  <div class="row g-3"></div>
 </div>
   <!-- end row -->
 </div>
