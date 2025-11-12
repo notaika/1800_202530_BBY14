@@ -76,9 +76,7 @@ app.get("/recipe", (req, res) => {
 
 // Profile Page
 app.get("/profile", (req, res) => {
-  let profilePosts = loadProfileFeed();
   res.render("profile", {
-    posts: profilePosts,
     active: "profile",
     firebaseConfig: firebaseConfig,
   });

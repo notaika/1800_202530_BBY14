@@ -79,7 +79,6 @@ onAuthReady(async (user) => {
 // find all elements with ids and fill elements w/ user data
 function populateUserData(userData, authUser) {
   // get user's username
-  // Use 'username' from your schema
 
   // seed main.ejs elems
   const userGreeting = document.getElementById("user-greeting");
@@ -92,20 +91,9 @@ function populateUserData(userData, authUser) {
     mainProfilePic.src = userData.profilePicUrl;
   }
 
-  // seed profile.ejs elems
-  const profileTitle = document.getElementById("profile-title");
-  if (profileTitle) {
-    profileTitle.textContent = `${userData.username}'s Cookbook`;
-  }
-
   const profileFirstName = document.getElementById("profile-full-name");
   if (profileFirstName) {
     profileFirstName.textContent = `${userData.firstName} ${userData.lastName}`;
-  }
-
-  const profileBio = document.getElementById("profile-bio");
-  if (profileBio) {
-    profileBio.textContent = userData.bio || "No bio set.";
   }
 
   const profileProfilePic = document.getElementById("profile-pic-profile");

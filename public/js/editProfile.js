@@ -7,11 +7,11 @@ import {
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const profileForm = document.getElementById("edit-profile-form");
-const usernameInput = document.getElementById("profileUsername");
-const firstNameInput = document.getElementById("profileFirstName");
-const lastNameInput = document.getElementById("profileLastName");
-const bioInput = document.getElementById("profileBio");
-const picUrlInput = document.getElementById("profilePicUrl");
+const usernameInput = document.getElementById("profile-username");
+const firstNameInput = document.getElementById("profile-first-name");
+const lastNameInput = document.getElementById("profile-last-name");
+const bioInput = document.getElementById("profile-bio");
+const picUrlInput = document.getElementById("profile-pic-url");
 const messageEl = document.getElementById("form-message");
 
 let currentUser;
