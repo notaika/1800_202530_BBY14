@@ -61,7 +61,7 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
 
         //Set image
         if (currentRecipe.imageUrl){
-          document.getElementById("recipe-preview-image").src = currentRecipe.imageUrl
+          document.getElementById("recipe-preview-image").src = "data:image/png;base64," + currentRecipe.imageUrl
         }
 
         //Formats date as (Month dd, yyyy)
