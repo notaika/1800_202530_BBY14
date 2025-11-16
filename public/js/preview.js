@@ -44,7 +44,7 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
         recipePreview.style.display = "block";
 
         //Set title
-        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title;
+        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title || currentRecipe.name;
 
         //Author name needs to be retrived from users collection.
         var authorName = "deleted";
@@ -61,7 +61,7 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
 
         //Set image
         if (currentRecipe.imageUrl){
-          document.getElementById("recipe-preview-image").src = "data:image/png;base64," + currentRecipe.imageUrl
+          document.getElementById("recipe-preview-image").src = currentRecipe.imageUrl
         }
 
         //Formats date as (Month dd, yyyy)
