@@ -13,13 +13,6 @@ const firebaseConfig = {
   appId: process.env.VITE_FIREBASE_APP_ID,
 };
 
-// import helpers from server-helpers.js
-const {
-  loadRecipes,
-  loadProfileFeed,
-  shuffle,
-} = require("./server-helpers.js");
-
 // Serve files and assets
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
@@ -30,6 +23,14 @@ app.set("views", "./views");
 app.set("view engine", "ejs");
 
 // PAGE ROUTES
+// Landing Page
+app.get("/", (req, res) => {
+  // This renders views/index.ejs
+  res.render("landing", {
+    firebaseConfig: firebaseConfig,
+  });
+});
+
 // Login page
 app.get("/login", (req, res) => {
   res.render("login", { firebaseConfig: firebaseConfig });
@@ -41,7 +42,7 @@ app.get("/signup", (req, res) => {
 });
 
 // Home Page
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
   // This renders views/index.ejs
   res.render("index", {
     active: "home",
@@ -74,15 +75,29 @@ app.get("/recipe", (req, res) => {
   });
 });
 
-// Profile page
+// Profile Page
 app.get("/profile", (req, res) => {
-  let profilePosts = loadProfileFeed();
   res.render("profile", {
-    posts: profilePosts,
     active: "profile",
     firebaseConfig: firebaseConfig,
   });
 });
+
+// Edit Profile Information Page
+app.get("/profile/edit", (req, res) => {
+  res.render("edit-profile", {
+    active: "profile",
+    firebaseConfig: firebaseConfig,
+  });
+});
+
+// Edit Account Info Page
+// app.get("/profile/account", (req, res) => {
+//   res.render("profile", {
+//     active: "profile",
+//     firebaseConfig: firebaseConfig,
+//   });
+// });
 
 // Error for page not found
 app.use(function (req, res, next) {

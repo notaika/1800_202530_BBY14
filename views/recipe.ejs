@@ -1,27 +1,32 @@
 <%- include('partials/head') %> <%- include('partials/header') %>
 
-<div class="d-flex flex-column feed px-3 py-2">
-  <div class="recipe-full-card">
-    <img
-      src="/assets/images/place-5.png"
-      class="square-media create-image mb-2"
-      alt="Recipe Image"
-      id="recipe-image" />
+  <div id="saved-recipe-list" class="feed">
 
-    <h3 id="recipe-name" class="mb-0">Loading...</h3>
-    <span class="author-chip mb-3" id="recipe-author">by...</span>
+    <template id="saved-card-template">
+      <div class="d-flex flex-column px-1">
 
-    <h5 class="mt-2 mb-1">Description</h5>
-    <p id="recipe-description" class="text-dark small">...</p>
+        <button class="saved-card recipe-button" recipeid="">
+          <div>
+            <img src="" class="saved-thumbnail" alt="Thumbnail could not be found"
+              onerror="this.src='https://placehold.co/100x100/eee/aaa?text=Thumb'" />
+          </div>
 
-    <h5 class="mt-2 mb-1">Ingredients</h5>
-    <p id="recipe-ingredients" class="text-dark small">...</p>
+          <div class="saved-body">
+            <h6 class="card-title mb-1">
+              Title
+            </h6>
+            <span class="author-chip">@author</span>
+          </div>
+        </button>
+      </div>
+    </template>
 
-    <h5 class="mt-2 mb-1">Instructions</h5>
-    <p id="recipe-instructions" class="text-dark small">...</p>
   </div>
-</div>
-
-<script type="module" src="/js/recipeDetail.js"></script>
-<%- include('partials/navbar', {active: 'recipe'}) %> <%-
-include('partials/footer') %> <%- include('partials/scripts') %>
+  
+    
+    <%- include('partials/navbar', {active: 'recipe' }) %> 
+    <%- include('partials/footer') %> 
+    <%-include('partials/preview')%>
+    <%- include('partials/scripts') %>
+    
+    <script type="module" src="/js/savedRecipes.js"></script>

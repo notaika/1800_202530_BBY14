@@ -9,26 +9,34 @@
       alt="Profile picture" />
     <div class="ms-4">
       <span
-        class="profile-title badge text-dark fs-6 rounded-pill px-3 py-2"
+        class="profile-title badge text-dark fs-5 rounded-pill px-3 py-2"
         id="profile-title">
-        Quinn's Cookbook
       </span>
-      <p class="description py-2 small" id="profile-bio">
-        📍 Vancouver, BC <br />
-        Welcome to my recipe page!
-      </p>
+      <div class="profile-names ms-2 mt-1">
+        <span class="profile-first-name fs-5" id="profile-full-name"></span>
+      </div>
+      <p class="description ms-2 mb-2 fs-6" id="profile-bio"></p>
+      <span
+        class="profile-community badge text-dark small rounded-pill px-3 py-2"
+        ><i class="bi bi-houses me-2"></i><a href="#" id="user-community"></a>
+      </span>
     </div>
   </header>
 
   <main class="d-flex flex-column flex-grow-1">
-    <div class="row g-3 mb-2">
-      <div class="profile-grid-btn col-6">
-        <a href="#" class="btn btn-custom d-block w-100">
+    <div class="row g-2 mb-2">
+      <div class="profile-grid-btn col-4">
+        <a href="#" id="profile-grid-btn" class="btn btn-custom d-block w-100">
           <i class="bi bi-grid-3x3"></i>
         </a>
       </div>
-      <div class="share-button col-6">
-        <a href="#" class="btn btn-custom d-block w-100">
+      <div class="community-btn col-4">
+        <a href="#" id="community-btn" class="btn btn-custom d-block w-100">
+          <i class="bi bi-houses"></i>
+        </a>
+      </div>
+      <div class="share-btn col-4">
+        <a href="#" id="share-btn" class="btn btn-custom d-block w-100">
           <i class="bi bi-reply-fill"></i>
         </a>
       </div>
@@ -36,27 +44,13 @@
 
     <hr class="mt-0 mb-2" />
 
-    <div class="post-content-grid">
-      <div class="row g-1">
-        <% if (locals.posts && posts.length) { %> <%
-        posts.forEach(function(post) { %>
-        <div class="post col-4">
-          <div class="post-img-container aspect-ratio aspect-ratio-1x1 post">
-            <img
-              src="<%= post.imageUrl %>"
-              class="post-img img-square rounded"
-              alt="<%= post.alt %>" />
-          </div>
-        </div>
-        <% }) %> <% } else { %>
-        <div class="col-12">
-          <p class="p-3 text-center">No posts to display.</p>
-        </div>
-        <% } %>
-      </div>
+    <div class="post-container">
+      <div class="row g-1" id="post-content-grid"></div>
     </div>
   </main>
 </div>
 
+<script type="module" src="/js/profile.js"></script>
 <%- include('partials/navbar', {active: 'profile'}) %> <%-
-include('partials/footer') %> <%- include('partials/scripts') %>
+include('partials/footer') %> <%- include('partials/preview') %>
+<%- include('partials/scripts') %>
