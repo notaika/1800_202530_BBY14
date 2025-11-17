@@ -1,5 +1,5 @@
 import { onAuthReady, logoutUser } from "./authentication.js";
-import { db } from "./firebaseConfig.js";
+import { db, auth } from "./firebaseConfig.js";
 import {
   doc,
   getDoc,
@@ -247,4 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 250); // matches fade-out speed
     });
   });
+
 });
+

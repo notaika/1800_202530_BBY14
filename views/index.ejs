@@ -21,7 +21,7 @@
       -->
     <div class="col-12">
       <!-- The recipe card box -->
-      <div class="recipe-card">
+      <div class="recipe-card recipe-button" recipeID="<%= r.id%>">
         <!--
             Square recipe image on top
             .square-media forces a perfect square crop
@@ -64,4 +64,6 @@
 <!-- end browse-feed wrapper -->
 
 <%- include('partials/navbar', {active: 'home'}) %> <%-
-include('partials/footer') %> <%- include('partials/scripts') %>
+include('partials/footer') %> <%- include('partials/preview') %> 
+<%- include('partials/scripts') %>
+

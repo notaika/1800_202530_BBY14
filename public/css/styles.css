@@ -236,11 +236,13 @@ body {
 }
 .recipe-card .card-body {
   padding: 0.65rem 0.8rem;
+  pointer-events: none;
 }
 .recipe-card .card-title {
   font-weight: 700;
   margin: 0;
   color: var(--accent);
+  pointer-events: none;
 }
 
 /* Author chip/tag look */
@@ -254,6 +256,7 @@ body {
   color: var(--dark-berry);
   font-size: 0.72rem;
   font-weight: 600;
+  pointer-events: none;
 }
 
 /* Always-square recipe images */
@@ -261,6 +264,59 @@ body {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+  pointer-events: none;
+}
+
+/* --------------------------------------
+   RECIPE PREVIEW
+   -------------------------------------- */
+.recipe-preview{
+  display:none;
+  z-index: 5;
+  position: absolute ;
+  bottom: 0px ;
+  background-color: var(--bg);
+  width: 100%;
+  height: 90%;
+  border-radius: 20px 20px 0px 0px;
+  padding-bottom: 40px;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.recipe-preview-top{
+  position: sticky;
+  width: 100%;
+  border-bottom: 2px solid var(--forest-green);
+  background-color: rgb(236, 236, 236);
+  border-radius: 20px 20px 0px 0px;
+  padding: 10px;
+  display: flex;
+  /* align-items: center; */
+}
+.recipe-preview-back, .recipe-preview-save{
+  flex-shrink: 0;
+  background-color: var(--surface);
+  border-radius: 999px;
+  border-color: var(--forest-green);
+  aspect-ratio: 1 / 1;
+}
+.recipe-preview-save{
+  float: right;
+}
+.recipe-preview-title{
+  font-weight: 700;
+  flex-grow: 1;
+  text-align: center;
+}
+.recipe-preview-image{
+  width: 100%;
+  padding-bottom: 10px;
+  border-radius: 20px;
+}
+.recipe-preview-content{
+  height: 100%;
+  padding: 10px;
+  padding-bottom: 80px;
+  overflow-y: scroll;
 }
 
 /* --------------------------------------
@@ -393,6 +449,7 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 .saved-thumbnail {
+  pointer-events: none;
   aspect-ratio: 1 / 1;
   width: 30%;
   object-fit: cover;
@@ -401,6 +458,7 @@ body {
   float: left;
 }
 .saved-body {
+  pointer-events: none;
   width: 70%;
   padding: 5px;
   padding-top: 10px;
