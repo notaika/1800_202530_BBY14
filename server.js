@@ -62,6 +62,12 @@ app.get("/browse", (req, res) => {
   });
 });
 
+app.get("/community", (req, res) => {
+  res.render("community", {
+    firebaseConfig: firebaseConfig,
+  });
+});
+
 // Create recipe page
 app.get("/create", (req, res) => {
   res.render("create", { active: "create", firebaseConfig: firebaseConfig });

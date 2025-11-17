@@ -1,0 +1,131 @@
+<%- include('partials/head') %> <%- include('partials/header') %>
+
+<div class="container my-5">
+  <div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+      <h1 class="display-5 fw-bold">Find Your Community</h1>
+      <p class="fs-5 text-body-secondary">
+        Share recipes and tips with cooks just like you.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <form class="input-group" role="search">
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Search communities..."
+          aria-label="Search communities" />
+        <button class="btn btn-outline-secondary" type="button">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <div classZ="row row-cols-1 row-cols-md-2 g-4" id="community-card-container">
+    <div class="community-item col mb-4">
+      <div class="card h-100 shadow-sm community-card">
+        <img
+          src="./images/community-banner-1.jpg"
+          class="card-img-top community-card-banner"
+          alt="Community Banner" />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Busy Students</h5>
+          <p class="card-text">
+            Quick, cheap, and easy one-bowl meals for when you're on a deadline.
+            No-fuss, all flavor.
+          </p>
+          <a href="#" class="btn btn-warning mt-auto fw-bold">View Community</a>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">
+            <strong>142</strong> Members | <strong>89</strong> Recipes
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="community-item col mb-4">
+      <div class="card h-100 shadow-sm community-card">
+        <img
+          src="./images/community-banner-2.jpg"
+          class="card-img-top community-card-banner"
+          alt="Community Banner" />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Vegan Ventures</h5>
+          <p class="card-text">
+            Plant-based, one-bowl creations. From hearty stews to fresh salad
+            bowls, all 100% vegan.
+          </p>
+          <a href="#" class="btn btn-warning mt-auto fw-bold">View Community</a>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">
+            <strong>88</strong> Members | <strong>120</strong> Recipes
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="community-item col mb-4">
+      <div class="card h-100 shadow-sm community-card">
+        <img
+          src="./images/community-banner-3.jpg"
+          class="card-img-top community-card-banner"
+          alt="Community Banner" />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Low-Carb Lunches</h5>
+          <p class="card-text">
+            Healthy, keto-friendly, and all in one bowl. Perfect for a light but
+            satisfying midday meal.
+          </p>
+          <a href="#" class="btn btn-warning mt-auto fw-bold">View Community</a>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">
+            <strong>51</strong> Members | <strong>45</strong> Recipes
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="community-item col mb-4">
+      <div class="card h-100 shadow-sm community-card">
+        <img
+          src="./images/community-banner-4.jpg"
+          class="card-img-top community-card-banner"
+          alt="Community Banner" />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Global Kitchen (Private)</h5>
+          <p class="card-text">
+            An invite-only group for sharing authentic one-bowl meals from
+            around the world.
+          </p>
+          <a href="#" class="btn btn-outline-secondary mt-auto disabled"
+            >Request to Join</a
+          >
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">
+            <strong>25</strong> Members | <strong>30</strong> Recipes
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav aria-label="Community page navigation" class="mt-5">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" href="#">Previous</a>
+      </li>
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="#">1</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<%- include('partials/navbar', {active: 'community'}) %> <%-
+include('partials/footer') %> <%- include('partials/scripts') %>
