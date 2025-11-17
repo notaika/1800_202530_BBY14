@@ -10,16 +10,20 @@ import {
 onAuthReady(async (user) => {
   // all auth elements
   const navProfileLink = document.getElementById("nav-profile-link");
-  // V-- Get the new header elements --V
   const headerLoginLink = document.getElementById("header-login-link");
   const headerLogoutButton = document.getElementById("header-logout-button");
+  const editProfileLink = document.getElementById("header-edit-profile-link");
+  const accountSettingsLink = document.getElementById(
+    "header-account-settings-link"
+  );
 
   if (user) {
     // User is signed in.
-    if (headerLoginLink) headerLoginLink.classList.add("d-none"); // Hide Login
+    if (headerLoginLink) headerLoginLink.classList.add("d-none"); // hide Login
     if (headerLogoutButton) {
-      headerLogoutButton.classList.remove("d-none"); // Show Logout
-      // Add click listener to the *header* logout button
+      headerLogoutButton.classList.remove("d-none"); // show Logout
+
+      // event listener for logout
       headerLogoutButton.addEventListener("click", () => {
         logoutUser();
       });
@@ -62,7 +66,9 @@ onAuthReady(async (user) => {
     if (
       currentPage.includes("/profile") ||
       currentPage.includes("/create") ||
-      currentPage.includes("/main")
+      currentPage.includes("/main") ||
+      currentPage.includes("/edit-profile") ||
+      currentPage.includes("/account-settings")
     ) {
       console.log("No user signed in, redirecting to login.");
       window.location.href = "/login";
@@ -73,13 +79,11 @@ onAuthReady(async (user) => {
 // find all elements with ids and fill elements w/ user data
 function populateUserData(userData, authUser) {
   // get user's username
-  // Use 'username' from your schema
-  const name = userData.username || authUser.displayName;
 
   // seed main.ejs elems
   const userGreeting = document.getElementById("user-greeting");
   if (userGreeting) {
-    userGreeting.textContent = `Hi, ${name}`;
+    userGreeting.textContent = `Hi, ${userData.username}`;
   }
 
   const mainProfilePic = document.getElementById("profile-pic-main");
@@ -87,15 +91,9 @@ function populateUserData(userData, authUser) {
     mainProfilePic.src = userData.profilePicUrl;
   }
 
-  // seed profile.ejs elems
-  const profileTitle = document.getElementById("profile-title");
-  if (profileTitle) {
-    profileTitle.textContent = `${name}'s Cookbook`;
-  }
-
-  const profileBio = document.getElementById("profile-bio");
-  if (profileBio) {
-    profileBio.textContent = userData.bio || "No bio set.";
+  const profileFirstName = document.getElementById("profile-full-name");
+  if (profileFirstName) {
+    profileFirstName.textContent = `${userData.firstName} ${userData.lastName}`;
   }
 
   const profileProfilePic = document.getElementById("profile-pic-profile");
