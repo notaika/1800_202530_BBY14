@@ -7,13 +7,22 @@
     ></script>
 
     <script>
-      window.firebaseConfig = <%- JSON.stringify(firebaseConfig) %>;
+      window.firebaseConfig = <%- JSON.stringify(locals.firebaseConfig ) %>;
     </script>
     
     <!-- Firebase auth -->
     <script type="module" src="/js/firebaseConfig.js"></script>
     <script type="module" src="/js/authentication.js"></script>
     <script type="module" src="/js/loginSignup.js"></script>
+    <script type="module" src="/js/createRecipe.js"></script>
+    <script type="module" src="/js/recipeDetail.js"></script>
+    <script type="module" src="/js/recipesFeed.js"></script>
+    <script type="module">
+      import { initFavouritesUI } from "/js/favourites.js";
+      document.addEventListener("DOMContentLoaded", () => {
+      initFavouritesUI();
+      });
+    </script>
 
     <script type="module" src="/js/app.js"></script>
   </body>
