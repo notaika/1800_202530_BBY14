@@ -156,6 +156,11 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
           }
         })
 
+        //Create and link expand recipe button
+        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+        <button id="recipe-preview-expand-button" class="create-input create-button">Expand recipe</button>`
+        linkExpandButton(id);
+
       } else {
         console.warn("Recipe not found: ", id)
       }
@@ -185,6 +190,9 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
     } catch (error){
     console.error("Error previewing recipe ", error);
   }
+
+
+
 }
 
 function closeRecipePreview(){
@@ -202,7 +210,7 @@ async function savePreviewedRecipe(id, addEntry){
 
         const savedArray = userSnap.data().favouriteRecipeIDs;
 
-        //Ensure that saved recipe list has not been updated on another window.
+        //Ensure that saved recipe list has not been updated on another tab.
         if(savedArray.includes(id)){
           //Should be removing a existing entry.
           if(!addEntry){
@@ -262,4 +270,17 @@ export function updateRecipeCards(){
   })
 
 }
+
+//Conects the button to preview recipe in another page.
+function linkExpandButton(id){
+
+  document.getElementById("recipe-preview-expand-button").addEventListener('click', (event) => {
+
+  const url = "/recipeDetails?id=" + id;
+  window.location.href = url;
+
+  })
+
+}
+
 

@@ -66,7 +66,7 @@ app.get("/create", (req, res) => {
   res.render("create", { active: "create", firebaseConfig: firebaseConfig });
 });
 
-// Recipe page
+// Saved recipes page
 app.get("/recipe", (req, res) => {
   res.render("recipe", {
     active: "recipe",
@@ -83,6 +83,13 @@ app.get("/profile", (req, res) => {
     firebaseConfig: firebaseConfig,
   });
 });
+
+// Full recipe page
+app.get("/recipeDetails", (req, res) => {
+  res.render("recipeDetails", {
+    firebaseConfig: firebaseConfig
+  })
+})
 
 // Error for page not found
 app.use(function (req, res, next) {

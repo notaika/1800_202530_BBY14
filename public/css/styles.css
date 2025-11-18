@@ -318,6 +318,11 @@ body {
   padding-bottom: 80px;
   overflow-y: scroll;
 }
+.recipe-save-container{
+  margin-right: 20px;
+  display: inline;
+
+}
 
 /* --------------------------------------
    MAIN PAGE
