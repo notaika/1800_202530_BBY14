@@ -247,6 +247,57 @@ body {
   pointer-events: none;
 }
 
+/* Tag filter under browse search */
+.tag-filter {
+  padding-inline: 0.25rem;
+  font-size: 0.75rem;
+  min-width: 0;
+}
+
+.tag-filter-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--forest-green);
+  margin-right: 0.25rem;
+}
+
+.tag-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* Tag bubble */
+.tag-chip {
+  border: none;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgb(236, 236, 236);
+  color: var(--dark-berry);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.tag-chip:hover {
+  transform: translateY(-1px);
+}
+
+.tag-chip.active {
+  background: var(--forest-green);
+  color: #fff;
+}
+
+/* Compact dropdown for lots of tags */
+.tag-dropdown {
+  max-width: 180px;
+  font-size: 0.75rem;
+  height: 30px;
+  padding: 0 0.4rem;
+}
+
+
 /* Author chip/tag look */
 .author-chip {
   display: inline-block;
@@ -254,7 +305,7 @@ body {
   padding: 0.25rem 0.65rem;
   border-radius: 999px;
   background: rgb(236, 236, 236);
-  border: none; /* cleaner bubble */
+  border: none;
   color: var(--dark-berry);
   font-size: 0.72rem;
   font-weight: 600;

@@ -6,6 +6,7 @@ import {
   getDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 let browseAllRecipes = [];
+let activeTag = null;
 
 /**
  * Fetch all recipes and their author usernames
@@ -52,7 +53,7 @@ async function loadRecipes() {
       // Save for search filtering
       browseAllRecipes = recipes;
       renderBrowseFeed(browseAllRecipes);
-      setupBrowseSearch();
+      setupBrowseControls();
     }
   } catch (err) {
     console.error("Error loading recipes:", err);
@@ -125,30 +126,20 @@ function renderBrowseFeed(recipes) {
 }
 
 /**
- * Browse page search setup
- * Filters browseAllRecipes and re-renders feed
+ * Apply search + tag filters to browse recipes
  */
-function setupBrowseSearch() {
-  const form = document.querySelector(".floating-search .search-form");
-  if (!form) return;
+function applyBrowseFilters() {
+  let filtered = [...browseAllRecipes];
 
-  const input = form.querySelector('input[type="search"]');
-  if (!input) return;
+  // Search query
+  const searchInput = document.querySelector(
+    ".floating-search .search-form input[type='search']"
+  );
+  const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
 
-  const runSearch = () => {
-    const query = input.value.trim().toLowerCase();
-
-    // If search box empty, show everything
-    if (!query) {
-      renderBrowseFeed(browseAllRecipes);
-      return;
-    }
-
-    // Split on spaces into words
+  if (query) {
     const words = query.split(/\s+/).filter(Boolean);
-
-    const filtered = browseAllRecipes.filter((r) => {
-      // Build a text blob from the recipe fields we care about
+    filtered = filtered.filter((r) => {
       const haystack = [
         r.name,
         r.title,
@@ -160,23 +151,130 @@ function setupBrowseSearch() {
         .join(" ")
         .toLowerCase();
 
-      // Keep the recipe if ANY word appears in the text
       return words.some((w) => haystack.includes(w));
     });
+  }
 
-    renderBrowseFeed(filtered);
-  };
+  // Tag filter
+  if (activeTag) {
+    filtered = filtered.filter(
+      (r) => Array.isArray(r.tags) && r.tags.includes(activeTag)
+    );
+  }
 
-  // Submit = prevent page reload and run search
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    runSearch();
+  renderBrowseFeed(filtered);
+}
+
+/**
+ * Set up search bar and tags on Browse page
+ */
+function setupBrowseControls() {
+  const form = document.querySelector(".floating-search .search-form");
+  const input = form?.querySelector('input[type="search"]');
+
+  // Search wiring
+  if (form && input) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      applyBrowseFilters();
+    });
+
+    input.addEventListener("input", () => {
+      applyBrowseFilters();
+    });
+  }
+
+  // Tag filters
+  const tagHost = document.querySelector(".tag-filter");
+  if (!tagHost) return;
+
+  const tagSet = new Set();
+  browseAllRecipes.forEach((r) => {
+    if (Array.isArray(r.tags)) {
+      r.tags.forEach((t) => {
+        const trimmed = String(t).trim();
+        if (trimmed) tagSet.add(trimmed);
+      });
+    }
   });
 
-  // Live search as they type (optional but nice)
-  input.addEventListener("input", () => {
-    runSearch();
-  });
+  const tags = Array.from(tagSet).sort((a, b) => a.localeCompare(b));
+  if (tags.length === 0) {
+    tagHost.style.display = "none";
+    return;
+  }
+
+  tagHost.innerHTML = "";
+
+  // If there's only a few tags, show tag chips. Otherwise a dropdown
+  const useChips = tags.length <= 16;
+
+  if (useChips) {
+    const label = document.createElement("span");
+    label.className = "tag-filter-label";
+    label.textContent = "Tags:";
+    tagHost.appendChild(label);
+
+    const row = document.createElement("div");
+    row.className = "tag-chip-row";
+
+    tags.forEach((tag) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "tag-chip";
+      btn.textContent = tag;
+      btn.dataset.tag = tag;
+
+      btn.addEventListener("click", () => {
+        if (activeTag === tag) {
+          activeTag = null;
+          btn.classList.remove("active");
+        } else {
+          activeTag = tag;
+          tagHost
+            .querySelectorAll(".tag-chip.active")
+            .forEach((el) => el.classList.remove("active"));
+          btn.classList.add("active");
+        }
+        applyBrowseFilters();
+      });
+
+      row.appendChild(btn);
+    });
+
+    tagHost.appendChild(row);
+  } else {
+    const wrapper = document.createElement("div");
+    wrapper.className = "d-flex align-items-center gap-2";
+
+    const label = document.createElement("span");
+    label.className = "tag-filter-label";
+    label.textContent = "Tag:";
+    wrapper.appendChild(label);
+
+    const select = document.createElement("select");
+    select.className = "form-select form-select-sm tag-dropdown";
+
+    const optAll = document.createElement("option");
+    optAll.value = "";
+    optAll.textContent = "All tags";
+    select.appendChild(optAll);
+
+    tags.forEach((tag) => {
+      const opt = document.createElement("option");
+      opt.value = tag;
+      opt.textContent = tag;
+      select.appendChild(opt);
+    });
+
+    select.addEventListener("change", () => {
+      activeTag = select.value || null;
+      applyBrowseFilters();
+    });
+
+    wrapper.appendChild(select);
+    tagHost.appendChild(wrapper);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
