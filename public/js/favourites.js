@@ -27,6 +27,7 @@ let currentUser = null;
 // when logged-in we store only IDs in Firestore (array field)
 // when logged-out we store in localStorage
 let favs = {};
+let favouritesUIInitialized = false;
 
 // ----- Drawer open/close -----
 function openDrawer() {
@@ -169,10 +170,15 @@ function paintHearts() {
   });
 }
 
-// ----- Public init -----  
+// ----- Public init -----
 export function initFavouritesUI() {
+  if (favouritesUIInitialized) return;
+  favouritesUIInitialized = true;
+
   // Open/close
-  document.querySelectorAll(".fav-open").forEach(b => b.addEventListener("click", openDrawer));
+  document.querySelectorAll(".fav-open").forEach(b =>
+    b.addEventListener("click", openDrawer)
+  );
   backdrop?.addEventListener("click", closeDrawer);
   drawer?.querySelector(".btn-close")?.addEventListener("click", closeDrawer);
 
@@ -191,7 +197,6 @@ export function initFavouritesUI() {
     const card = heart.closest(".recipe-card");
     const id   = heart.dataset.id;
 
-    // Build minimal payload from card (not required for array version but harmless)
     const payload = {
       title:  card?.querySelector(".card-title")?.textContent?.trim() || "Untitled",
       author: card?.querySelector(".author-chip")?.textContent?.replace(/^@/, "").trim() || "unknown",
