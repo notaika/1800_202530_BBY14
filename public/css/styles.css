@@ -51,7 +51,7 @@ body {
 
   /* Core app colors */
   --bg: #ffffff; /* main background */
-  --text: #1e2e27; /* default text on light bg */
+  --dark-green: #1e2e27; /* default text on light bg */
 
   /* Surfaces */
   --surface: #ffffff; /* bars, cards */
@@ -84,7 +84,7 @@ body {
 html,
 body {
   background: var(--bg) !important;
-  color: var(--text);
+  color: var(--dark-green);
   font-family: "Quicksand", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -160,7 +160,7 @@ body {
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: var(--text);
+  color: var(--dark-green);
   font-size: 0.78rem;
   padding: 0.25rem 0;
   border-radius: 0.75rem;
@@ -207,7 +207,7 @@ body {
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 .floating-search .form-control {
-  color: var(--text);
+  color: var(--dark-green);
 }
 .floating-search .form-control::placeholder {
   color: rgba(30, 46, 39, 0.55);
@@ -323,11 +323,11 @@ body {
 /* --------------------------------------
    RECIPE PREVIEW
    -------------------------------------- */
-.recipe-preview{
-  display:none;
+.recipe-preview {
+  display: none;
   z-index: 5;
-  position: absolute ;
-  bottom: 0px ;
+  position: absolute;
+  bottom: 0px;
   background-color: var(--bg);
   width: 100%;
   height: 90%;
@@ -335,7 +335,7 @@ body {
   padding-bottom: 40px;
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
-.recipe-preview-top{
+.recipe-preview-top {
   position: sticky;
   width: 100%;
   border-bottom: 2px solid var(--forest-green);
@@ -345,27 +345,28 @@ body {
   display: flex;
   /* align-items: center; */
 }
-.recipe-preview-back, .recipe-preview-save{
+.recipe-preview-back,
+.recipe-preview-save {
   flex-shrink: 0;
   background-color: var(--surface);
   border-radius: 999px;
   border-color: var(--forest-green);
   aspect-ratio: 1 / 1;
 }
-.recipe-preview-save{
+.recipe-preview-save {
   float: right;
 }
-.recipe-preview-title{
+.recipe-preview-title {
   font-weight: 700;
   flex-grow: 1;
   text-align: center;
 }
-.recipe-preview-image{
+.recipe-preview-image {
   width: 100%;
   padding-bottom: 10px;
   border-radius: 20px;
 }
-.recipe-preview-content{
+.recipe-preview-content {
   height: 100%;
   padding: 10px;
   padding-bottom: 80px;
@@ -410,6 +411,10 @@ body {
   background-color: var(--forest-green);
 }
 
+.dark-green {
+  background-color: var(--dark-green);
+}
+
 .banner {
   object-fit: cover;
 }
@@ -427,7 +432,7 @@ body {
 }
 .create-input {
   background: var(--surface);
-  color: var(--text);
+  color: var(--dark-green);
   display: block;
   width: 100%;
   margin-top: 8px;
@@ -576,7 +581,7 @@ body {
   color: var(--accent);
 }
 .text-dark {
-  color: var(--text);
+  color: var(--dark-green);
 }
 
 /* --------------------------------------
@@ -722,7 +727,7 @@ body {
   position: absolute;
   inset: 0;
   background: url("/assets/images/auth-bg.jpg") center / cover no-repeat;
-  filter: brightness(0.6); /* Darken the image a bit */
+  filter: brightness(0.6);
   z-index: 1;
 }
 .hero-section .container {
@@ -762,7 +767,7 @@ body {
   color: var(--forest-green);
 }
 .landing-nav {
-  background-color: var(--forest-green);
+  background-color: var(--dark-green);
 }
 .signup-btn {
   background-color: var(--lemon-curd);
@@ -770,7 +775,51 @@ body {
   font-weight: 600;
 }
 .landing-btn-container > a:hover {
-  background-color: #1e2e27;
+  background-color: var(--forest-green);
   color: white;
-  border-color: #1e2e27;
+  border-color: var(--forest-green);
+}
+
+/* LANDING PAGEEEE */
+.community-card-banner {
+  height: 180px;
+  object-fit: cover;
+}
+
+.community-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.community-card .btn-warning {
+  font-weight: 700;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--forest-green);
+  border-color: var(--forest-green);
+  color: var(--lemon-curd);
+}
+
+.pagination .page-item.active .page-link:hover {
+  background-color: var(--dark-berry);
+  border-color: var(--dark-berry);
+}
+
+.pagination .page-link {
+  color: var(--forest-green);
+}
+
+.pagination .page-link:hover {
+  color: var(--dark-berry);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+}
+
+/* community create */
+.create-image {
+  max-height: 300px;
+  object-fit: cover;
 }

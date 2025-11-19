@@ -1,0 +1,40 @@
+<%- include('partials/head') %> <%- include('partials/header') %>
+
+<main class="p-1">
+  <div class="container my-4">
+    <h1 class="mb-4 fw-bold">Create a New Community</h1>
+
+    <form action="" class="create-form" id="create-community-form">
+      <h5 class="mb-2 create-label">Community Name</h5>
+      <input
+        type="text"
+        class="create-input form-control"
+        name="communityName"
+        id="community-name"
+        placeholder="e.g., Weekend Bakers"
+        autofocus
+        required />
+
+      <h5 class="mb-2 create-label mt-4">Description</h5>
+      <textarea
+        class="create-input create-text-area form-control"
+        name="communityDescription"
+        id="community-description"
+        placeholder="What is this community about?"
+        rows="4"
+        required></textarea>
+
+      <div class="mt-5">
+        <input
+          type="submit"
+          class="create-input create-button"
+          value="Create Community"
+          id="create-community-submit" />
+      </div>
+    </form>
+  </div>
+</main>
+
+<script type="module" src="/js/community.js"></script>
+<%- include('partials/navbar', {active: 'community'}) %> <%-
+include('partials/footer') %> <%- include('partials/scripts') %>

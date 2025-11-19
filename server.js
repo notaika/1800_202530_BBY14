@@ -25,7 +25,6 @@ app.set("view engine", "ejs");
 // PAGE ROUTES
 // Landing Page
 app.get("/", (req, res) => {
-  // This renders views/index.ejs
   res.render("landing", {
     firebaseConfig: firebaseConfig,
   });
@@ -58,6 +57,18 @@ app.get("/main", (req, res) => {
 app.get("/browse", (req, res) => {
   res.render("browse", {
     active: "browse",
+    firebaseConfig: firebaseConfig,
+  });
+});
+
+app.get("/community", (req, res) => {
+  res.render("community", {
+    firebaseConfig: firebaseConfig,
+  });
+});
+
+app.get("/community/create", (req, res) => {
+  res.render("create-community", {
     firebaseConfig: firebaseConfig,
   });
 });
