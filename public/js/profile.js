@@ -8,6 +8,7 @@ import {
   query,
   where,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {updateRecipeCards} from "./preview.js";
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -84,18 +85,22 @@ async function displayUserRecipes(userId) {
     const recipeId = doc.id;
 
     allPostsHtml += `
-      <div class="post col-4">
-        <a href="/recipe?id=${recipeId}">
+      <div class="post col-4 recipe-button" recipeId="${recipeId}">
+        
           <img
             src="${
               recipe.imageUrl || "/assets/images/profile-pic-placeholder.jpg"
             }"
             class="post-img square-media rounded" 
             alt="${recipe.name}" />
-        </a>
+        
       </div>
     `;
+
   });
 
   gridContainer.innerHTML = allPostsHtml;
+  
+  updateRecipeCards();
+
 }
