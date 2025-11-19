@@ -78,7 +78,7 @@ app.get("/create", (req, res) => {
   res.render("create", { active: "create", firebaseConfig: firebaseConfig });
 });
 
-// Recipe page
+// Saved recipes page
 app.get("/recipe", (req, res) => {
   res.render("recipe", {
     active: "recipe",
@@ -94,6 +94,12 @@ app.get("/profile", (req, res) => {
   });
 });
 
+// Full recipe page
+app.get("/recipeDetails", (req, res) => {
+  res.render("recipeDetails", {
+    firebaseConfig: firebaseConfig
+  })
+})
 // Edit Profile Information Page
 app.get("/profile/edit", (req, res) => {
   res.render("edit-profile", {
