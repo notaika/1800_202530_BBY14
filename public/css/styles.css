@@ -40,6 +40,7 @@ body {
 
 * {
   font-family: Quicksand;
+  font-weight: 600;
 }
 
 :root {
@@ -111,9 +112,12 @@ body {
   color: #ffffff;
 }
 
-/* Space for content below the top bar */
 .main-with-topbar {
   padding-top: 0.75rem;
+}
+
+.dropdown-nav-link {
+  padding: 0.5em;
 }
 
 /* --------------------------------------
@@ -186,11 +190,9 @@ body {
    FLOATING SEARCH BAR (Home only)
    -------------------------------------- */
 .floating-search {
-  position: sticky;
-  top: calc(
-    var(--topbar-h) + var(--search-gap) + env(safe-area-inset-top, 0px)
-  );
-  z-index: 1040;
+  position: static; 
+  margin-top: 12px; 
+  z-index: 1;
 }
 .floating-search .search-form {
   height: 46px;
@@ -245,6 +247,57 @@ body {
   pointer-events: none;
 }
 
+/* Tag filter under browse search */
+.tag-filter {
+  padding-inline: 0.25rem;
+  font-size: 0.75rem;
+  min-width: 0;
+}
+
+.tag-filter-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--forest-green);
+  margin-right: 0.25rem;
+}
+
+.tag-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* Tag bubble */
+.tag-chip {
+  border: none;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgb(236, 236, 236);
+  color: var(--dark-berry);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.tag-chip:hover {
+  transform: translateY(-1px);
+}
+
+.tag-chip.active {
+  background: var(--forest-green);
+  color: #fff;
+}
+
+/* Compact dropdown for lots of tags */
+.tag-dropdown {
+  max-width: 180px;
+  font-size: 0.75rem;
+  height: 30px;
+  padding: 0 0.4rem;
+}
+
+
 /* Author chip/tag look */
 .author-chip {
   display: inline-block;
@@ -252,7 +305,7 @@ body {
   padding: 0.25rem 0.65rem;
   border-radius: 999px;
   background: rgb(236, 236, 236);
-  border: none; /* cleaner bubble */
+  border: none;
   color: var(--dark-berry);
   font-size: 0.72rem;
   font-weight: 600;
@@ -344,7 +397,7 @@ body {
   color: #fff;
 }
 .profile-pic {
-  max-height: 3em;
+  max-height: 7em;
   transition: 0.3s ease-in-out;
 }
 .profile-pic:hover {
@@ -430,7 +483,7 @@ body {
 .btn-outline-forest:hover,
 .btn-outline-forest:focus,
 .btn-outline-forest:active {
-  background: rgba(37,83,63,.10) !important;
+  background: rgba(37, 83, 63, 0.1) !important;
   border-color: var(--forest-green) !important;
   color: var(--forest-green) !important;
 }
@@ -496,11 +549,13 @@ body {
   flex-grow: 1;
   overflow-y: auto;
 }
-.img-square {
+
+.square-media {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
 }
+
 .post-img:hover {
   border: 1px solid rgb(226, 226, 226);
   border-radius: 3px;
@@ -510,9 +565,14 @@ body {
 .badge {
   background-color: #e0e0e0;
 }
+
 .btn:hover {
   background-color: #c0c0c0;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.description {
+  font-weight: 400;
 }
 
 /* --------------------------------------
@@ -559,7 +619,8 @@ body {
 /* --------------------------------------
     BUTTON STYLE for AUTH DROPDOWN ITEMS
    -------------------------------------- */
- .dropdown-item.auth-item {
+
+.dropdown-item.auth-item {
   color: #ffffff !important;
   background: transparent;
 }
@@ -572,9 +633,9 @@ body {
    login/signup page styles
    -------------------------------------- */
 
-.auth-viewport{
-  position: fixed; 
-  height: 100vh; 
+.auth-viewport {
+  position: fixed;
+  height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
@@ -583,35 +644,139 @@ body {
   overflow: hidden;
 }
 
-.auth-viewport::before{
-  content:"";
+.auth-viewport::before {
+  content: "";
   position: absolute;
   inset: 0;
   background: url("/assets/images/auth-bg.jpg") center / cover no-repeat fixed;
   filter: blur(5px) brightness(0.85);
-  transform: scale(1.06);         
+  transform: scale(1.06);
   z-index: 0;
 }
 
-.auth-viewport::after{
-  content:"";
+.auth-viewport::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,.15);
+  background: rgba(0, 0, 0, 0.15);
   z-index: 0;
 }
 
-.auth-bubble{
+.auth-bubble {
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 520px;
   transform: translateY(calc(-1 * var(--bubble-bias)));
   height: auto;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--surface-border);
   border-radius: 60px;
-  box-shadow: 0 18px 40px rgba(0,0,0,.18);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   padding: 90px 22px;
   backdrop-filter: saturate(120%) blur(2px);
+}
+
+.page-toolbar { margin-top: .5rem; }
+
+/* --------------------------------------
+   FAVOURITES DRAWER
+   -------------------------------------- */
+.fav-drawer{ position:fixed; top:0; right:0; width:min(420px,92vw); height:100dvh;
+  background:#fff; border-left:1px solid var(--surface-border); box-shadow:0 12px 30px rgba(0,0,0,.18);
+  transform:translateX(100%); transition:transform .25s ease; z-index:2000; display:flex; flex-direction:column; }
+.fav-drawer[data-open="true"]{ transform:translateX(0); }
+.fav-header{ padding:12px 14px; border-bottom:1px solid var(--surface-border); }
+.fav-body{ overflow:auto; padding:10px; }
+
+/* Backdrop overlay */
+.fav-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:1995; opacity:0; transition:opacity .2s ease; }
+.fav-backdrop[data-open="true"]{ opacity:1; }
+
+/* Favourite item in drawer */
+.fav-item{ display:grid; grid-template-columns:72px 1fr auto; gap:10px; align-items:center;
+  border:1px solid var(--surface-border); border-radius:12px; padding:8px; margin-bottom:10px; }
+.fav-item img{ width:72px; height:72px; object-fit:cover; border-radius:8px; }
+.fav-item h6{ margin:0; font-size:.95rem; color:var(--forest-green); }
+.fav-item small{ color:var(--dark-berry); }
+
+/* Heart button on cards */
+.recipe-card { position: relative; }
+.fav-toggle{ position:absolute; top:8px; right:8px; border:0; background:rgba(255,255,255,.9);
+  border-radius:999px; width:34px; height:34px; display:grid; place-items:center; box-shadow:0 2px 8px rgba(0,0,0,.15); }
+.fav-toggle i{ color:var(--accent); font-size:1.05rem; }
+.fav-toggle.is-fav i{ color:var(--dark-berry); }
+
+
+/* --------------------------------------
+   LANDING PAGE!!
+   -------------------------------------- */
+
+.hero-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 60vh;
+  color: white;
+  padding: 2rem;
+  overflow: hidden;
+}
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/images/auth-bg.jpg") center / cover no-repeat;
+  filter: brightness(0.6); /* Darken the image a bit */
+  z-index: 1;
+}
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+.hero-title {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 3.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.hero-subtitle {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.hero-cta {
+  background-color: var(--lemon-curd);
+  color: var(--dark-berry);
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+}
+.hero-cta:hover {
+  background-color: #fff;
+  color: var(--dark-berry);
+}
+.features-section {
+  padding: 4rem 1.5rem;
+}
+.feature-icon {
+  font-size: 3rem;
+  color: var(--forest-green);
+}
+.landing-nav {
+  background-color: var(--forest-green);
+}
+.signup-btn {
+  background-color: var(--lemon-curd);
+  color: var(--dark-berry);
+  font-weight: 600;
+}
+.landing-btn-container > a:hover {
+  background-color: #1e2e27;
+  color: white;
+  border-color: #1e2e27;
 }
