@@ -6,6 +6,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+// Create New Community
 const createCommunityForm = document.getElementById("create-community-form");
 
 if (createCommunityForm) {
