@@ -30,8 +30,11 @@ if (submitButton) {
 
     const difficulty = document.querySelector("input[name=create-dificulty]:checked").value;
 
-    const prepTime = formatTime(document.getElementById("create-prep-time").value);
-    const cookTime = formatTime(document.getElementById("create-cook-time").value);
+    const prepTime = formatTime(document.querySelector("input[name=create-prep-time]:checked").value);
+    const cookTime = formatTime(document.querySelector("input[name=create-cook-time]:checked").value);
+
+    const implementDropdown = document.getElementById("create-item-list");
+    const cookingImplement = implementDropdown.options[implementDropdown.selectedIndex].value;
 
     try {
       // build new recipe object onto firebase
@@ -47,14 +50,15 @@ if (submitButton) {
         submittedTimestamp: serverTimestamp(), // from demo
         imageUrl: imageFile, 
         communityId: "", // need to add logic for this later
+        tags: cookingImplement
       };
-
+      
       // adds document to recipe collection
       // const docRef = await addDoc(collection(db, "recipe"), newRecipeDoc);
       // console.log("Recipe created with ID: ", docRef.id);
 
       // alert("Recipe created successfully!");
-      // window.location.href = `/recipe?id=${docRef.id}`; // auto navigates to recipe page
+      // window.location.href = `/recipeDetails?id=${docRef.id}`; // auto navigates to recipe page
 
       console.log(newRecipeDoc)
     } catch (error) {
@@ -65,7 +69,12 @@ if (submitButton) {
 }
 
 //Save inputed image as base 64 string.
-document.getElementById("create-add-button").addEventListener("change", handleFileSelect);
+const addImageButton = document.getElementById("create-add-button")
+if (addImageButton){
+
+  addImageButton.addEventListener("change", handleFileSelect);
+
+}
 function handleFileSelect(event){
 
   var file = event.target.files[0];
