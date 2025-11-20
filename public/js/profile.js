@@ -20,6 +20,8 @@ onAuthStateChanged(auth, async (user) => {
         const userData = userDoc.data();
 
         populateProfilePage(userData);
+
+        await fetchAndDisplayCommunity(userData.communityId);
       } else {
         console.error("No user document found for logged-in user!");
       }
@@ -57,9 +59,46 @@ function populateProfilePage(userData) {
 
   const profileUserCommunity = document.getElementById("user-community");
   if (profileUserCommunity) {
-    if (profileUserCommunity.textContent.trim() === "") {
-      profileUserCommunity.classList.add("small", "fst-italic");
-      profileUserCommunity.textContent = "has yet to join a community...";
+    profileUserCommunity.textContent = "";
+  }
+}
+
+// handles community lookup
+async function fetchAndDisplayCommunity(communityId) {
+  const communityEl = document.getElementById("user-community");
+
+  // if community element doesn't exist or user has yet to join a community
+  if (!communityEl || !communityId) {
+    if (communityEl) {
+      communityEl.removeAttribute("href");
+      communityEl.classList.add("small", "fst-italic");
+      communityEl.textContent = "has yet to join a community...";
+    }
+    return;
+  }
+
+  try {
+    // fetch community document
+    const communityRef = doc(db, "communities", communityId);
+    const communitySnap = await getDoc(communityRef);
+
+    if (communitySnap.exists()) {
+      const communityData = communitySnap.data();
+
+      // populate element with the community name
+      communityEl.textContent = communityData.communityName;
+      communityEl.setAttribute("href", `/communities/${communityId}`);
+      communityEl.classList.remove("small", "fst-italic");
+    } else {
+      // community ID exists in user profile but doc not found
+      communityEl.classList.add("small", "fst-italic");
+      communityEl.textContent = "Community not found.";
+    }
+  } catch (error) {
+    console.error("Error fetching community data:", error);
+    if (communityEl) {
+      communityEl.classList.add("small", "fst-italic");
+      communityEl.textContent = "Error loading community.";
     }
   }
 }
