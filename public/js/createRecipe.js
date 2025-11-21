@@ -54,11 +54,11 @@ if (submitButton) {
       };
       
       // adds document to recipe collection
-      // const docRef = await addDoc(collection(db, "recipe"), newRecipeDoc);
-      // console.log("Recipe created with ID: ", docRef.id);
+      const docRef = await addDoc(collection(db, "recipe"), newRecipeDoc);
+      console.log("Recipe created with ID: ", docRef.id);
 
-      // alert("Recipe created successfully!");
-      // window.location.href = `/recipeDetails?id=${docRef.id}`; // auto navigates to recipe page
+      alert("Recipe created successfully!");
+      window.location.href = `/recipeDetails?id=${docRef.id}`; // auto navigates to recipe page
 
       console.log(newRecipeDoc)
     } catch (error) {
