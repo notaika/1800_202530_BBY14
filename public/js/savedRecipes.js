@@ -65,7 +65,7 @@ onAuthStateChanged(auth, async (user) => {
 
         let newcard = cardTemplate.content.cloneNode(true);
 
-        newcard.querySelector(".card-title").innerHTML = currentRecipe.title;
+        newcard.querySelector(".card-title").innerHTML = currentRecipe.title || currentRecipe.name;
         newcard.querySelector(".saved-thumbnail").src = currentRecipe.imageUrl;
 
         newcard.querySelector(".recipe-button").setAttribute("recipeId", id);

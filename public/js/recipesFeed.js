@@ -7,6 +7,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 let browseAllRecipes = [];
 let activeTag = null;
+import {updateRecipeCards} from "./preview.js";
+
 
 /**
  * Fetch all recipes and their author usernames
@@ -71,7 +73,7 @@ function renderHomeFeed(recipes) {
     .map(
       (r) => `
     <div class="col-12">
-      <div class="recipe-card">
+      <div class="recipe-card recipe-button" recipeId="${r.id}">
         <button class="fav-toggle"
                 data-id="${r.id}"
                 aria-pressed="false"
@@ -90,6 +92,9 @@ function renderHomeFeed(recipes) {
   `
     )
     .join("");
+
+  updateRecipeCards();
+
 }
 
 /**
@@ -105,7 +110,7 @@ function renderBrowseFeed(recipes) {
     const col = document.createElement("div");
     col.className = "col";
     col.innerHTML = `
-      <div class="card h-100 overflow-hidden recipe-card ${left ? "card-left" : "card-right"}">
+      <div class="card h-100 overflow-hidden recipe-card recipe-button ${left ? "card-left" : "card-right"}" recipeId="${r.id}">
         <button class="fav-toggle"
                 data-id="${r.id}"
                 aria-pressed="false"
@@ -123,6 +128,9 @@ function renderBrowseFeed(recipes) {
     `;
     container.appendChild(col);
   });
+
+  updateRecipeCards();
+
 }
 
 /**

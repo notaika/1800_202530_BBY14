@@ -19,13 +19,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------------------------
   updateRecipeCards();
 
+  if (document.getElementById("recipe-preview")){
+
+    recipeOriginal = document.getElementById("recipe-preview").innerHTML;
+
+  }
+  
 })  
 
-//Save original state of preview.ejs
-const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
+var recipeOriginal;
 
-  async function openRecipePreview(id){
-    
+async function openRecipePreview(id){
+  //Save original state of preview.ejs
+
+  if(document.getElementById("recipe-preview")){
+
     try{
       
       const recipesDocRef = doc(db, "recipe", id);
@@ -44,7 +52,7 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
         recipePreview.style.display = "block";
 
         //Set title
-        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title;
+        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title || currentRecipe.name;
 
         //Author name needs to be retrived from users collection.
         var authorName = "deleted";
@@ -79,6 +87,14 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
           const recipeTimestamp = currentTimeStamp.toLocaleDateString("en-US", options);
           
           document.getElementById("recipe-preview-timestamp").innerHTML = recipeTimestamp;
+        }
+
+        //Cooking Item
+        if (currentRecipe.tags){
+          recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+          <h3>Cooking Item</h3>
+          <p id="recipe-preview-cook-item">Place holder</p>`
+          document.getElementById("recipe-preview-cook-item").innerHTML = currentRecipe.tags;
         }
 
         //Set description
@@ -156,6 +172,11 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
           }
         })
 
+        //Create and link expand recipe button
+        recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+        <button id="recipe-preview-expand-button" class="create-input create-button">Expand recipe</button>`
+        linkExpandButton(id);
+
       } else {
         console.warn("Recipe not found: ", id)
       }
@@ -171,8 +192,8 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
         const previewSavedIcon = document.getElementById("recipe-preview-save-icon");
         if(savedArray.includes(id)){
           
-          previewSavedIcon.classList.remove("bi-bookmark");
-          previewSavedIcon.classList.add("bi-bookmark-check");
+          previewSavedIcon.classList.remove("bi-heart");
+          previewSavedIcon.classList.add("bi-heart-fill");
           return false;
 
         } else{
@@ -185,6 +206,9 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
     } catch (error){
     console.error("Error previewing recipe ", error);
   }
+  }
+
+
 }
 
 function closeRecipePreview(){
@@ -202,7 +226,7 @@ async function savePreviewedRecipe(id, addEntry){
 
         const savedArray = userSnap.data().favouriteRecipeIDs;
 
-        //Ensure that saved recipe list has not been updated on another window.
+        //Ensure that saved recipe list has not been updated on another tab.
         if(savedArray.includes(id)){
           //Should be removing a existing entry.
           if(!addEntry){
@@ -262,4 +286,17 @@ export function updateRecipeCards(){
   })
 
 }
+
+//Conects the button to preview recipe in another page.
+function linkExpandButton(id){
+
+  document.getElementById("recipe-preview-expand-button").addEventListener('click', (event) => {
+
+  const url = "/recipeDetails?id=" + id;
+  window.location.href = url;
+
+  })
+
+}
+
 
