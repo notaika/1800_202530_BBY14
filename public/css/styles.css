@@ -689,31 +689,145 @@ body {
 /* --------------------------------------
    FAVOURITES DRAWER
    -------------------------------------- */
-.fav-drawer{ position:fixed; top:0; right:0; width:min(420px,92vw); height:100dvh;
-  background:#fff; border-left:1px solid var(--surface-border); box-shadow:0 12px 30px rgba(0,0,0,.18);
-  transform:translateX(100%); transition:transform .25s ease; z-index:2000; display:flex; flex-direction:column; }
-.fav-drawer[data-open="true"]{ transform:translateX(0); }
-.fav-header{ padding:12px 14px; border-bottom:1px solid var(--surface-border); }
-.fav-body{ overflow:auto; padding:10px; }
+.fav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(420px, 92vw);
+  height: 100dvh;
+  background: #fff;
+  border-left: 1px solid var(--surface-border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+  transform: translateX(100%);
+  transition: transform .25s ease;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+}
+.fav-drawer[data-open="true"] {
+  transform: translateX(0);
+}
+
+.fav-header {
+  flex: 0 0 auto;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+/* Body fills remaining height and scrolls as needed */
+.fav-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 10px;
+  position: relative; /* so bubble is positioned inside the drawer */
+}
 
 /* Backdrop overlay */
-.fav-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:1995; opacity:0; transition:opacity .2s ease; }
-.fav-backdrop[data-open="true"]{ opacity:1; }
+.fav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .35);
+  z-index: 1995;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.fav-backdrop[data-open="true"] {
+  opacity: 1;
+}
+
+/* Make favourites "rows" look like plain content */
+.fav-main {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+}
+
+/* Don't let inner elements steal the click target */
+.fav-main-inner,
+.fav-main-inner * {
+  pointer-events: none;
+}
 
 /* Favourite item in drawer */
-.fav-item{ display:grid; grid-template-columns:72px 1fr auto; gap:10px; align-items:center;
-  border:1px solid var(--surface-border); border-radius:12px; padding:8px; margin-bottom:10px; }
-.fav-item img{ width:72px; height:72px; object-fit:cover; border-radius:8px; }
-.fav-item h6{ margin:0; font-size:.95rem; color:var(--forest-green); }
-.fav-item small{ color:var(--dark-berry); }
+.fav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+.fav-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.fav-item h6 {
+  margin: 0;
+  font-size: .95rem;
+  color: var(--forest-green);
+}
+.fav-item small {
+  color: var(--dark-berry);
+}
+
+/* Bubble positioning */
+.fav-preview-bubble {
+  position: absolute;
+  z-index: 5;
+}
+
+/* Bubble card */
+.fav-preview-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  padding: 0.6rem 0.75rem;
+  max-width: 280px;
+}
+.fav-preview-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.fav-preview-close {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
 
 /* Heart button on cards */
 .recipe-card { position: relative; }
-.fav-toggle{ position:absolute; top:8px; right:8px; border:0; background:rgba(255,255,255,.9);
-  border-radius:999px; width:34px; height:34px; display:grid; place-items:center; box-shadow:0 2px 8px rgba(0,0,0,.15); }
-.fav-toggle i{ color:var(--accent); font-size:1.05rem; }
-.fav-toggle.is-fav i{ color:var(--dark-berry); }
-
+.fav-toggle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: 0;
+  background: rgba(255, 255, 255, .9);
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+}
+.fav-toggle i {
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+.fav-toggle.is-fav i {
+  color: var(--dark-berry);
+}
 
 /* --------------------------------------
    LANDING PAGE!!
