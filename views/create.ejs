@@ -1,22 +1,22 @@
 <%- include('partials/head') %> <%- include('partials/header') %>
 
 <!-- Main content for the Create page -->
-<main class="p-1">
-  <figure class="create-recipe-image">
-    <img
-      src="https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
-      class="square-media create-image"
-      alt="there should be a image here"
-      id="create-image" />
+<form action="" class="create-form"></form>
+  <main class="p-1">
+    <figure class="create-recipe-image">
+      <img
+        src="https://images.unsplash.com/photo-1650092194571-d3c1534562be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
+        class="square-media create-image"
+        alt="there should be a image here"
+        id="create-image" />
 
-    <input
-      type="button"
-      class="create-image-button create-button"
-      id="create-add-button"
-      value="Insert Photo" />
-  </figure>
+      <input
+        type="file"
+        class="create-image-button create-button"
+        id="create-add-button"/>
+    </figure>
 
-  <form action="" class="create-form">
+  
     <h5 class="mb-0 create-label">Name</h5>
     <textarea
       class="create-input create-text-area"
@@ -34,6 +34,35 @@
       placeholder="Description"
       required></textarea>
 
+    <h5 class="mb-0 create-label">Dificulty</h5>
+    <div>
+      <input type="radio" id="create-dificulty-easy" class="btn-check create-input" name="create-dificulty" value="Easy" checked>
+      <label class="btn btn-outline-success" for="create-dificulty-easy">Easy</label>
+
+      <input type="radio" id="create-dificulty-medium" class="btn-check create-input" name="create-dificulty" value="Medium">
+      <label class="btn btn-outline-success" for="create-dificulty-medium">Medium</label>
+
+      <input type="radio" id="create-dificulty-hard" class="btn-check create-input" name="create-dificulty" value="Hard">
+      <label class="btn btn-outline-success" for="create-dificulty-hard">Hard</label>
+
+    </div>
+    
+    <h5 class="mb-0 create-label">Prep Time</h5>
+    <input type="number"
+      class="create-input "
+      name="Recipe Prep Time"
+      id="create-prep-time"
+      placeholder="Prep Time (min)">
+  </input>
+
+    <h5 class="mb-0 create-label">Cook Time</h5>
+    <input type="number"
+      class="create-input "
+      name="Recipe Cook Time"
+      id="create-cook-time"
+      placeholder="Cook Time (min)">
+</input>
+
     <h5 class="mb-0 create-label">Ingredients</h5>
     <textarea
       class="create-input create-text-area"
@@ -50,12 +79,7 @@
       placeholder="Instructions"
       required></textarea>
 
-    <h5 class="mb-0 create-label">Tags</h5>
-    <textarea
-      class="create-input create-text-area"
-      name="Recipe Tags"
-      id="create-tags"
-      placeholder="Tags"></textarea>
+    
 
     <input
       type="button"

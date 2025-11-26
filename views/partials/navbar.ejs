@@ -11,17 +11,17 @@
     class="nav-item <%= active==='home' ? 'active' : '' %>"
     data-index="0"
     href="/home">
-    <i class="bi bi-house-fill"></i>
+    <i class="bi bi-house"></i>
     <span>Home</span>
   </a>
 
   <!-- Browse recipes tab -->
   <a
-    class="nav-item <%= active==='browse' ? 'active' : '' %>"
+    class="nav-item <%= active==='community' ? 'active' : '' %>"
     data-index="1"
-    href="/browse">
-    <i class="bi bi-compass"></i>
-    <span>Browse</span>
+    href="/community">
+    <i class="bi bi-people"></i>
+    <span>Community</span>
   </a>
 
   <!-- Create a recipe tab (future feature) -->
@@ -38,8 +38,8 @@
     class="nav-item <%= active==='recipe' ? 'active' : '' %>"
     data-index="3"
     href="/recipe">
-    <i class="bi bi-book"></i>
-    <span>Recipe</span>
+    <i class="bi bi-heart"></i>
+    <span>Favourites</span>
   </a>
 
   <!-- Profile tab (future feature) -->
