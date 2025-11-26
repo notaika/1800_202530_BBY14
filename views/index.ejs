@@ -1,22 +1,38 @@
 <%- include('partials/head') %> <%- include('partials/header') %>
 
-<div class="page-toolbar d-flex justify-content-end align-items-center gap-2 px-2">
-  <button class="btn btn-outline-forest fav-open">
-    <i class="bi bi-heart-fill me-1"></i> Favourites
-  </button>
-</div>
-<!--
-  Container for the Browse recipe feed
-  pt-2  → small space at the top
-  pb-5  → bottom padding so the last card isn't covered
-  browse-feed → page-specific styling in CSS
--->
-<div class="feed pt-4 pb-2 px-1">
-  <div class="row g-3"></div>
+<div class="floating-search px-2">
+  <!-- Search form container (pill shape handled in CSS) -->
+  <form class="search-form d-flex align-items-center">
+    <!-- Search icon on the left -->
+    <i class="bi bi-search fs-5 ms-2"></i>
+
+    <!-- Search text input -->
+    <input
+      type="search"
+      class="form-control border-0 bg-transparent"
+      placeholder="Search"
+      aria-label="Search" />
+
+    <!-- Search button on the right (return icon) -->
+    <button class="btn btn-link me-2" type="submit" aria-label="Search">
+      <i class="bi bi-arrow-return-left"></i>
+    </button>
+  </form>
+
+  <!-- Tags + Favourites -->
+  <div class="d-flex align-items-center justify-content-between mt-2 px-1">
+    <div class="tag-filter flex-grow-1 me-2"></div>
+  </div>
 </div>
 
-<%- include('partials/navbar', {active: 'home'}) %> 
-<%- include('partials/favourites') %>
-<%- include('partials/footer') %> <%- include('partials/preview') %> 
+<!-- ===================================================
+     Recipe Feed Area (Home Page)
+     Shows 2 cards per row, alternating layout
+     =================================================== -->
+<div class="pt-2 pb-2 browse-feed px-1">
+  <div class="row row-cols-2 g-3" id="browse-grid"></div>
+</div>
+
+<%- include('partials/navbar', {active: 'home'}) %>
+<%- include('partials/footer') %> <%- include('partials/preview') %>
 <%- include('partials/scripts') %>
-

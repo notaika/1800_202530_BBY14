@@ -43,58 +43,16 @@ async function loadRecipes() {
       })
     );
 
-    // detect page
-    const isHome = !!document.querySelector(".feed .row.g-3");
-    const isBrowse = !!document.querySelector(".browse-feed .row.g-3");
+  const isBrowseStyle = !!document.querySelector(".browse-feed .row.g-3");
 
-    if (isHome) {
-      renderHomeFeed(recipes);
-    }
-
-    if (isBrowse) {
-      // Save for search filtering
-      browseAllRecipes = recipes;
-      renderBrowseFeed(browseAllRecipes);
-      setupBrowseControls();
-    }
+  if (isBrowseStyle) {
+    browseAllRecipes = recipes;
+    renderBrowseFeed(browseAllRecipes);
+    setupBrowseControls();
+  }
   } catch (err) {
     console.error("Error loading recipes:", err);
   }
-}
-
-/**
- * Single-column home feed
- */
-function renderHomeFeed(recipes) {
-  const container = document.querySelector(".feed .row.g-3");
-  if (!container) return;
-
-  container.innerHTML = recipes
-    .map(
-      (r) => `
-    <div class="col-12">
-      <div class="recipe-card recipe-button" recipeId="${r.id}">
-        <button class="fav-toggle"
-                data-id="${r.id}"
-                aria-pressed="false"
-                aria-label="Add to favourites">
-          <i class="bi bi-heart-fill"></i>
-        </button>
-
-        <img src="${r.imageUrl}" class="square-media" alt="${r.name || r.title}">
-        <div class="card-body">
-          <h5 class="card-title">${r.name || r.title}</h5>
-          <span class="author-chip">@${r.author}</span>
-          <p class="mt-2 mb-0 small text-dark">${r.description || ""}</p>
-        </div>
-      </div>
-    </div>
-  `
-    )
-    .join("");
-
-  updateRecipeCards();
-
 }
 
 /**
@@ -110,22 +68,15 @@ function renderBrowseFeed(recipes) {
     const col = document.createElement("div");
     col.className = "col";
     col.innerHTML = `
-      <div class="card h-100 overflow-hidden recipe-card recipe-button ${left ? "card-left" : "card-right"}" recipeId="${r.id}">
-        <button class="fav-toggle"
-                data-id="${r.id}"
-                aria-pressed="false"
-                aria-label="Add to favourites">
-          <i class="bi bi-heart-fill"></i>
-        </button>
-
-        ${!left ? `<img src="${r.imageUrl}" class="card-img-top square-media" alt="${r.name || r.title}">` : ""}
-        <div class="card-body py-2">
-          <h6 class="card-title mb-1">${r.name || r.title}</h6>
-          <span class="author-chip">@${r.author}</span>
-        </div>
-        ${left ? `<img src="${r.imageUrl}" class="card-img-bottom square-media" alt="${r.name || r.title}">` : ""}
+    <div class="card h-100 overflow-hidden recipe-card recipe-button ${left ? "card-left" : "card-right"}" recipeid="${r.id}">
+      ${!left ? `<img src="${r.imageUrl}" class="card-img-top square-media" alt="${r.name || r.title}">` : ""}
+      <div class="card-body py-2">
+        <h6 class="card-title mb-1">${r.name || r.title}</h6>
+        <span class="author-chip">@${r.author}</span>
       </div>
-    `;
+      ${left ? `<img src="${r.imageUrl}" class="card-img-bottom square-media" alt="${r.name || r.title}">` : ""}
+    </div>
+  `;
     container.appendChild(col);
   });
 

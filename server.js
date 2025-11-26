@@ -53,16 +53,10 @@ app.get("/main", (req, res) => {
   res.render("main", { active: "home", firebaseConfig: firebaseConfig });
 });
 
-// Browse Page
-app.get("/browse", (req, res) => {
-  res.render("browse", {
-    active: "browse",
-    firebaseConfig: firebaseConfig,
-  });
-});
-
+// Community Page
 app.get("/community", (req, res) => {
   res.render("community", {
+    active: "community",
     firebaseConfig: firebaseConfig,
   });
 });
