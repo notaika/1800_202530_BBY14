@@ -248,3 +248,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const backBtn = document.getElementById("back-btn");
+
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      // If there is history, go back
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        // Fallback if user landed directly on page
+        window.location.href = "/";
+      }
+    });
+  }
+});
