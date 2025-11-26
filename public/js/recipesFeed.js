@@ -166,12 +166,12 @@ function setupBrowseControls() {
   tagHost.innerHTML = "";
 
   // If there's only a few tags, show tag chips. Otherwise a dropdown
-  const useChips = tags.length <= 16;
+  const useChips = tags.length <= 8;
 
   if (useChips) {
     const label = document.createElement("span");
     label.className = "tag-filter-label";
-    label.textContent = "Tags:";
+    label.textContent = "Dish Type:";
     tagHost.appendChild(label);
 
     const row = document.createElement("div");
