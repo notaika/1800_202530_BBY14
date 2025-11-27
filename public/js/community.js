@@ -279,7 +279,7 @@ async function loadCommunity(user) {
       recipesHtml += `
         <div class="col-md-4 col-sm-6">
           <div class="card h-100 shadow-sm recipe-card">
-            <a href="/recipe?id=${
+            <a href="/recipeDetails?id=${
               doc.id
             }" class="text-decoration-none text-dark">
               <img 

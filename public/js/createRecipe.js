@@ -1,11 +1,59 @@
+import { onAuthReady, logoutUser } from "./authentication.js";
 import { db, auth } from "./firebaseConfig.js";
 import {
-  collection,
+  doc,
+  getDoc,
+  getDocs,
   addDoc,
+  collection,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const createForm = document.querySelector(".create-form");
+const communityPrefab = document.getElementById("create-community-template");
+const communityDropdown = document.getElementById("create-community-list");
+
+// Add community options to the dropdown
+onAuthReady(async (user) => {
+
+  const usersDocRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(usersDocRef);
+
+  if (docSnap.exists()){
+
+    const userData = docSnap.data();
+    const userCommunities = userData.communityIDs;
+
+    userCommunities.forEach(element => {
+
+      getCommunity(element);
+
+    });
+
+  }
+
+})
+
+async function getCommunity(element){
+
+  const communityDocRef = doc(db, "communities", element);
+  const communitySnap = await getDoc(communityDocRef);
+
+  if (communitySnap.exists()){
+
+    const communityData = communitySnap.data();
+
+    let newOption = communityPrefab.content.cloneNode(true);
+
+    newOption.querySelector(".create-community-option").innerHTML = communityData.communityName;
+    newOption.querySelector(".create-community-option").value = element;
+
+    communityDropdown.appendChild(newOption);
+
+  }
+
+}
+
+
 const submitButton = document.getElementById("create-submit");
 
 var imageFile = "";
@@ -46,7 +94,9 @@ if (submitButton) {
 
 
     // community integration - aika
-    let userCommunityId = "";
+    const communityDropdown = document.getElementById("create-community-list");
+    const userCommunityId = communityDropdown.options[communityDropdown.selectedIndex].value;
+    
 
     try {
       const userDoc = doc(db, "users", user.uid);
@@ -82,6 +132,7 @@ if (submitButton) {
 
       alert("Recipe created successfully!");
       window.location.href = `/recipeDetails?id=${docRef.id}`; // auto navigates to recipe page
+      // console.error("You have not uncommented those lines on createRecipe.js Do that ")
 
       console.log(newRecipeDoc);
     } catch (error) {
