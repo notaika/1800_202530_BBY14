@@ -53,16 +53,26 @@ app.get("/main", (req, res) => {
   res.render("main", { active: "home", firebaseConfig: firebaseConfig });
 });
 
-// Community Page
-app.get("/community", (req, res) => {
-  res.render("community", {
+// Community Pages
+app.get("/communities", (req, res) => {
+  res.render("communities", {
     active: "community",
     firebaseConfig: firebaseConfig,
   });
 });
 
-app.get("/community/create", (req, res) => {
+// create a community
+app.get("/communities/create", (req, res) => {
   res.render("create-community", {
+    active: "community",
+    firebaseConfig: firebaseConfig,
+  });
+});
+
+// view a community
+app.get("/communities/:id", (req, res) => {
+  res.render("community", {
+    active: "community",
     firebaseConfig: firebaseConfig,
   });
 });
@@ -91,9 +101,9 @@ app.get("/profile", (req, res) => {
 // Full recipe page
 app.get("/recipeDetails", (req, res) => {
   res.render("recipeDetails", {
-    firebaseConfig: firebaseConfig
-  })
-})
+    firebaseConfig: firebaseConfig,
+  });
+});
 // Edit Profile Information Page
 app.get("/profile/edit", (req, res) => {
   res.render("edit-profile", {

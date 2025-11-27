@@ -8,7 +8,7 @@ import {
   query,
   where,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {updateRecipeCards} from "./preview.js";
+import { updateRecipeCards } from "./preview.js";
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -63,45 +63,46 @@ function populateProfilePage(userData) {
   }
 }
 
-// handles community lookup
-async function fetchAndDisplayCommunity(communityId) {
-  const communityEl = document.getElementById("user-community");
+// ~~REMOVING THIS FEATURE ON PROFILE~~
+// // handles community lookup
+// async function fetchAndDisplayCommunity(communityId) {
+//   const communityEl = document.getElementById("user-community");
 
-  // if community element doesn't exist or user has yet to join a community
-  if (!communityEl || !communityId) {
-    if (communityEl) {
-      communityEl.removeAttribute("href");
-      communityEl.classList.add("small", "fst-italic");
-      communityEl.textContent = "has yet to join a community...";
-    }
-    return;
-  }
+//   // if community element doesn't exist or user has yet to join a community
+//   if (!communityEl || !communityId) {
+//     if (communityEl) {
+//       communityEl.removeAttribute("href");
+//       communityEl.classList.add("small", "fst-italic");
+//       communityEl.textContent = "has yet to join a community...";
+//     }
+//     return;
+//   }
 
-  try {
-    // fetch community document
-    const communityRef = doc(db, "communities", communityId);
-    const communitySnap = await getDoc(communityRef);
+//   try {
+//     // fetch community document
+//     const communityRef = doc(db, "communities", communityId);
+//     const communitySnap = await getDoc(communityRef);
 
-    if (communitySnap.exists()) {
-      const communityData = communitySnap.data();
+//     if (communitySnap.exists()) {
+//       const communityData = communitySnap.data();
 
-      // populate element with the community name
-      communityEl.textContent = communityData.communityName;
-      communityEl.setAttribute("href", `/communities/${communityId}`);
-      communityEl.classList.remove("small", "fst-italic");
-    } else {
-      // community ID exists in user profile but doc not found
-      communityEl.classList.add("small", "fst-italic");
-      communityEl.textContent = "Community not found.";
-    }
-  } catch (error) {
-    console.error("Error fetching community data:", error);
-    if (communityEl) {
-      communityEl.classList.add("small", "fst-italic");
-      communityEl.textContent = "Error loading community.";
-    }
-  }
-}
+//       // populate element with the community name
+//       communityEl.textContent = communityData.communityName;
+//       communityEl.setAttribute("href", `/communities/${communityId}`);
+//       communityEl.classList.remove("small", "fst-italic");
+//     } else {
+//       // community ID exists in user profile but doc not found
+//       communityEl.classList.add("small", "fst-italic");
+//       communityEl.textContent = "Community not found.";
+//     }
+//   } catch (error) {
+//     console.error("Error fetching community data:", error);
+//     if (communityEl) {
+//       communityEl.classList.add("small", "fst-italic");
+//       communityEl.textContent = "Error loading community.";
+//     }
+//   }
+// }
 
 // populate the profile grid
 async function displayUserRecipes(userId) {
@@ -135,11 +136,9 @@ async function displayUserRecipes(userId) {
         
       </div>
     `;
-
   });
 
   gridContainer.innerHTML = allPostsHtml;
-  
-  updateRecipeCards();
 
+  updateRecipeCards();
 }
