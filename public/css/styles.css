@@ -120,6 +120,10 @@ body {
   padding: 0.5em;
 }
 
+#back-btn {
+  cursor: pointer;
+}
+
 /* --------------------------------------
    FLOATING BOTTOM NAV ("craft stick")
    -------------------------------------- */
@@ -190,8 +194,8 @@ body {
    FLOATING SEARCH BAR (Home only)
    -------------------------------------- */
 .floating-search {
-  position: static; 
-  margin-top: 12px; 
+  position: static;
+  margin-top: 12px;
   z-index: 1;
 }
 .floating-search .search-form {
@@ -249,13 +253,13 @@ body {
 
 /* Tag filter under browse search */
 .tag-filter {
-  padding-inline: 0.25rem;
-  font-size: 0.75rem;
+  padding-inline: 0.5rem;
+  font-size: 1rem;
   min-width: 0;
 }
 
 .tag-filter-label {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--forest-green);
   margin-right: 0.25rem;
@@ -264,7 +268,7 @@ body {
 .tag-chip-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: 0.4rem;
 }
 
 /* Tag bubble */
@@ -272,7 +276,7 @@ body {
   border: none;
   border-radius: 999px;
   padding: 0.2rem 0.6rem;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 600;
   background: rgb(236, 236, 236);
   color: var(--dark-berry);
@@ -296,7 +300,6 @@ body {
   height: 30px;
   padding: 0 0.4rem;
 }
-
 
 /* Author chip/tag look */
 .author-chip {
@@ -372,10 +375,9 @@ body {
   padding-bottom: 80px;
   overflow-y: scroll;
 }
-.recipe-save-container{
+.recipe-save-container {
   margin-right: 20px;
   display: inline;
-
 }
 
 /* --------------------------------------
@@ -560,7 +562,7 @@ body {
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
-.post-img{
+.post-img {
   pointer-events: none;
 }
 .post-img:hover {
@@ -684,36 +686,34 @@ body {
   backdrop-filter: saturate(120%) blur(2px);
 }
 
-.page-toolbar { margin-top: .5rem; }
-
-/* --------------------------------------
-   FAVOURITES DRAWER
-   -------------------------------------- */
-.fav-drawer{ position:fixed; top:0; right:0; width:min(420px,92vw); height:100dvh;
-  background:#fff; border-left:1px solid var(--surface-border); box-shadow:0 12px 30px rgba(0,0,0,.18);
-  transform:translateX(100%); transition:transform .25s ease; z-index:2000; display:flex; flex-direction:column; }
-.fav-drawer[data-open="true"]{ transform:translateX(0); }
-.fav-header{ padding:12px 14px; border-bottom:1px solid var(--surface-border); }
-.fav-body{ overflow:auto; padding:10px; }
-
-/* Backdrop overlay */
-.fav-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:1995; opacity:0; transition:opacity .2s ease; }
-.fav-backdrop[data-open="true"]{ opacity:1; }
-
-/* Favourite item in drawer */
-.fav-item{ display:grid; grid-template-columns:72px 1fr auto; gap:10px; align-items:center;
-  border:1px solid var(--surface-border); border-radius:12px; padding:8px; margin-bottom:10px; }
-.fav-item img{ width:72px; height:72px; object-fit:cover; border-radius:8px; }
-.fav-item h6{ margin:0; font-size:.95rem; color:var(--forest-green); }
-.fav-item small{ color:var(--dark-berry); }
+.page-toolbar {
+  margin-top: 0.5rem;
+}
 
 /* Heart button on cards */
-.recipe-card { position: relative; }
-.fav-toggle{ position:absolute; top:8px; right:8px; border:0; background:rgba(255,255,255,.9);
-  border-radius:999px; width:34px; height:34px; display:grid; place-items:center; box-shadow:0 2px 8px rgba(0,0,0,.15); }
-.fav-toggle i{ color:var(--accent); font-size:1.05rem; }
-.fav-toggle.is-fav i{ color:var(--dark-berry); }
-
+.recipe-card {
+  position: relative;
+}
+.fav-toggle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.fav-toggle i {
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+.fav-toggle.is-fav i {
+  color: var(--dark-berry);
+}
 
 /* --------------------------------------
    LANDING PAGE!!
@@ -830,4 +830,13 @@ body {
 .create-image {
   max-height: 300px;
   object-fit: cover;
+}
+
+/* single community */
+.community-banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 300px;
+  background-color: #222;
 }

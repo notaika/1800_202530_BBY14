@@ -61,14 +61,15 @@ onAuthReady(async (user) => {
 
     displayRecipes(); // displays recipes from db
 
-    // protect these pages and redirect to login if no user detected
+    // restrict these pages and redirect to login if no user detected
     const currentPage = window.location.pathname;
     if (
       currentPage.includes("/profile") ||
       currentPage.includes("/create") ||
       currentPage.includes("/main") ||
       currentPage.includes("/edit-profile") ||
-      currentPage.includes("/account-settings")
+      currentPage.includes("/account-settings") ||
+      currentPage.includes("/communities")
     ) {
       console.log("No user signed in, redirecting to login.");
       window.location.href = "/login";
@@ -245,6 +246,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 250); // matches fade-out speed
     });
   });
-
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const backBtn = document.getElementById("back-btn");
+
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      // If there is history, go back
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        // Fallback if user landed directly on page
+        window.location.href = "/";
+      }
+    });
+  }
+});

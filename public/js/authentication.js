@@ -25,7 +25,7 @@ export async function loginUser(email, password) {
       password
     );
     console.log("Success. User logged in.", userCredential.user);
-    window.location.href = "/main";
+    window.location.href = "/home";
     return userCredential.user;
   } catch (error) {
     console.error("Error logging in: ", error.message);
@@ -56,7 +56,7 @@ export async function signupUser(displayName, email, password) {
       email: user.email,
       profilePicUrl: "/assets/images/profile-pic-placeholder.jpg", // default-pic
       favouriteRecipeIDs: [],
-      communityId: "",
+      communityIDs: [],
     };
 
     // set the document in the 'users' collection with the user's UID = doc ID
@@ -67,7 +67,7 @@ export async function signupUser(displayName, email, password) {
     console.error("Error creating user document in Firestore:", error);
   }
 
-  window.location.href = "/main";
+  window.location.href = "/home";
   return user;
 }
 
