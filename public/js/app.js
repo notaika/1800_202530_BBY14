@@ -61,7 +61,7 @@ onAuthReady(async (user) => {
 
     displayRecipes(); // displays recipes from db
 
-    // protect these pages and redirect to login if no user detected
+    // restrict these pages and redirect to login if no user detected
     const currentPage = window.location.pathname;
     if (
       currentPage.includes("/profile") ||
@@ -245,7 +245,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 250); // matches fade-out speed
     });
   });
-
 });
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -24,61 +24,9 @@
     </div>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-2 g-4" id="community-card-container">
-    <div class="community-item col mb-4">
-      <div class="card h-100 shadow-sm community-card">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Busy Students</h5>
-          <p class="card-text">
-            Quick, cheap, and easy one-bowl meals for when you're on a deadline.
-            No-fuss, all flavor.
-          </p>
-          <a href="#" class="btn btn-warning mt-auto fw-bold">View Community</a>
-        </div>
-        <div class="card-footer">
-          <small class="text-body-secondary">
-            <strong>142</strong> Members | <strong>89</strong> Recipes
-          </small>
-        </div>
-      </div>
-    </div>
-
-    <div class="community-item col mb-4">
-      <div class="card h-100 shadow-sm community-card">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Vegan Ventures</h5>
-          <p class="card-text">
-            Plant-based, one-bowl creations. From hearty stews to fresh salad
-            bowls, all 100% vegan.
-          </p>
-          <a href="#" class="btn btn-warning mt-auto fw-bold">View Community</a>
-        </div>
-        <div class="card-footer">
-          <small class="text-body-secondary">
-            <strong>88</strong> Members | <strong>120</strong> Recipes
-          </small>
-        </div>
-      </div>
-    </div>
-
-    <div class="community-item col mb-4">
-      <div class="card h-100 shadow-sm community-card">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Low-Carb Lunches</h5>
-          <p class="card-text">
-            Healthy, keto-friendly, and all in one bowl. Perfect for a light but
-            satisfying midday meal.
-          </p>
-          <a href="#" class="btn btn-warning mt-auto fw-bold">View Community</a>
-        </div>
-        <div class="card-footer">
-          <small class="text-body-secondary">
-            <strong>51</strong> Members | <strong>45</strong> Recipes
-          </small>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div
+    class="row row-cols-1 row-cols-md-2 g-4"
+    id="community-card-container"></div>
   <nav aria-label="Community page navigation" class="mt-5">
     <ul class="pagination justify-content-center">
       <li class="page-item disabled">
@@ -95,5 +43,6 @@
     </ul>
   </nav>
 </div>
+<script type="module" src="/js/community.js"></script>
 <%- include('partials/navbar', {active: 'community'}) %> <%-
 include('partials/footer') %> <%- include('partials/scripts') %>

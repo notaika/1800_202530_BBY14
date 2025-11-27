@@ -25,7 +25,7 @@ export async function loginUser(email, password) {
       password
     );
     console.log("Success. User logged in.", userCredential.user);
-    window.location.href = "/main";
+    window.location.href = "/browse";
     return userCredential.user;
   } catch (error) {
     console.error("Error logging in: ", error.message);
