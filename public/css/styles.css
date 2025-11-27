@@ -194,8 +194,8 @@ body {
    FLOATING SEARCH BAR (Home only)
    -------------------------------------- */
 .floating-search {
-  position: static; 
-  margin-top: 12px; 
+  position: static;
+  margin-top: 12px;
   z-index: 1;
 }
 .floating-search .search-form {
@@ -301,7 +301,6 @@ body {
   padding: 0 0.4rem;
 }
 
-
 /* Author chip/tag look */
 .author-chip {
   display: inline-block;
@@ -376,10 +375,9 @@ body {
   padding-bottom: 80px;
   overflow-y: scroll;
 }
-.recipe-save-container{
+.recipe-save-container {
   margin-right: 20px;
   display: inline;
-
 }
 
 /* --------------------------------------
@@ -564,7 +562,7 @@ body {
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
-.post-img{
+.post-img {
   pointer-events: none;
 }
 .post-img:hover {
@@ -688,23 +686,26 @@ body {
   backdrop-filter: saturate(120%) blur(2px);
 }
 
-.page-toolbar { margin-top: .5rem; }
-
+.page-toolbar {
+  margin-top: 0.5rem;
+}
 
 /* Heart button on cards */
-.recipe-card { position: relative; }
+.recipe-card {
+  position: relative;
+}
 .fav-toggle {
   position: absolute;
   top: 8px;
   right: 8px;
   border: 0;
-  background: rgba(255, 255, 255, .9);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 999px;
   width: 34px;
   height: 34px;
   display: grid;
   place-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 .fav-toggle i {
   color: var(--accent);
@@ -829,4 +830,13 @@ body {
 .create-image {
   max-height: 300px;
   object-fit: cover;
+}
+
+/* single community */
+.community-banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 300px;
+  background-color: #222;
 }

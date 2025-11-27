@@ -68,7 +68,8 @@ onAuthReady(async (user) => {
       currentPage.includes("/create") ||
       currentPage.includes("/main") ||
       currentPage.includes("/edit-profile") ||
-      currentPage.includes("/account-settings")
+      currentPage.includes("/account-settings") ||
+      currentPage.includes("/communities")
     ) {
       console.log("No user signed in, redirecting to login.");
       window.location.href = "/login";

@@ -1,48 +1,40 @@
 <%- include('partials/head') %> <%- include('partials/header') %>
 
-<div class="container my-5">
-  <div class="row mb-4 align-items-center">
-    <div class="col-md-8">
-      <h1 class="display-5 fw-bold">Find Your Community</h1>
-      <p class="fs-5 text-body-secondary">
-        Share recipes and tips with cooks just like you.
-      </p>
-
-      <a href="/community/create" class="btn btn-custom shadow-sm">
-        <i class="bi bi-plus-circle-fill me-2"></i>Create a Community
-      </a>
+<main class="p-0 mb-5" id="single-community-container">
+  <div
+    class="community-banner position-relative mb-4 px-5"
+    <div
+    class="card-img-overlay d-flex flex-column justify-content-end container pb-4">
+    <h1 class="display-4 fw-bold text-white mb-0" id="community-title"></h1>
+    <p class="fs-5 text-white mb-1" id="community-desc"></p>
+    <div class="community-creator-container mb-3">
+      <span
+        class="profile-community badge text-dark small rounded-pill px-2 py-2"
+        ><i class="bi bi-houses"> </i> <span>Created by:</span>
+        <a href="#" id="community-creator"></a>
+      </span>
     </div>
-    <div class="col-md-4">
-      <form class="input-group" role="search">
-        <input
-          type="search"
-          class="form-control"
-          placeholder="Search communities..."
-          aria-label="Search communities" />
-        <button class="btn btn-outline-secondary" type="button">Search</button>
-      </form>
+    <div id="community-action-container">
+      <button class="btn btn-warning fw-bold disabled">Loading...</button>
     </div>
   </div>
 
-  <div
-    class="row row-cols-1 row-cols-md-2 g-4"
-    id="community-card-container"></div>
-  <nav aria-label="Community page navigation" class="mt-5">
-    <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
-        <a class="page-link" href="#">Previous</a>
-      </li>
-      <li class="page-item active" aria-current="page">
-        <a class="page-link" href="#">1</a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
-      </li>
-    </ul>
-  </nav>
-</div>
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold mb-0">Community Recipes</h3>
+    </div>
+
+    <div class="row g-4" id="community-recipes-grid">
+      <div class="col-12 text-center py-5">
+        <div class="spinner-border text-success" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
 <script type="module" src="/js/community.js"></script>
+
 <%- include('partials/navbar', {active: 'community'}) %> <%-
 include('partials/footer') %> <%- include('partials/scripts') %>
