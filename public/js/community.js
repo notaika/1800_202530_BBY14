@@ -261,7 +261,7 @@ async function loadCommunity(user) {
     // get the recipes from this community
     // select all recipes where user communityId is this.communityId
     const recipesRef = collection(db, "recipe");
-    const q = query(recipesRef, where("communityId", "==", communityId));
+    const q = query(recipesRef, where("communityId", "array-contains", communityId));
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
@@ -279,7 +279,7 @@ async function loadCommunity(user) {
       recipesHtml += `
         <div class="col-md-4 col-sm-6">
           <div class="card h-100 shadow-sm recipe-card">
-            <a href="/recipe?id=${
+            <a href="/recipeDetails?id=${
               doc.id
             }" class="text-decoration-none text-dark">
               <img 

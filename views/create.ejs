@@ -25,6 +25,29 @@
       placeholder="Name"
       autofocus
       required></textarea>
+    
+    <h5 class="mb-0 create-label">Cooking Item</h5>
+    <select id="create-item-list" class="create-input">
+      <option value="Stovetop">Stovetop</option>
+      <option value="Air Fryer">Air Fryer</option>
+      <option value="Rice Cooker">Rice Cooker</option>
+      <option value="Oven">Oven</option>
+      <option value="Toaster">Toaster</option>
+      <option value="Microwave">Microwave</option>
+
+    </select>
+
+    <h5 class="mb-0 create-label">Communities</h5>
+    <div id="create-community-list" class="create-input">
+      
+      <template id="create-community-template">
+        <label class="create-community-label">
+          <input type="checkbox" name="create-community-check" class="create-community-option" value=""></option>
+        </label>
+      </br>
+      </template>
+
+    </div>
 
     <h5 class="mb-0 create-label">Description</h5>
     <textarea
@@ -48,20 +71,36 @@
     </div>
     
     <h5 class="mb-0 create-label">Prep Time</h5>
-    <input type="number"
-      class="create-input "
-      name="Recipe Prep Time"
-      id="create-prep-time"
-      placeholder="Prep Time (min)">
-  </input>
+    <div>
+      <input type="radio" id="create-prep-time1" class="btn-check create-input" name="create-prep-time" value="5" checked>
+      <label class="btn btn-outline-success" for="create-prep-time1">5 min</label>
+
+      <input type="radio" id="create-prep-time2" class="btn-check create-input" name="create-prep-time" value="10">
+      <label class="btn btn-outline-success" for="create-prep-time2">10 min</label>
+
+      <input type="radio" id="create-prep-time3" class="btn-check create-input" name="create-prep-time" value="15">
+      <label class="btn btn-outline-success" for="create-prep-time3">15 min</label>
+
+      <input type="radio" id="create-prep-time4" class="btn-check create-input" name="create-prep-time" value="30">
+      <label class="btn btn-outline-success" for="create-prep-time4">30 min</label>
+
+    </div>
 
     <h5 class="mb-0 create-label">Cook Time</h5>
-    <input type="number"
-      class="create-input "
-      name="Recipe Cook Time"
-      id="create-cook-time"
-      placeholder="Cook Time (min)">
-</input>
+    <div>
+      <input type="radio" id="create-cook-time1" class="btn-check create-input" name="create-cook-time" value="5" checked>
+      <label class="btn btn-outline-success" for="create-cook-time1">5 min</label>
+
+      <input type="radio" id="create-cook-time2" class="btn-check create-input" name="create-cook-time" value="10">
+      <label class="btn btn-outline-success" for="create-cook-time2">10 min</label>
+
+      <input type="radio" id="create-cook-time3" class="btn-check create-input" name="create-cook-time" value="15">
+      <label class="btn btn-outline-success" for="create-cook-time3">15 min</label>
+
+      <input type="radio" id="create-cook-time4" class="btn-check create-input" name="create-cook-time" value="30">
+      <label class="btn btn-outline-success" for="create-cook-time4">30 min</label>
+
+    </div>
 
     <h5 class="mb-0 create-label">Ingredients</h5>
     <textarea

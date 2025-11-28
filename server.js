@@ -82,7 +82,7 @@ app.get("/create", (req, res) => {
   res.render("create", { active: "create", firebaseConfig: firebaseConfig });
 });
 
-// Saved recipes page
+// Favourites page
 app.get("/recipe", (req, res) => {
   res.render("recipe", {
     active: "recipe",

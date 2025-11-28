@@ -55,6 +55,14 @@ async function displayRecipeInfo() {
         document.getElementById("recipe-timestamp").innerHTML = recipeTimestamp;
       }
 
+      //Cooking Item
+      if (recipe.tags){
+        recipeContent.innerHTML = recipeContent.innerHTML + `
+        <h3>Cooking Item</h3>
+        <p id="recipe-preview-cook-item">Place holder</p>`
+        document.getElementById("recipe-preview-cook-item").innerHTML = recipe.tags;
+      }
+
       //Set description
       if (recipe.description){
         recipeContent.innerHTML = recipeContent.innerHTML + `
@@ -133,7 +141,7 @@ async function displayRecipeInfo() {
           document.getElementById("recipe-save-container").innerHTML = `
 
             <button id="recipe-save" class="recipe-preview-save">
-            <i id="recipe-save-icon" class="bi bi-bookmark"></i>
+            <i id="recipe-save-icon" class="bi bi-heart"></i>
             </button>
 
             `;
@@ -226,8 +234,8 @@ function recipeCanSave(id, savedArray){
   const savedIcon = document.getElementById("recipe-save-icon");
   if(savedArray.includes(id)){
     
-    savedIcon.classList.remove("bi-bookmark");
-    savedIcon.classList.add("bi-bookmark-check");
+    savedIcon.classList.remove("bi-heart");
+    savedIcon.classList.add("bi-heart-fill");
 
     return false;
 

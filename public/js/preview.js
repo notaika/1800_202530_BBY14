@@ -19,13 +19,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------------------------
   updateRecipeCards();
 
+  if (document.getElementById("recipe-preview")){
+
+    recipeOriginal = document.getElementById("recipe-preview").innerHTML;
+
+  }
+  
 })  
 
-//Save original state of preview.ejs
-const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
+var recipeOriginal;
 
-  async function openRecipePreview(id){
-    
+async function openRecipePreview(id){
+  //Save original state of preview.ejs
+
+  if(document.getElementById("recipe-preview")){
+
     try{
       
       const recipesDocRef = doc(db, "recipe", id);
@@ -79,6 +87,14 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
           const recipeTimestamp = currentTimeStamp.toLocaleDateString("en-US", options);
           
           document.getElementById("recipe-preview-timestamp").innerHTML = recipeTimestamp;
+        }
+
+        //Cooking Item
+        if (currentRecipe.tags){
+          recipePreviewContent.innerHTML = recipePreviewContent.innerHTML + `
+          <h3>Cooking Item</h3>
+          <p id="recipe-preview-cook-item">Place holder</p>`
+          document.getElementById("recipe-preview-cook-item").innerHTML = currentRecipe.tags;
         }
 
         //Set description
@@ -176,8 +192,8 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
         const previewSavedIcon = document.getElementById("recipe-preview-save-icon");
         if(savedArray.includes(id)){
           
-          previewSavedIcon.classList.remove("bi-bookmark");
-          previewSavedIcon.classList.add("bi-bookmark-check");
+          previewSavedIcon.classList.remove("bi-heart");
+          previewSavedIcon.classList.add("bi-heart-fill");
           return false;
 
         } else{
@@ -190,7 +206,7 @@ const recipeOriginal = document.getElementById("recipe-preview").innerHTML;
     } catch (error){
     console.error("Error previewing recipe ", error);
   }
-
+  }
 
 
 }
