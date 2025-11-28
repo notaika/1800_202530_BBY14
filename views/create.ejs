@@ -37,14 +37,17 @@
 
     </select>
 
-    <h5 class="mb-0 create-label">Community</h5>
-    <select id="create-community-list" class="create-input">
-      <option value="">No Community</option>
+    <h5 class="mb-0 create-label">Communities</h5>
+    <div id="create-community-list" class="create-input">
+      
       <template id="create-community-template">
-        <option class="create-community-option" value="">Place Holder</option>
+        <label class="create-community-label">
+          <input type="checkbox" name="create-community-check" class="create-community-option" value=""></option>
+        </label>
+      </br>
       </template>
 
-    </select>
+    </div>
 
     <h5 class="mb-0 create-label">Description</h5>
     <textarea

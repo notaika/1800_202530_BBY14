@@ -3,7 +3,6 @@ import { db, auth } from "./firebaseConfig.js";
 import {
   doc,
   getDoc,
-  getDocs,
   addDoc,
   collection,
   serverTimestamp,
@@ -44,7 +43,7 @@ async function getCommunity(element){
 
     let newOption = communityPrefab.content.cloneNode(true);
 
-    newOption.querySelector(".create-community-option").innerHTML = communityData.communityName;
+    newOption.querySelector(".create-community-label").innerHTML += communityData.communityName;
     newOption.querySelector(".create-community-option").value = element;
 
     communityDropdown.appendChild(newOption);
@@ -94,9 +93,19 @@ if (submitButton) {
 
 
     // community integration - aika
-    const communityDropdown = document.getElementById("create-community-list");
-    const userCommunityId = communityDropdown.options[communityDropdown.selectedIndex].value;
-    
+    var userCommunityId = [];
+
+    var checkedCommunities = document.querySelectorAll('input[name=create-community-check]:checked');
+
+    if (checkedCommunities.length > 0){
+
+      checkedCommunities.forEach(element => {
+        
+        userCommunityId.push(element.value);
+
+      });
+
+    }    
 
     try {
       const userDoc = doc(db, "users", user.uid);

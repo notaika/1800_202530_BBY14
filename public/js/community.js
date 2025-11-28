@@ -261,7 +261,7 @@ async function loadCommunity(user) {
     // get the recipes from this community
     // select all recipes where user communityId is this.communityId
     const recipesRef = collection(db, "recipe");
-    const q = query(recipesRef, where("communityId", "==", communityId));
+    const q = query(recipesRef, where("communityId", "array-contains", communityId));
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
