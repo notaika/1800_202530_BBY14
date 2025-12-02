@@ -352,14 +352,17 @@ body {
   /* align-items: center; */
 }
 .recipe-preview-back,
-.recipe-preview-save {
+.recipe-preview-save,
+.recipe-preview-edit {
   flex-shrink: 0;
   background-color: var(--surface);
   border-radius: 999px;
   border-color: var(--forest-green);
   aspect-ratio: 1 / 1;
 }
-.recipe-preview-save {
+.recipe-preview-save,
+.recipe-preview-edit {
+  margin-left: 10px;
   float: right;
 }
 .recipe-preview-title {

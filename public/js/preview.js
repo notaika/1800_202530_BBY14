@@ -164,6 +164,14 @@ async function openRecipePreview(id){
                   savePreviewedRecipe(id, entryNew);
                 
                 })  
+
+                //Show and link edit button if recipe was created by user
+                if (user.uid == currentRecipe.submittedByUserID){
+
+                  linkEditButton(id);
+
+                }
+
               }
             
             } catch(error) {
@@ -293,6 +301,20 @@ function linkExpandButton(id){
   document.getElementById("recipe-preview-expand-button").addEventListener('click', (event) => {
 
   const url = "/recipeDetails?id=" + id;
+  window.location.href = url;
+
+  })
+
+}
+
+//Conects the button to edit the recipe, only if the current user created the recipe.
+function linkEditButton(id){
+
+  document.getElementById("recipe-preview-edit").style.display = "inline";
+
+  document.getElementById("recipe-preview-edit").addEventListener('click', (event) => {
+
+  const url = "/editRecipe?id=" + id;
   window.location.href = url;
 
   })

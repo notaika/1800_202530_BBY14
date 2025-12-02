@@ -113,6 +113,13 @@ app.get("/profile/edit", (req, res) => {
   });
 });
 
+//Edit recipe page
+app.get("/editRecipe", (req, res) => {
+  res.render("editRecipe", {
+    firebaseConfig: firebaseConfig,
+  })
+})
+
 // Error for page not found
 app.use(function (req, res, next) {
   res
