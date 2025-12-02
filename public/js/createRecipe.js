@@ -13,45 +13,35 @@ const communityDropdown = document.getElementById("create-community-list");
 
 // Add community options to the dropdown
 onAuthReady(async (user) => {
-
   const usersDocRef = doc(db, "users", user.uid);
   const docSnap = await getDoc(usersDocRef);
 
-  if (docSnap.exists()){
-
+  if (docSnap.exists()) {
     const userData = docSnap.data();
     const userCommunities = userData.communityIDs;
 
-    userCommunities.forEach(element => {
-
+    userCommunities.forEach((element) => {
       getCommunity(element);
-
     });
-
   }
+});
 
-})
-
-async function getCommunity(element){
-
+async function getCommunity(element) {
   const communityDocRef = doc(db, "communities", element);
   const communitySnap = await getDoc(communityDocRef);
 
-  if (communitySnap.exists()){
-
+  if (communitySnap.exists()) {
     const communityData = communitySnap.data();
 
     let newOption = communityPrefab.content.cloneNode(true);
 
-    newOption.querySelector(".create-community-label").innerHTML += communityData.communityName;
+    newOption.querySelector(".create-community-label").innerHTML +=
+      communityData.communityName;
     newOption.querySelector(".create-community-option").value = element;
 
     communityDropdown.appendChild(newOption);
-
   }
-
 }
-
 
 const submitButton = document.getElementById("create-submit");
 
@@ -85,27 +75,29 @@ if (submitButton) {
       "input[name=create-dificulty]:checked"
     ).value;
 
-    const prepTime = formatTime(document.querySelector("input[name=create-prep-time]:checked").value);
-    const cookTime = formatTime(document.querySelector("input[name=create-cook-time]:checked").value);
+    const prepTime = formatTime(
+      document.querySelector("input[name=create-prep-time]:checked").value
+    );
+    const cookTime = formatTime(
+      document.querySelector("input[name=create-cook-time]:checked").value
+    );
 
     const implementDropdown = document.getElementById("create-item-list");
-    const cookingImplement = implementDropdown.options[implementDropdown.selectedIndex].value;
-
+    const cookingImplement =
+      implementDropdown.options[implementDropdown.selectedIndex].value;
 
     // community integration - aika
     var userCommunityId = [];
 
-    var checkedCommunities = document.querySelectorAll('input[name=create-community-check]:checked');
+    var checkedCommunities = document.querySelectorAll(
+      "input[name=create-community-check]:checked"
+    );
 
-    if (checkedCommunities.length > 0){
-
-      checkedCommunities.forEach(element => {
-        
+    if (checkedCommunities.length > 0) {
+      checkedCommunities.forEach((element) => {
         userCommunityId.push(element.value);
-
       });
-
-    }    
+    }
 
     try {
       const userDoc = doc(db, "users", user.uid);
@@ -130,11 +122,11 @@ if (submitButton) {
         difficulty: difficulty,
         submittedByUserID: user.uid,
         submittedTimestamp: serverTimestamp(), // from demo
-        imageUrl: imageFile, 
+        imageUrl: imageFile,
         communityId: userCommunityId, // need to add logic for this later
-        tags: cookingImplement
+        tags: cookingImplement,
       };
-      
+
       // adds document to recipe collection
       const docRef = await addDoc(collection(db, "recipe"), newRecipeDoc);
       console.log("Recipe created with ID: ", docRef.id);
@@ -152,14 +144,11 @@ if (submitButton) {
 }
 
 //Save inputed image as base 64 string.
-const addImageButton = document.getElementById("create-add-button")
-if (addImageButton){
-
+const addImageButton = document.getElementById("create-add-button");
+if (addImageButton) {
   addImageButton.addEventListener("change", handleFileSelect);
-
 }
-function handleFileSelect(event){
-
+function handleFileSelect(event) {
   var file = event.target.files[0];
 
   if (file) {

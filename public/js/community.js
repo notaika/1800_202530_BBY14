@@ -68,7 +68,7 @@ if (createCommunityForm) {
         communityIDs: arrayUnion(docRef.id),
       });
 
-      console.log("Community created with ID: ", docRef.id);
+      // console.log("Community created with ID: ", docRef.id);
       alert("Community created successfully!");
 
       // redirect to this page once created
@@ -82,60 +82,105 @@ if (createCommunityForm) {
 
 // ~~~~ DISPLAY COMMUNITIES ~~~~
 const communityContainer = document.getElementById("community-card-container");
-// display communities from database onto community page
-async function displayCommunities() {
-  // make sure this only runs on community page
+const searchInput = document.getElementById("community-search");
+
+// store all fetched communities onto global variable once page loads
+// this is used for dynamic filtering
+let allCommunities = [];
+
+// helper function to render cards
+function renderCommunities(communitiesList) {
+  if (!communityContainer) return;
+
+  if (communitiesList.length === 0) {
+    communityContainer.innerHTML = `<div class="col-12 text-center py-5">No communities found matching your search.</div>`;
+    return;
+  }
+
+  let allCardsHtml = "";
+
+  communitiesList.forEach((community) => {
+    const communityId = community.id;
+    const communityMembersCount = community.membersUID
+      ? community.membersUID.length
+      : 0;
+    const communityMembersLabel =
+      communityMembersCount === 1 ? "Member" : "Members";
+
+    const buttonText = "View Community";
+
+    allCardsHtml += `
+        <div class="community-item col mb-4">
+            <div class="card h-100 shadow-sm community-card">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${community.communityName}</h5>
+                <p class="card-text">${community.description}</p>
+                <a href="/communities/${communityId}" class="btn btn-warning mt-auto fw-bold">${buttonText}</a>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">
+                <strong>${communityMembersCount}</strong> ${communityMembersLabel} 
+                </small>
+            </div>
+            </div>
+        </div>
+        `;
+  });
+
+  communityContainer.innerHTML = allCardsHtml;
+}
+
+// ~~~~ FETCH AND INITIAL DISPLAY LOGIC ~~~~
+
+async function fetchAndStoreCommunities() {
   if (!communityContainer) {
     return;
   }
 
   const commRef = collection(db, "communities");
-
   try {
-    // fetch all docs from communities collection
     const commSnap = await getDocs(commRef);
-    let communityCard = "";
 
-    // loop through all data and put into html cards
-    commSnap.forEach((commDoc) => {
-      const community = commDoc.data();
-      const communityId = commDoc.id;
-      const communityMembersCount = community.membersUID.length;
-      const communityMembers =
-        communityMembersCount <= 1 ? "member" : "members";
+    // after fetching data, store it onto global array allCommunities
+    allCommunities = commSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-      // crete community card structure with dynamic data!
-      communityCard += `
-        <div class="community-item col mb-4">
-          <div class="card h-100 shadow-sm community-card">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">${community.communityName}</h5>
-              <p class="card-text">
-                ${community.description}
-              </p>
-              <a href="/communities/${communityId}" class="btn btn-warning mt-auto fw-bold">View Community</a>
-            </div>
-            <div class="card-footer">
-              <small class="text-body-secondary">
-                <strong>${communityMembersCount}</strong> 
-                ${communityMembers} 
-                | <strong>0</strong> Recipes
-              </small>
-            </div>
-          </div>
-        </div>
-      `;
-
-      communityContainer.innerHTML = communityCard;
-    });
+    // display all initially
+    renderCommunities(allCommunities);
   } catch (error) {
     console.error("Error fetching communities:", error);
+    communityContainer.innerHTML = `<div class="col-12 text-center text-danger">Error loading communities.</div>`;
   }
 }
 
+// event listener for filtering
 if (communityContainer) {
-  displayCommunities();
-  console.log("Success");
+  // display our data fetched first
+  fetchAndStoreCommunities();
+
+  // attach an event listener to the search input field
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+
+      // use the global array to filter based on the search term
+      const filteredCommunities = allCommunities.filter((community) => {
+        const name = community.communityName
+          ? community.communityName.toLowerCase()
+          : "";
+        const desc = community.description
+          ? community.description.toLowerCase()
+          : "";
+
+        return name.includes(searchTerm) || desc.includes(searchTerm);
+      });
+
+      // render the filtered list onto the page
+      renderCommunities(filteredCommunities);
+    });
+  }
 }
 
 // ~~~~ SINGLE COMMUNITY PAGE ~~~~
@@ -261,14 +306,16 @@ async function loadCommunity(user) {
     // get the recipes from this community
     // select all recipes where user communityId is this.communityId
     const recipesRef = collection(db, "recipe");
-    const q = query(recipesRef, where("communityId", "array-contains", communityId));
+    const q = query(
+      recipesRef,
+      where("communityId", "array-contains", communityId)
+    );
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
       recipesGrid.innerHTML = `
         <div class="col-12 text-center py-5">
-          <i class="bi bi-basket3 fs-1 text-muted"></i>
-          <p class="mt-3 text-muted">No recipes shared yet.</p>
+            <span>No recipes shared yet.</span>
         </div>`;
       return;
     }

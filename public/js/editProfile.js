@@ -11,7 +11,6 @@ const usernameInput = document.getElementById("profile-username");
 const firstNameInput = document.getElementById("profile-first-name");
 const lastNameInput = document.getElementById("profile-last-name");
 const bioInput = document.getElementById("profile-bio");
-const picUrlInput = document.getElementById("profile-pic-url");
 const messageEl = document.getElementById("form-message");
 
 let currentUser;
@@ -32,9 +31,10 @@ onAuthStateChanged(auth, async (user) => {
         firstNameInput.value = data.firstName || "";
         lastNameInput.value = data.lastName || "";
         bioInput.value = data.bio || "";
-        picUrlInput.value = data.profilePicUrl || "";
+        previewImg.src =
+          data.profilePicUrl || "/assets/images/profile-pic-placeholder.jpg";
       } else {
-        console.log("No user document found to edit!");
+        console.log("No user doc found to edit.");
       }
     } catch (e) {
       console.error("Error loading user data:", e);
@@ -51,7 +51,12 @@ onAuthStateChanged(auth, async (user) => {
 profileForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  if (!currentUser) return;
+  if (!currentUser) {
+    return;
+  }
+
+  // if user uploaded new file, use it else, use default
+  const finalPicUrl = uploadedImageBase64 || previewImg.src;
 
   // get update values from the form
   const newProfileData = {
@@ -59,7 +64,7 @@ profileForm.addEventListener("submit", async (e) => {
     firstName: firstNameInput.value,
     lastName: lastNameInput.value,
     bio: bioInput.value,
-    profilePicUrl: picUrlInput.value,
+    profilePicUrl: finalPicUrl,
   };
 
   try {
@@ -79,3 +84,77 @@ profileForm.addEventListener("submit", async (e) => {
     messageEl.className = "alert alert-danger";
   }
 });
+
+const fileInput = document.getElementById("profileFile");
+const previewImg = document.getElementById("profile-preview-img");
+let uploadedImageBase64 = "";
+
+if (fileInput) {
+  fileInput.addEventListener("change", handleFileSelect);
+}
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const imageReference = e.target.result;
+
+      const imgFull = new Image();
+      imgFull.onload = function () {
+        const maxImageArea = 200000;
+        const originalWidth = this.width;
+        const originalHeight = this.height;
+        const originalArea = originalWidth * originalHeight;
+
+        let finalWidth = originalWidth;
+        let finalHeight = originalHeight;
+
+        if (originalArea > maxImageArea) {
+          const aspectRatio = originalWidth / originalHeight;
+          finalWidth = Math.floor(Math.sqrt(aspectRatio * maxImageArea));
+          finalHeight = Math.floor(Math.sqrt(maxImageArea / aspectRatio));
+        }
+
+        // resizes and compresses image
+        resizeBase64Image(imageReference, finalWidth, finalHeight).then(
+          (resized) => {
+            updateImage(resized);
+            uploadedImageBase64 = resized;
+          }
+        );
+      };
+
+      imgFull.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  } else {
+    uploadedImageBase64 = "";
+  }
+}
+
+// taken code from Quinn on create recipe (thanks quinn)
+function resizeBase64Image(originalImage, newWidth, newHeight) {
+  return new Promise((resolve) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+
+    const context = canvas.getContext("2d");
+    const img = new Image();
+    img.src = originalImage;
+
+    img.onload = function () {
+      context.scale(newWidth / img.width, newHeight / img.height);
+      context.drawImage(img, 0, 0);
+      resolve(canvas.toDataURL("image/jpeg", 0.8));
+    };
+  });
+}
+
+function updateImage(imageSrc) {
+  previewImg.src = imageSrc;
+}

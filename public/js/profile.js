@@ -8,7 +8,6 @@ import {
   query,
   where,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { updateRecipeCards } from "./preview.js";
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -19,8 +18,10 @@ onAuthStateChanged(auth, async (user) => {
       if (userDoc.exists()) {
         const userData = userDoc.data();
 
+        // populate basic profile data
         populateProfilePage(userData);
 
+        // async fxn call for community look up when profile button is pressed
         await fetchAndDisplayCommunity(userData.communityId);
       } else {
         console.error("No user document found for logged-in user!");
@@ -63,46 +64,44 @@ function populateProfilePage(userData) {
   }
 }
 
-// ~~REMOVING THIS FEATURE ON PROFILE~~
-// // handles community lookup
-// async function fetchAndDisplayCommunity(communityId) {
-//   const communityEl = document.getElementById("user-community");
+// async function that handles community lookup
+async function fetchAndDisplayCommunity(communityId) {
+  const communityEl = document.getElementById("user-community");
+  if (!communityEl || !communityId) {
+    // if element doesn't exist, or user has yet to join a community
+    if (communityEl) {
+      communityEl.removeAttribute("href");
+      communityEl.classList.add("small", "fst-italic");
+      communityEl.textContent = "has yet to join a community...";
+    }
+    return;
+  }
 
-//   // if community element doesn't exist or user has yet to join a community
-//   if (!communityEl || !communityId) {
-//     if (communityEl) {
-//       communityEl.removeAttribute("href");
-//       communityEl.classList.add("small", "fst-italic");
-//       communityEl.textContent = "has yet to join a community...";
-//     }
-//     return;
-//   }
+  try {
+    // fetch the community document
+    const communityRef = doc(db, "communities", communityId);
+    const communitySnap = await getDoc(communityRef); // <-- Await the Promise!
 
-//   try {
-//     // fetch community document
-//     const communityRef = doc(db, "communities", communityId);
-//     const communitySnap = await getDoc(communityRef);
+    if (communitySnap.exists()) {
+      const communityData = communitySnap.data();
 
-//     if (communitySnap.exists()) {
-//       const communityData = communitySnap.data();
-
-//       // populate element with the community name
-//       communityEl.textContent = communityData.communityName;
-//       communityEl.setAttribute("href", `/communities/${communityId}`);
-//       communityEl.classList.remove("small", "fst-italic");
-//     } else {
-//       // community ID exists in user profile but doc not found
-//       communityEl.classList.add("small", "fst-italic");
-//       communityEl.textContent = "Community not found.";
-//     }
-//   } catch (error) {
-//     console.error("Error fetching community data:", error);
-//     if (communityEl) {
-//       communityEl.classList.add("small", "fst-italic");
-//       communityEl.textContent = "Error loading community.";
-//     }
-//   }
-// }
+      // seed the element with the community name
+      communityEl.textContent = communityData.communityName;
+      communityEl.setAttribute("href", `/communities/${communityId}`);
+      communityEl.classList.remove("small", "fst-italic");
+    } else {
+      // Community ID exists in user profile but doc is missing
+      communityEl.classList.add("small", "fst-italic");
+      communityEl.textContent = "Community not found.";
+    }
+  } catch (error) {
+    console.error("Error fetching community data:", error);
+    if (communityEl) {
+      communityEl.classList.add("small", "fst-italic");
+      communityEl.textContent = "Error loading community.";
+    }
+  }
+}
 
 // populate the profile grid
 async function displayUserRecipes(userId) {
@@ -125,20 +124,18 @@ async function displayUserRecipes(userId) {
     const recipeId = doc.id;
 
     allPostsHtml += `
-      <div class="post col-4 recipe-button" recipeId="${recipeId}">
-        
+      <div class="post col-4">
+        <a href="/recipe?id=${recipeId}">
           <img
             src="${
               recipe.imageUrl || "/assets/images/profile-pic-placeholder.jpg"
             }"
             class="post-img square-media rounded" 
             alt="${recipe.name}" />
-        
+        </a>
       </div>
     `;
   });
 
   gridContainer.innerHTML = allPostsHtml;
-
-  updateRecipeCards();
 }
