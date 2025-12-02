@@ -312,7 +312,10 @@ body {
   color: var(--dark-berry);
   font-size: 0.72rem;
   font-weight: 600;
-  pointer-events: none;
+}
+
+.author-link {
+  color: var(--dark-berry);
 }
 
 /* Always-square recipe images */
@@ -400,7 +403,9 @@ body {
   color: #fff;
 }
 .profile-pic {
-  max-height: 7em;
+  height: 7em;
+  width: 7em;
+  object-fit: cover;
   transition: 0.3s ease-in-out;
 }
 .profile-pic:hover {
