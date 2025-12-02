@@ -2,6 +2,7 @@
 
 <div class="d-flex flex-column px-1">
   <header class="profile-info-container d-flex align-items-center p-3">
+    <!-- ... (Header content remains the same) ... -->
     <img
       src="/assets/images/profile-pic-placeholder.jpg"
       id="profile-pic-profile"
@@ -21,30 +22,24 @@
 
   <main class="d-flex flex-column flex-grow-1">
     <div class="row g-2 mb-2">
-      <div class="profile-grid-btn col-4">
+      <div class="profile-grid-btn col-6">
+        <!-- Changed href to "#" to prevent page reload, handled by JS -->
         <a href="#" id="profile-grid-btn" class="btn btn-custom d-block w-100">
           <i class="bi bi-grid-3x3"></i>
         </a>
       </div>
-      <div class="community-btn col-4">
-        <a
-          href="/community"
-          id="community-btn"
-          class="btn btn-custom d-block w-100">
+      <div class="community-btn col-6">
+        <!-- Changed href to "#" to prevent page reload, handled by JS -->
+        <a href="#" id="community-btn" class="btn btn-custom d-block w-100">
           <i class="bi bi-houses"></i>
-        </a>
-      </div>
-      <div class="share-btn col-4">
-        <a href="#" id="share-btn" class="btn btn-custom d-block w-100">
-          <i class="bi bi-reply-fill"></i>
         </a>
       </div>
     </div>
 
     <hr class="mt-0 mb-2" />
 
-    <div class="post-container">
-      <div class="row g-1" id="post-content-grid"></div>
+    <div class="post-container p-2">
+      <div id="post-content-grid" class="row g-1"></div>
     </div>
   </main>
 </div>
