@@ -168,12 +168,8 @@ async function displayRecipeInfo() {
         document.getElementById(
           "recipe-author"
         ).innerHTML = `by ${authorLinkHTML}`;
-      }
-    } else {
-      document.getElementById("recipe-name").textContent = "Recipe not found.";
-    }
 
-    onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, async (user) => {
       //Only show save button if user is logged in
       if (user) {
         document.getElementById("recipe-save-container").innerHTML = `
@@ -182,9 +178,19 @@ async function displayRecipeInfo() {
             <i id="recipe-save-icon" class="bi bi-heart"></i>
             </button>
 
+            <button id="recipe-preview-edit" class="recipe-preview-edit" style="display: none;">
+            <i class="bi bi-pencil"></i>
+            </button>
+
             `;
 
         const id = recipeId;
+        
+        if (recipe.submittedByUserID == user.uid){
+
+          linkEditButton(id);
+
+        }
 
         try {
           // reference to the user document
@@ -207,6 +213,13 @@ async function displayRecipeInfo() {
         }
       }
     });
+
+      }
+    } else {
+      document.getElementById("recipe-name").textContent = "Recipe not found.";
+    }
+
+    
   } catch (error) {
     console.error("Error loading recipe:", error);
     document.getElementById("recipe-name").textContent =
@@ -268,3 +281,17 @@ function recipeCanSave(id, savedArray) {
 }
 
 displayRecipeInfo();
+
+//Conects the button to edit the recipe, only if the current user created the recipe.
+function linkEditButton(id){
+
+  document.getElementById("recipe-preview-edit").style.display = "inline";
+
+  document.getElementById("recipe-preview-edit").addEventListener('click', (event) => {
+
+  const url = "/editRecipe?id=" + id;
+  window.location.href = url;
+
+  })
+
+}
