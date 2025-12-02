@@ -119,7 +119,6 @@ async function displayCommunities() {
               <small class="text-body-secondary">
                 <strong>${communityMembersCount}</strong> 
                 ${communityMembers} 
-                | <strong>0</strong> Recipes
               </small>
             </div>
           </div>
@@ -261,14 +260,16 @@ async function loadCommunity(user) {
     // get the recipes from this community
     // select all recipes where user communityId is this.communityId
     const recipesRef = collection(db, "recipe");
-    const q = query(recipesRef, where("communityId", "array-contains", communityId));
+    const q = query(
+      recipesRef,
+      where("communityId", "array-contains", communityId)
+    );
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
       recipesGrid.innerHTML = `
         <div class="col-12 text-center py-5">
-          <i class="bi bi-basket3 fs-1 text-muted"></i>
-          <p class="mt-3 text-muted">No recipes shared yet.</p>
+            <span>No recipes shared yet.</span>
         </div>`;
       return;
     }

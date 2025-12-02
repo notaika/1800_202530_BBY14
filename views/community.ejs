@@ -1,24 +1,42 @@
 <%- include('partials/head') %> <%- include('partials/header') %>
 
 <main class="p-0 mb-5" id="single-community-container">
-  <div
-    class="community-banner position-relative mb-4 px-5">
-    <div>
-    class="card-img-overlay d-flex flex-column justify-content-end container pb-4">
-    <h1 class="display-4 fw-bold text-white mb-0" id="community-title"></h1>
-    <p class="fs-5 text-white mb-1" id="community-desc"></p>
-    <div class="community-creator-container mb-3">
-      <span
-        class="profile-community badge text-dark small rounded-pill px-2 py-2"
-        ><i class="bi bi-houses"> </i> <span>Created by:</span>
-        <a href="#" id="community-creator"></a>
-      </span>
-    </div>
-    <div id="community-action-container">
-      <button class="btn btn-warning fw-bold disabled">Loading...</button>
+  <!-- BANNER SECTION START -->
+  <div class="community-banner position-relative mb-5">
+    <!-- Removed px-5 here for cleaner edge-to-edge look -->
+    <!-- 
+      Since you're using card-img-overlay without an image, 
+      ensure the parent has position: relative (which you have).
+    -->
+    <div
+      class="card-img-overlay d-flex flex-column justify-content-end container pb-4">
+      <h1 class="display-4 fw-bold text-white mb-0" id="community-title">
+        Loading...
+      </h1>
+      <p class="fs-5 text-white mb-1" id="community-desc"></p>
+
+      <div class="community-creator-container mb-3">
+        <span
+          class="badge bg-light text-dark rounded-pill px-3 py-2 d-inline-flex align-items-center">
+          <i class="bi bi-houses me-2"></i>
+          <span>Created by:</span>
+          <a
+            href="#"
+            id="community-creator"
+            class="fw-bold text-decoration-none text-dark ms-1"
+            >...</a
+          >
+        </span>
+      </div>
+
+      <div id="community-action-container">
+        <button class="btn btn-warning fw-bold disabled">Loading...</button>
+      </div>
     </div>
   </div>
+  <!-- BANNER SECTION END -->
 
+  <!-- RECIPE GRID SECTION START (Now outside the banner!) -->
   <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h3 class="fw-bold mb-0">Community Recipes</h3>
