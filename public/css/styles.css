@@ -845,3 +845,10 @@ body {
   height: 300px;
   background-color: #222;
 }
+
+/* EDIT PROFILE */
+#profile-preview-img {
+  width: 120px; 
+  height: 120px; 
+  object-fit: cover"
+}
