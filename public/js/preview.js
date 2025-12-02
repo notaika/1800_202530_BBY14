@@ -314,7 +314,7 @@ function linkEditButton(id){
 
   document.getElementById("recipe-preview-edit").addEventListener('click', (event) => {
 
-  const url = "/recipeEdit?id=" + id;
+  const url = "/editRecipe?id=" + id;
   window.location.href = url;
 
   })

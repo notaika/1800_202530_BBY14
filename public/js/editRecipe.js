@@ -4,6 +4,7 @@ import {
   doc,
   getDoc,
   addDoc,
+  updateDoc,
   collection,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -24,6 +25,8 @@ onAuthReady(async (user) => {
       getCommunity(element);
     });
   }
+
+  seedInitialContent(user);
 });
 
 async function getCommunity(element) {
@@ -43,6 +46,81 @@ async function getCommunity(element) {
   }
 }
 
+//Seed initial content if correct user is logged in.
+async function seedInitialContent(currentUser) {
+  const params = new URL(window.location.href).searchParams;
+  const id = params.get("id");
+
+    if (!id) {
+    // fixed error with printing message for missing content when no id provided
+    const nameElement = document.getElementById("recipe-name");
+    if (nameElement) nameElement.textContent = "Recipe not found.";
+    return;
+  }
+
+  try {
+    // get doc recipe from firestore
+    const recipeRef = doc(db, "recipe", id);
+    const recipeSnap = await getDoc(recipeRef);
+
+    if (recipeSnap.exists()) {
+      const recipe = recipeSnap.data();
+
+      if(recipe.submittedByUserID != currentUser.uid){
+
+        //If user did not create recipe kick them to the home page.
+        console.error("Current user did not create this recipe");
+        window.location.href = `/home`; // auto navigates to home page
+
+      }
+
+      document.getElementById("create-name").value = recipe.name;
+
+      document.getElementById("create-description").value = recipe.description.replace(/<br>/g, "\n");
+      document.getElementById("create-ingredients").value = recipe.ingredients.replace(/<br>/g, "\n");
+      document.getElementById("create-instructions").value = recipe.instructions.replace(/<br>/g, "\n");
+
+      document.querySelectorAll("input[name=create-dificulty]").forEach(element => {
+        
+        element.checked = element.value == recipe.difficulty;
+
+      });
+
+      document.querySelectorAll("input[name=create-prep-time]").forEach(element => {
+
+        element.checked = formatTime(element.value) == recipe.prepTime;
+
+      });
+
+      document.querySelectorAll("input[name=create-cook-time]").forEach(element => {
+
+        element.checked = formatTime(element.value) == recipe.cookTime;
+
+      });
+
+      let dropdown = document.getElementById("create-item-list");
+      dropdown.value = recipe.tags;
+      dropdown.dispatchEvent(new Event('change'));
+
+      document.getElementById("create-image").src = recipe.imageUrl;
+      imageFile = recipe.imageUrl;
+
+      var communityButtons = document.querySelectorAll("input[name=create-community-check]");
+      communityButtons.forEach(element => {
+
+        element.checked = recipe.communityId.includes(element.value);
+
+      })
+
+
+    }
+
+  } catch (error){
+    console.error(error);
+  }
+
+}
+
 const submitButton = document.getElementById("create-submit");
 
 var imageFile = "";
@@ -50,6 +128,10 @@ var imageFile = "";
 if (submitButton) {
   submitButton.addEventListener("click", async (e) => {
     e.preventDefault();
+
+    const params = new URL(window.location.href).searchParams;
+    const id = params.get("id");
+    const recipeRef = doc(db, "recipe", id);
 
     const user = auth.currentUser;
     if (!user) {
@@ -128,12 +210,11 @@ if (submitButton) {
       };
 
       // adds document to recipe collection
-      const docRef = await addDoc(collection(db, "recipe"), newRecipeDoc);
-      console.log("Recipe created with ID: ", docRef.id);
+      const docRef = await updateDoc(recipeRef, newRecipeDoc);
 
       alert("Recipe created successfully!");
-      window.location.href = `/recipeDetails?id=${docRef.id}`; // auto navigates to recipe page
-      // console.error("You have not uncommented those lines on createRecipe.js Do that ")
+      window.location.href = `/recipeDetails?id=${id}`; // auto navigates to recipe page
+    //   console.error("You have not uncommented those lines on createRecipe.js Do that ")
 
       console.log(newRecipeDoc);
     } catch (error) {
