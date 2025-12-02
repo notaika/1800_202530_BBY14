@@ -85,7 +85,6 @@ app.get("/create", (req, res) => {
 // Favourites page
 app.get("/recipe", (req, res) => {
   res.render("recipe", {
-    active: "recipe",
     firebaseConfig: firebaseConfig,
   });
 });
@@ -117,8 +116,8 @@ app.get("/profile/edit", (req, res) => {
 app.get("/editRecipe", (req, res) => {
   res.render("editRecipe", {
     firebaseConfig: firebaseConfig,
-  })
-})
+  });
+});
 
 // Error for page not found
 app.use(function (req, res, next) {
