@@ -647,6 +647,33 @@ body {
 }
 
 /* --------------------------------------
+   DELETE CONFIRM MODAL (recipe detail)
+   -------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2200;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  padding: 1rem 1.25rem;
+  max-width: 320px;
+  width: 90vw;
+}
+
+#recipe-owner-actions {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------
    login/signup page styles
    -------------------------------------- */
 

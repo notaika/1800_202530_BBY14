@@ -6,13 +6,14 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getAuth,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
-// get document ID from URLS
+// get document ID from URL
 function getRecipeIdFromUrl() {
   const params = new URL(window.location.href).searchParams;
   return params.get("id");
@@ -21,14 +22,12 @@ function getRecipeIdFromUrl() {
 async function displayRecipeInfo() {
   const recipeId = getRecipeIdFromUrl();
   if (!recipeId) {
-    // fixed error with printing message for missing content when no id provided
     const nameElement = document.getElementById("recipe-name");
     if (nameElement) nameElement.textContent = "Recipe not found.";
     return;
   }
 
   try {
-    // get doc recipe from firestore
     const recipeRef = doc(db, "recipe", recipeId);
     const recipeSnap = await getDoc(recipeRef);
 
@@ -36,19 +35,16 @@ async function displayRecipeInfo() {
       const recipe = recipeSnap.data();
       const recipeContent = document.getElementById("recipe-page-content");
 
-      // seed elements on recipe.ejs
+      // Image + name
       document.getElementById("recipe-name").textContent =
         recipe.name || recipe.title;
       document.getElementById("recipe-image").src = recipe.imageUrl;
 
-      //Formats date as (Month dd, yyyy)
+      // Timestamp formatting
       if (recipe.submittedTimestamp) {
-        //Date() takes miliseconds as a input.
         const currentTimeStamp = new Date(
           recipe.submittedTimestamp.seconds * 1000
         );
-
-        //Format of date, we may want to standardize this somehow.
         const options = {
           month: "long",
           year: "numeric",
@@ -58,89 +54,73 @@ async function displayRecipeInfo() {
           "en-US",
           options
         );
-
         document.getElementById("recipe-timestamp").innerHTML = recipeTimestamp;
       }
 
-      //Cooking Item
+      // Cooking item
       if (recipe.tags) {
-        recipeContent.innerHTML =
-          recipeContent.innerHTML +
-          `
-        <h3>Cooking Item</h3>
-        <p id="recipe-preview-cook-item">Place holder</p>`;
+        recipeContent.innerHTML += `
+          <h3>Cooking Item</h3>
+          <p id="recipe-preview-cook-item"></p>`;
         document.getElementById("recipe-preview-cook-item").innerHTML =
           recipe.tags;
       }
 
-      //Set description
+      // Description
       if (recipe.description) {
-        recipeContent.innerHTML =
-          recipeContent.innerHTML +
-          `
-        <h3>Description</h3>
-        <p id="recipe-description">Place holder</p>`;
+        recipeContent.innerHTML += `
+          <h3>Description</h3>
+          <p id="recipe-description"></p>`;
         document.getElementById("recipe-description").innerHTML =
           recipe.description;
       }
 
-      //Set difficulty
+      // Difficulty
       if (recipe.difficulty) {
-        recipeContent.innerHTML =
-          recipeContent.innerHTML +
-          `
-        <h3>Difficulty</h3>
-        <p id="recipe-difficulty">Place holder</p>`;
+        recipeContent.innerHTML += `
+          <h3>Difficulty</h3>
+          <p id="recipe-difficulty"></p>`;
         document.getElementById("recipe-difficulty").innerHTML =
           recipe.difficulty;
       }
 
-      //Set prep time
+      // Prep time
       if (recipe.prepTime) {
-        recipeContent.innerHTML =
-          recipeContent.innerHTML +
-          `
-        <h3>Prep Time</h3>
-        <p id="recipe-prep-time">Place holder</p>`;
-        //We will need to format the time unit either on write or read.
-        document.getElementById("recipe-prep-time").innerHTML = recipe.prepTime;
+        recipeContent.innerHTML += `
+          <h3>Prep Time</h3>
+          <p id="recipe-prep-time"></p>`;
+        document.getElementById("recipe-prep-time").innerHTML =
+          recipe.prepTime;
       }
 
-      //Set cook time
+      // Cook time
       if (recipe.cookTime) {
-        recipeContent.innerHTML =
-          recipeContent.innerHTML +
-          `
-        <h3>Cook Time</h3>
-        <p id="recipe-cook-time">Place holder</p>`;
-        //We will need to format the time unit either on write or read.
-        document.getElementById("recipe-cook-time").innerHTML = recipe.cookTime;
+        recipeContent.innerHTML += `
+          <h3>Cook Time</h3>
+          <p id="recipe-cook-time"></p>`;
+        document.getElementById("recipe-cook-time").innerHTML =
+          recipe.cookTime;
       }
 
-      //Set ingredients
+      // Ingredients
       if (recipe.ingredients) {
-        recipeContent.innerHTML =
-          recipeContent.innerHTML +
-          `
-        <h3>Ingredients</h3>
-        <p id="recipe-ingredients">Place holder</p>`;
+        recipeContent.innerHTML += `
+          <h3>Ingredients</h3>
+          <p id="recipe-ingredients"></p>`;
         document.getElementById("recipe-ingredients").innerHTML =
           recipe.ingredients;
       }
 
-      //Set instructions
+      // Instructions
       if (recipe.instructions) {
-        recipeContent.innerHTML =
-          recipeContent.innerHTML +
-          `
-        <h3>Instructions</h3>
-        <p id="recipe-instructions">Place holder</p>`;
+        recipeContent.innerHTML += `
+          <h3>Instructions</h3>
+          <p id="recipe-instructions"></p>`;
         document.getElementById("recipe-instructions").innerHTML =
           recipe.instructions;
       }
 
-      // == *** need to remember to do logic for author!!
-
+      // Author logic
       if (recipeSnap.exists()) {
         const recipe = recipeSnap.data();
         const authorId = recipe.submittedByUserID;
@@ -169,57 +149,49 @@ async function displayRecipeInfo() {
           "recipe-author"
         ).innerHTML = `by ${authorLinkHTML}`;
 
+        // Auth-dependent UI
         onAuthStateChanged(auth, async (user) => {
-      //Only show save button if user is logged in
-      if (user) {
-        document.getElementById("recipe-save-container").innerHTML = `
-
-            <button id="recipe-save" class="recipe-preview-save">
-            <i id="recipe-save-icon" class="bi bi-heart"></i>
-            </button>
-
-            <button id="recipe-preview-edit" class="recipe-preview-edit" style="display: none;">
-            <i class="bi bi-pencil"></i>
-            </button>
-
+          if (user) {
+            document.getElementById("recipe-save-container").innerHTML = `
+              <button id="recipe-save" class="recipe-preview-save">
+                <i id="recipe-save-icon" class="bi bi-heart"></i>
+              </button>
+              <button id="recipe-preview-edit" class="recipe-preview-edit" style="display: none;">
+                <i class="bi bi-pencil"></i>
+              </button>
             `;
 
-        const id = recipeId;
-        
-        if (recipe.submittedByUserID == user.uid){
+            const id = recipeId;
 
-          linkEditButton(id);
+            // Show edit + delete for owner
+            if (recipe.submittedByUserID == user.uid) {
+              linkEditButton(id);
+              showDeleteButton(id);
+            }
 
-        }
+            try {
+              const userRef = doc(db, "users", user.uid);
+              const userSnap = await getDoc(userRef);
 
-        try {
-          // reference to the user document
-          const userRef = doc(db, "users", user.uid);
-          const userSnap = await getDoc(userRef);
+              if (userSnap.exists()) {
+                const userSavedRecipes = userSnap.data().favouriteRecipeIDs;
+                const entryNew = recipeCanSave(id, userSavedRecipes);
 
-          if (userSnap.exists()) {
-            const userSavedRecipes = userSnap.data().favouriteRecipeIDs;
-            const entryNew = recipeCanSave(id, userSavedRecipes);
-
-            //Link save button to savePreviewedRecipe().
-            document
-              .getElementById("recipe-save")
-              .addEventListener("click", (event) => {
-                savePreviewedRecipe(id, entryNew);
-              });
+                document
+                  .getElementById("recipe-save")
+                  .addEventListener("click", () => {
+                    savePreviewedRecipe(id, entryNew);
+                  });
+              }
+            } catch (error) {
+              console.error("Error retrieving user information: ", error);
+            }
           }
-        } catch (error) {
-          console.error("Error retreiving user information: ", error);
-        }
-      }
-    });
-
+        });
       }
     } else {
       document.getElementById("recipe-name").textContent = "Recipe not found.";
     }
-
-    
   } catch (error) {
     console.error("Error loading recipe:", error);
     document.getElementById("recipe-name").textContent =
@@ -230,33 +202,23 @@ async function displayRecipeInfo() {
 async function savePreviewedRecipe(id, addEntry) {
   onAuthStateChanged(auth, async (user) => {
     try {
-      // reference to the user document
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
         const savedArray = userSnap.data().favouriteRecipeIDs;
 
-        //Ensure that saved recipe list has not been updated on another window.
         if (savedArray.includes(id)) {
-          //Should be removing a existing entry.
           if (!addEntry) {
-            const newSavedList = savedArray.filter(function (currentRecipe) {
-              return currentRecipe !== id;
-            });
-
             await updateDoc(userRef, { favouriteRecipeIDs: arrayRemove(id) });
             window.location.reload();
           } else {
-            console.error("Recipe not found saved");
             window.location.reload();
           }
         } else {
-          //Should be adding a new entry.
           if (addEntry) {
             await updateDoc(userRef, { favouriteRecipeIDs: arrayUnion(id) });
             window.location.reload();
           } else {
-            console.error("Recipe found allready saved");
             window.location.reload();
           }
         }
@@ -268,12 +230,10 @@ async function savePreviewedRecipe(id, addEntry) {
 }
 
 function recipeCanSave(id, savedArray) {
-  //Returns true if id is not present in savedArray.
   const savedIcon = document.getElementById("recipe-save-icon");
   if (savedArray.includes(id)) {
     savedIcon.classList.remove("bi-heart");
     savedIcon.classList.add("bi-heart-fill");
-
     return false;
   } else {
     return true;
@@ -282,16 +242,49 @@ function recipeCanSave(id, savedArray) {
 
 displayRecipeInfo();
 
-//Conects the button to edit the recipe, only if the current user created the recipe.
-function linkEditButton(id){
-
+// Connects the button to edit the recipe, only if the current user created the recipe.
+function linkEditButton(id) {
   document.getElementById("recipe-preview-edit").style.display = "inline";
+  document
+    .getElementById("recipe-preview-edit")
+    .addEventListener("click", () => {
+      const url = "/editRecipe?id=" + id;
+      window.location.href = url;
+    });
+}
 
-  document.getElementById("recipe-preview-edit").addEventListener('click', (event) => {
+// Delete recipe feature (owner only)
+function showDeleteButton(id) {
+  const deleteBtn = document.getElementById("recipe-delete");
+  const overlay = document.getElementById("delete-confirm-overlay");
+  const cancelBtn = document.getElementById("delete-cancel-btn");
+  const confirmBtn = document.getElementById("delete-confirm-btn");
 
-  const url = "/editRecipe?id=" + id;
-  window.location.href = url;
+  if (!deleteBtn || !overlay || !cancelBtn || !confirmBtn) return;
 
-  })
+  deleteBtn.classList.remove("d-none");
 
+  deleteBtn.addEventListener("click", () => {
+    overlay.hidden = false;
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    overlay.hidden = true;
+  });
+
+  confirmBtn.addEventListener("click", async () => {
+    confirmBtn.disabled = true;
+
+    try {
+      await deleteDoc(doc(db, "recipe", id));
+
+      // Always redirect to Home so the deleted recipe doesn't reappear in history
+      window.location.href = "/profile";
+    } catch (error) {
+      console.error("Error deleting recipe: ", error);
+      alert("Something went wrong while deleting this recipe. Please try again.");
+      confirmBtn.disabled = false;
+      overlay.hidden = true;
+    }
+  });
 }
