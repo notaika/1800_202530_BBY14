@@ -1,12 +1,9 @@
-import { onAuthReady, logoutUser } from "./authentication.js";
 import { db, auth } from "./firebaseConfig.js";
 import {
   doc,
   getDoc,
-  getDocs,
-  collection,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 import {updateRecipeCards} from "./preview.js";
 
 onAuthStateChanged(auth, async (user) => {

@@ -1,11 +1,9 @@
-import { onAuthReady, logoutUser } from "./authentication.js";
+import { onAuthReady } from "./authentication.js";
 import { db, auth } from "./firebaseConfig.js";
 import {
   doc,
   getDoc,
-  addDoc,
   updateDoc,
-  collection,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -76,9 +74,15 @@ async function seedInitialContent(currentUser) {
 
       document.getElementById("create-name").value = recipe.name;
 
+      //Newline character needs to be readded to display properly.
       document.getElementById("create-description").value = recipe.description.replace(/<br>/g, "\n");
+      document.getElementById("create-description").dispatchEvent(new Event('input'));
+
       document.getElementById("create-ingredients").value = recipe.ingredients.replace(/<br>/g, "\n");
+      document.getElementById("create-ingredients").dispatchEvent(new Event('input'));
+
       document.getElementById("create-instructions").value = recipe.instructions.replace(/<br>/g, "\n");
+      document.getElementById("create-instructions").dispatchEvent(new Event('input'));
 
       document.querySelectorAll("input[name=create-dificulty]").forEach(element => {
         
@@ -111,7 +115,6 @@ async function seedInitialContent(currentUser) {
         element.checked = recipe.communityId.includes(element.value);
 
       })
-
 
     }
 
@@ -212,7 +215,7 @@ if (submitButton) {
       // adds document to recipe collection
       const docRef = await updateDoc(recipeRef, newRecipeDoc);
 
-      alert("Recipe created successfully!");
+      alert("Recipe edited successfully!");
       window.location.href = `/recipeDetails?id=${id}`; // auto navigates to recipe page
     //   console.error("You have not uncommented those lines on createRecipe.js Do that ")
 

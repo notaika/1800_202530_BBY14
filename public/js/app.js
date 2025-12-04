@@ -1,5 +1,5 @@
 import { onAuthReady, logoutUser } from "./authentication.js";
-import { db, auth } from "./firebaseConfig.js";
+import { db } from "./firebaseConfig.js";
 import {
   doc,
   getDoc,
