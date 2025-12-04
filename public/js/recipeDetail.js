@@ -1,5 +1,4 @@
 import { db, auth } from "./firebaseConfig.js";
-import { onAuthReady } from "./authentication.js";
 import {
   doc,
   getDoc,
@@ -8,10 +7,7 @@ import {
   arrayRemove,
   deleteDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {
-  getAuth,
-  onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 // get document ID from URL
 function getRecipeIdFromUrl() {

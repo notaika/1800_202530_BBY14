@@ -117,7 +117,7 @@ function applyBrowseFilters() {
   // Tag filter
   if (activeTag) {
     filtered = filtered.filter(
-      (r) => Array.isArray(r.tags) && r.tags.includes(activeTag)
+      (r) => r.tags == activeTag
     );
   }
 
@@ -149,11 +149,11 @@ function setupBrowseControls() {
 
   const tagSet = new Set();
   browseAllRecipes.forEach((r) => {
-    if (Array.isArray(r.tags)) {
-      r.tags.forEach((t) => {
-        const trimmed = String(t).trim();
-        if (trimmed) tagSet.add(trimmed);
-      });
+    if (r.tags != "") {
+      
+      const trimmed = String(r.tags).trim();
+      if (trimmed) tagSet.add(trimmed);
+      
     }
   });
 

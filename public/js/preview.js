@@ -1,10 +1,7 @@
-import { onAuthReady, logoutUser } from "./authentication.js";
 import { db, auth } from "./firebaseConfig.js";
 import {
   doc,
   getDoc,
-  getDocs,
-  collection,
   updateDoc ,
   arrayUnion, 
   arrayRemove
@@ -21,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (document.getElementById("recipe-preview")){
 
+    //Save original state of preview.ejs
     recipeOriginal = document.getElementById("recipe-preview").innerHTML;
 
   }
@@ -30,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 var recipeOriginal;
 
 async function openRecipePreview(id){
-  //Save original state of preview.ejs
 
   if(document.getElementById("recipe-preview")){
 
@@ -52,7 +49,7 @@ async function openRecipePreview(id){
         recipePreview.style.display = "block";
 
         //Set title
-        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.title || currentRecipe.name;
+        document.getElementById("recipe-preview-title").innerHTML = currentRecipe.name;
 
         //Author name needs to be retrived from users collection.
         var authorName = "deleted";
@@ -300,8 +297,8 @@ function linkExpandButton(id){
 
   document.getElementById("recipe-preview-expand-button").addEventListener('click', (event) => {
 
-  const url = "/recipeDetails?id=" + id;
-  window.location.href = url;
+    const url = "/recipeDetails?id=" + id;
+    window.location.href = url;
 
   })
 
@@ -314,8 +311,8 @@ function linkEditButton(id){
 
   document.getElementById("recipe-preview-edit").addEventListener('click', (event) => {
 
-  const url = "/editRecipe?id=" + id;
-  window.location.href = url;
+    const url = "/editRecipe?id=" + id;
+    window.location.href = url;
 
   })
 
