@@ -290,7 +290,7 @@ You can access the deployed version of PotLuck at the link below:
 
 The hosted version runs the same functionality as the local version, including account creation, recipe publishing, communities, and favorites but is deployed on DigitalOcean App Platform with a custom domain.
 
-
+## Environment Variables
 
 | Variable                          | Description                                   |
 |-----------------------------------|-----------------------------------------------|
