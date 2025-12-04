@@ -4,8 +4,6 @@ PotLuck is a community-oriented recipe platform built to make cooking simple, ac
 
 At its core, PotLuck creates a shared space where users can browse, create, and contribute recipes within **communities**. These communities act as collaborative cookbooks; groups of students, cultural food circles, shared-living groups, or social clusters, each collecting and curating their own recipe sets.  
 
----
-
 ## Project Overview
 
 This project demonstrates the full development cycle of a modern, community-driven web application. Built as a full-stack implementation, it incorporates:
@@ -18,8 +16,6 @@ This project demonstrates the full development cycle of a modern, community-driv
 
 Throughout the development process, emphasis was placed on clean UI/UX, organized code architecture, scalable design patterns, and clear separation of concerns between pages, scripts, and Firebase logic.
 
----
-
 ## Core Concepts
 
 ### Community-Driven Cookbooks  
@@ -31,7 +27,7 @@ To keep cooking approachable, every recipe uses only one primary dish. This cons
 ### Dynamic, User-Focused Features  
 Real-time interactions, live searching, filtering, saved recipes, editable content, and user cookbooks support an interactive browsing experience.
 
----
+
 
 ## Features
 
@@ -58,7 +54,7 @@ Real-time interactions, live searching, filtering, saved recipes, editable conte
 - Firestore integration for recipes, profiles, and communities  
 - Cloud deployment compatibility  
 
----
+
 
 ## Technology Stack
 
@@ -67,7 +63,7 @@ Real-time interactions, live searching, filtering, saved recipes, editable conte
 **Authentication & Database:** Firebase Authentication, Firestore  
 **Deployment:** DigitalOcean App Platform  
 
----
+
 
 ## Repository Structure
 
@@ -104,7 +100,7 @@ Project Root
       └── partials/            
 ```
 
----
+
 
 ## Detailed Page Structure
 
@@ -153,7 +149,6 @@ Displays:
 - Joined communities  
 Interactive toggle buttons switch between sections  
 
----
 
 ## Detailed Script Overview
 
@@ -206,32 +201,106 @@ Loads:
 - Full recipe documents using batched `in` queries  
 Renders saved recipes using `recipe.ejs` layout.
 
----
+## Firestore Database Structure
+
+PotLuck uses Firebase Authentication and Firestore to store users, recipes, and communities.  
+Below is the database structure required to recreate the database from scratch.
+
+### `users` Collection
+Each document ID is automatically generated. The `favouriteRecipeIDs` field contains an array of recipe IDs that represent the recipes saved by the user, establishing a many-to-many relationship. Similarly, the `communityIDs` field holds an array of community IDs that indicate the communities the user has joined, also reflecting a many-to-many relationship.
+
+**Fields:**
+- `username` (string)
+- firstName` (string)
+- `lastName` (string)
+- `bio` (string)
+- `email` (string)
+- `profilePicURL` (string)
+- `favouriteRecipeIDs` (array of recipe IDs)
+- `communityIDs` (array of community IDs)
+
+### `recipe` Collection
+Each document ID is automatically generated. The `tags` field is an array of strings used to categorize the recipe by dish type for the filtering functionality submitted when creating or editing a recipe.
+
+**Fields:**
+- `name` (string)
+- `description` (string)
+- `ingredients` (string)
+- `instructions` (string)
+- `difficulty` (string)
+- `prepTime` (string)  
+- `communityId` (string)
+- `cookTime` (string)
+- `imageUrl` (string)
+- `submittedByUserID` (string - user uid)
+- `submittedTimestamp` (timestamp)
+- `tags` (array of strings)
+
+### `communities` Collection
+Each document ID is automatically generated. The `membersUID` field is an array of user IDs representing users who have joined the community, establishing a many-to-many relationship.
+
+**Fields:**
+- `communityName` (string)
+- `description` (string)
+- `createdBy` (string)
+- `createdAt` (timestamp)
+- `membersUID` (array of user IDs)
+
 
 ## Local Development Setup
 
-```bash
-git clone https://github.com/notaika/1800_202530_BBY14.git
-npm install
-npm run dev
-```
+To run the application locally:
 
-View locally at:
+1. **Clone** the repository with:
+      ```bash
+      git clone https://github.com/notaika/1800_202530_BBY14.git
+      cd 1800_202530_BBY14
+      ```
+2. **Install dependencies** using:
+   ```bash
+   npm install
+   ```
+3. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+4. **Create a `.env` file** in the project root with the following structure:
 
-```
-http://localhost:8000
-```
+   ```bash
+   PORT="YOUR_PORT_NUMBER"
+   SESSION_SECRET="YOUR_SESSION_SECRET"
 
----
+   VITE_FIREBASE_API_KEY="YOUR_FIREBASE_API_KEY"
+   VITE_FIREBASE_AUTH_DOMAIN="YOUR_FIREBASE_AUTH_DOMAIN"
+   VITE_FIREBASE_PROJECT_ID="YOUR_FIREBASE_PROJECT_ID"
+   VITE_FIREBASE_APP_ID="YOUR_FIREBASE_APP_ID"
+   ```
 
-## Environment Variables
+5. Open the app at:
+   ```
+   http://localhost:8000
+   ```
 
-| Variable       | Description                                   |
-|----------------|-----------------------------------------------|
-| SESSION_SECRET | Used for Express session encryption           |
-| PORT           | Assigned by hosting platform or defaults 8000 |
 
----
+## Hosted Demo
+
+You can access the deployed version of PotLuck at the link below:
+
+### Live Demo:  [https://potluck-app.online/](https://potluck-app.online/)
+
+The hosted version runs the same functionality as the local version, including account creation, recipe publishing, communities, and favorites but is deployed on DigitalOcean App Platform with a custom domain.
+
+
+
+| Variable                          | Description                                   |
+|-----------------------------------|-----------------------------------------------|
+| SESSION_SECRET                    | Used for Express session encryption           |
+| PORT                              | Assigned by hosting platform or defaults 8000 |
+| VITE_FIREBASE_API_KEY             | API key for Firebase services                 |
+| VITE_FIREBASE_AUTH_DOMAIN         | Firebase authentication domain                 |
+| VITE_FIREBASE_PROJECT_ID          | Firebase project identifier                    |
+| VITE_FIREBASE_APP_ID              | Firebase application identifier                 |
+
 
 ## Deployment Notes
 
