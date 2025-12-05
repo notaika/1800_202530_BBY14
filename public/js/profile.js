@@ -1,3 +1,8 @@
+// profile.js
+// Responsibilities:
+//  - Populate the user's profile page and feed
+//  - Fetch user's recipes and communities from Firestore
+//  - Wire small UI interactions (switching between grid & communities)
 import { auth, db } from "./firebaseConfig.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
@@ -10,24 +15,34 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { updateRecipeCards } from "./preview.js";
 
+// Watch authentication state. When a user signs in we fetch the user's
+// document and populate the profile; if there's no signed-in user we
+// redirect to the login page.
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
+      // Read the user's Firestore document at `users/{uid}`. This provides
+      // static profile fields (username, name, bio, profilePicUrl) used by
+      // populateProfilePage below.
       const userDocRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
         const userData = userDoc.data();
 
+        // Populate the top-of-page profile fields (title, fullname, bio,
+        // avatar) from the user document.
         populateProfilePage(userData);
       } else {
         console.error("No user document found for logged-in user!");
       }
 
-      // display user recipes by default
+      // By default show the user's recipe grid. The function below queries
+      // the `recipe` collection where `submittedByUserID == user.uid`.
       displayUserRecipes(user.uid);
 
-      // add event listener for the community button
+      // Wire the UI buttons for switching views: Communities and Grid.
+      // These are client-side interactions that call the functions below.
       const communityBtn = document.getElementById("community-btn");
       if (communityBtn) {
         communityBtn.addEventListener("click", (e) => {
@@ -36,7 +51,6 @@ onAuthStateChanged(auth, async (user) => {
         });
       }
 
-      // add event listener for the grid button
       const profileGridBtn = document.getElementById("profile-grid-btn");
       if (profileGridBtn) {
         profileGridBtn.addEventListener("click", (e) => {
@@ -45,14 +59,18 @@ onAuthStateChanged(auth, async (user) => {
         });
       }
     } catch (error) {
+      // Surface errors to the console for debugging (network / Firestore
+      // permission issues are the most common causes here).
       console.error("Error fetching user data:", error);
     }
   } else {
+    // No authenticated user, redirect to login so the user can sign in.
     console.log("No user signed in.");
     window.location.href = "/login";
   }
 });
 
+// Render static profile fields from the `users/{uid}` document (read-only)
 function populateProfilePage(userData) {
   const profileTitle = document.getElementById("profile-title");
   if (profileTitle) {
@@ -80,7 +98,7 @@ function populateProfilePage(userData) {
   }
 }
 
-// populate the profile grid with recipes
+// Populate the profile grid with recipes for this user (reads `recipe` where submittedByUserID == userId)
 async function displayUserRecipes(userId) {
   const gridContainer = document.getElementById("post-content-grid");
   if (!gridContainer) return;
@@ -99,6 +117,7 @@ async function displayUserRecipes(userId) {
     return;
   }
 
+  // Build simple 3-column grid of recipe thumbnails
   let allPostsHtml = "";
   querySnapshot.forEach((doc) => {
     const recipe = doc.data();
@@ -116,16 +135,17 @@ async function displayUserRecipes(userId) {
     `;
   });
 
+  // Inject markup and rebind preview/card interactions
   gridContainer.innerHTML = allPostsHtml;
   updateRecipeCards();
 }
 
-// display user communities when clicking communities button
+// Display communities this user belongs to (reads `communities` where membersUID array-contains userId)
 async function displayUserCommunities(userId) {
   const gridContainer = document.getElementById("post-content-grid");
   if (!gridContainer) return;
 
-  // clear and empty container
+  // Clear and show a small spinner while loading
   gridContainer.innerHTML =
     "<div class='col-12 text-center'><div class='spinner-border text-success' role='status'><span class='visually-hidden'>Loading...</span></div></div>";
 
@@ -147,8 +167,7 @@ async function displayUserCommunities(userId) {
       return;
     }
 
-    // used Promises/map to handle recipe count - wasn't able to debug but i kept the syntax so it's different
-    // from how we handle the rest of serving data from db
+    // Build cards using Promise.all over docs (kept async map for consistency)
     const communityPromises = querySnapshot.docs.map(async (commDoc) => {
       const community = commDoc.data();
       const communityId = commDoc.id;

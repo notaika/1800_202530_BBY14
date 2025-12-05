@@ -1,3 +1,8 @@
+// savedRecipes.js
+// Responsibilities:
+//  - Render the current user's saved (favourite) recipes
+//  - Fetch recipe documents referenced by the user's saved IDs
+//  - Reuse preview helpers to render recipe cards
 import { db, auth } from "./firebaseConfig.js";
 import {
   doc,
@@ -9,7 +14,7 @@ import {updateRecipeCards} from "./preview.js";
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
-      // reference to the user document
+      // Read the current user's document to get saved recipe IDs
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
@@ -23,6 +28,7 @@ onAuthStateChanged(auth, async (user) => {
 
           userSavedRecipes.forEach(element => {
 
+            // For each saved recipe ID, render a small card from a template
             addRecipeCard(element, savedRecipeCardHolder, savedCardTemplate);
 
             updateRecipeCards()
@@ -51,7 +57,7 @@ onAuthStateChanged(auth, async (user) => {
   async function addRecipeCard(id, parentobject, cardTemplate){
 
     try{
-      
+      // Read recipe/{id} to populate the saved recipe card
       const recipesDocRef = doc(db, "recipe", id);
       const docSnap = await getDoc(recipesDocRef);
       
@@ -67,7 +73,7 @@ onAuthStateChanged(auth, async (user) => {
 
         newcard.querySelector(".recipe-button").setAttribute("recipeId", id);
 
-        //Author name needs to be retrived from users collection.
+        // Fetch author name from users/{submittedByUserID}
         var authorName = "deleted";
         const authorDocRef = doc(db, "users", currentRecipe.submittedByUserID);
         const authorSnap = await getDoc(authorDocRef);
@@ -76,7 +82,7 @@ onAuthStateChanged(auth, async (user) => {
 
           authorName = authorSnap.data().username;
 
-          //Author ID is saved incase we need to link to their profile.
+          // Store author ID on the chip if we need to link to profile later
           newcard.querySelector(".author-chip").setAttribute("userId", currentRecipe.submittedByUserID);
 
         }

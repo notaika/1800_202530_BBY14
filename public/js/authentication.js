@@ -1,3 +1,10 @@
+// authentication.js
+// Responsibilities:
+//  - Handle login, signup (with user doc creation), logout
+//  - Provide small helpers for auth-state readiness and user-friendly errors
+// Notes:
+//  - Uses Firebase Auth for identities and Firestore `users/{uid}` for profile
+//    metadata; reads/writes are documented inline below.
 // import the initialized Firebase instances
 import { auth, db } from "/js/firebaseConfig.js";
 
@@ -16,7 +23,7 @@ import {
   signOut,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// logs in user and redirects to main
+// Login: authenticate via Firebase Auth and redirect to `/home`
 export async function loginUser(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -33,7 +40,8 @@ export async function loginUser(email, password) {
   }
 }
 
-// creates new auth user and updates user collection in db
+// Signup: create Firebase Auth user, update displayName, and write a default
+// profile document to Firestore `users/{uid}`. Then redirect to `/home`.
 export async function signupUser(displayName, email, password) {
   // 1. Create the user in Firebase Auth
   const userCredential = await createUserWithEmailAndPassword(
@@ -48,6 +56,7 @@ export async function signupUser(displayName, email, password) {
 
   // creates a new doc in the 'users' collection in db
   try {
+    // Default profile fields stored in Firestore for app use
     const newUserDoc = {
       username: displayName,
       firstName: "",
@@ -71,7 +80,7 @@ export async function signupUser(displayName, email, password) {
   return user;
 }
 
-// sign out user
+// Logout: end session and send user to `/login`
 export async function logoutUser() {
   try {
     await signOut(auth);
@@ -82,12 +91,12 @@ export async function logoutUser() {
   }
 }
 
-// runs the given callback when auth state resolves
+// Helper: run the given callback when auth state resolves
 export function onAuthReady(callback) {
   return onAuthStateChanged(auth, callback);
 }
 
-// from 1800 demo, maps auth error messages
+// Map Firebase auth error codes to user-friendly messages
 export function authErrorMessage(error) {
   const code = (error?.code || "").toLowerCase();
 

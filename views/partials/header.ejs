@@ -1,9 +1,12 @@
+<!-- Top app header (navbar) -->
 <nav class="navbar dark-green shadow-sm">
   <div class="container-fluid text-light d-flex justify-content-between">
+    <!-- Back button (handled in JS) -->
     <a class="potluck-logo navbar-brand d-flex" id="back-btn">
       <i class="bi bi-chevron-left text-light"></i>
     </a>
 
+    <!-- App title -->
     <strong class="app-title">PotLuck</strong>
 
     <button
@@ -38,6 +41,7 @@
           </ul>
         </li>
 
+        <!-- Support link -->
         <li class="nav-item-header">
           <a class="nav-link text-light" href="#"
             ><i class="bi bi-patch-question me-1"></i> Support</a
@@ -45,12 +49,14 @@
         </li>
 
         <!-- Auth Section -->
+        <!-- Shown when logged out -->
         <li class="nav-item-header" id="header-login-link">
           <a class="nav-link dropdown-item auth-item" href="/login">
             <i class="bi bi-box-arrow-in-right me-1"></i> Login
           </a>
         </li>
 
+        <!-- Shown when logged in; toggled via JS -->
         <li class="nav-item-header d-none" id="header-logout-button">
           <button class="nav-link dropdown-item auth-item logout" type="button">
             <i class="bi bi-box-arrow-right me-1"></i> Logout

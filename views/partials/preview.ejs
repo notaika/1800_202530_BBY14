@@ -1,6 +1,7 @@
 <div id="recipe-preview" class="recipe-preview">
-    <!-- recipe-card must have the class "recipe-button" and a attribute of recipeID to be able to open recipe preview -->
-     <!-- After a recipe card is loaded call: updateRecipeCards from "./preview.js"; -->
+    <!-- Preview panel markup.
+         Usage: recipe cards must include class "recipe-button" and a recipeID attribute.
+         After cards render, call updateRecipeCards() from /js/preview.js to wire interactions. -->
 
     <div class="recipe-preview-top">
 
@@ -21,16 +22,12 @@
     </div>
 
     <div id="recipe-preview-content" class="recipe-preview-content">
-
-
         <img id="recipe-preview-image" src="" alt="" class="recipe-preview-image">
 
         <span id="recipe-preview-author" class="author-chip mb-3" userID=""></span>
         <span id="recipe-preview-timestamp"></span>
 
-
-
     </div>
 
 </div>
-<script src="/js/preview.js" type="module"></script>
+    <script src="/js/preview.js" type="module"></script>

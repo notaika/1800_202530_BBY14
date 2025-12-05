@@ -1,38 +1,94 @@
+// loginSignup.js
+// Responsibilities:
+//  - Wire up login & signup form submission
+//  - Provide UI feedback (errors, button disabled state)
+//  - Delegate actual auth operations to `authentication.js` (loginUser, signupUser)
+
+// -----------------------------
+// Imports (libraries / project modules)
+// -----------------------------
 import { loginUser, signupUser, authErrorMessage } from "./authentication.js";
 
-// helpers
-const errorDiv = document.getElementById("auth-error");
 
+// -----------------------------
+// DOM References
+// -----------------------------
+// Centralized DOM lookups for easy reading and maintainability
+const errorDiv = document.getElementById("auth-error");
+const loginForm = document.getElementById("login-form");
+const signupForm = document.getElementById("signup-form");
+
+
+// -----------------------------
+// Helpers / UI utilities
+// -----------------------------
+// showError
+// Display an authentication related error message in the UI.
+// The message to display (supports empty to clear)
 function showError(msg) {
   if (!errorDiv) return;
   errorDiv.textContent = msg || "";
   errorDiv.classList.remove("d-none");
 }
 
+
+// hideError
+// Hide and clear the auth error UI element.
 function hideError() {
   if (!errorDiv) return;
   errorDiv.classList.add("d-none");
   errorDiv.textContent = "";
 }
 
+
+// setSubmitDisabled
+// Toggle submit button disabled state and show simple processing text.
+// This provides consistent feedback for both login and signup forms.
 function setSubmitDisabled(form, disabled) {
   const submitBtn = form?.querySelector('[type="submit"]');
-  if (submitBtn) {
-    submitBtn.disabled = disabled;
-    submitBtn.textContent = disabled
-      ? "Processing..."
-      : form.id === "login-form"
-      ? "Login"
-      : "Create Account";
+  if (!submitBtn) return;
+
+  submitBtn.disabled = disabled;
+
+  // Keep button label contextual and deterministic
+  if (disabled) {
+    submitBtn.textContent = "Processing...";
+  } else {
+    submitBtn.textContent = form.id === "login-form" ? "Login" : "Create Account";
   }
 }
 
-// event listeners
 
-// find's login form (login.ejs)
-const loginForm = document.getElementById("login-form");
+// -----------------------------
+// Form validation helpers
+// -----------------------------
+// validateLoginInputs
+// Basic client-side validation for login fields.
+function validateLoginInputs(email, password) {
+  if (!email || !password) {
+    return { ok: false, message: "Please enter your email and password." };
+  }
+  return { ok: true };
+}
 
+
+// validateSignupInputs
+// Basic client-side validation for signup fields.
+function validateSignupInputs(displayName, email, password) {
+  if (!displayName || !email || !password) {
+    return { ok: false, message: "Please fill in display name, email, and password." };
+  }
+  return { ok: true };
+}
+
+
+// -----------------------------
+// Event handlers: Login
+// -----------------------------
+// Attach handler only when the form exists on the page
 if (loginForm) {
+  // onLoginSubmit
+  // Handle login form submission: validate, call auth, show errors.
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideError();
@@ -40,28 +96,34 @@ if (loginForm) {
     const email = loginForm.email.value.trim();
     const password = loginForm.password.value;
 
-    if (!email || !password) {
-      showError("Please enter your email and password.");
+    const valid = validateLoginInputs(email, password);
+    if (!valid.ok) {
+      showError(valid.message);
       return;
     }
 
     setSubmitDisabled(loginForm, true);
 
     try {
+      // Delegates actual auth work to authentication.js (loginUser)
       await loginUser(email, password);
     } catch (err) {
+      // authErrorMessage maps firebase errors -> user-friendly strings
       showError(authErrorMessage(err));
-      console.error(err);
+      console.error("Login failed:", err);
     } finally {
       setSubmitDisabled(loginForm, false);
     }
   });
 }
 
-// find's signup form (signup.ejs)
-const signupForm = document.getElementById("signup-form");
 
+// -----------------------------
+// Event handlers: Signup
+// -----------------------------
 if (signupForm) {
+  // onSignupSubmit
+  // Handle signup form submission: validate, call auth, show errors.
   signupForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideError();
@@ -70,18 +132,21 @@ if (signupForm) {
     const email = signupForm.email.value.trim();
     const password = signupForm.password.value;
 
-    if (!displayName || !email || !password) {
-      showError("Please fill in display name, email, and password.");
+    const valid = validateSignupInputs(displayName, email, password);
+    if (!valid.ok) {
+      showError(valid.message);
       return;
     }
 
     setSubmitDisabled(signupForm, true);
 
     try {
+      // Delegates actual auth work to authentication.js (signupUser)
       await signupUser(displayName, email, password);
     } catch (err) {
-      showError(authErrorMessage(err)); // from error map in authentication
-      console.error(err);
+      // authErrorMessage maps firebase errors -> user-friendly strings
+      showError(authErrorMessage(err));
+      console.error("Signup failed:", err);
     } finally {
       setSubmitDisabled(signupForm, false);
     }
