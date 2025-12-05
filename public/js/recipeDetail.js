@@ -1,3 +1,7 @@
+// recipeDetail.js
+// Responsibilities:
+//  - Load and render a single recipe's full details
+//  - Provide auth-dependent actions (save, edit, delete)
 import { db, auth } from "./firebaseConfig.js";
 import {
   doc,
@@ -16,6 +20,7 @@ function getRecipeIdFromUrl() {
 }
 
 async function displayRecipeInfo() {
+  // Resolve the current recipe ID from the URL (read-only display path)
   const recipeId = getRecipeIdFromUrl();
   if (!recipeId) {
     const nameElement = document.getElementById("recipe-name");
@@ -24,6 +29,7 @@ async function displayRecipeInfo() {
   }
 
   try {
+    // Read the recipe document at recipe/{id}
     const recipeRef = doc(db, "recipe", recipeId);
     const recipeSnap = await getDoc(recipeRef);
 
@@ -36,7 +42,7 @@ async function displayRecipeInfo() {
         recipe.name || recipe.title;
       document.getElementById("recipe-image").src = recipe.imageUrl;
 
-      // Timestamp formatting
+      // Timestamp formatting (server timestamp to human-readable date)
       if (recipe.submittedTimestamp) {
         const currentTimeStamp = new Date(
           recipe.submittedTimestamp.seconds * 1000
@@ -116,7 +122,7 @@ async function displayRecipeInfo() {
           recipe.instructions;
       }
 
-      // Author logic
+      // Author logic: read users/{authorId} to render @username link
       if (recipeSnap.exists()) {
         const recipe = recipeSnap.data();
         const authorId = recipe.submittedByUserID;
@@ -145,7 +151,7 @@ async function displayRecipeInfo() {
           "recipe-author"
         ).innerHTML = `by ${authorLinkHTML}`;
 
-        // Auth-dependent UI
+        // Auth-dependent UI: after auth, wire save/edit/delete for owners
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             document.getElementById("recipe-save-container").innerHTML = `
@@ -166,6 +172,7 @@ async function displayRecipeInfo() {
             }
 
             try {
+              // Read user favourites to compute initial save state
               const userRef = doc(db, "users", user.uid);
               const userSnap = await getDoc(userRef);
 
@@ -196,6 +203,7 @@ async function displayRecipeInfo() {
 }
 
 async function savePreviewedRecipe(id, addEntry) {
+  // Toggle favourite for the current user: writes to users/{uid}.favouriteRecipeIDs
   onAuthStateChanged(auth, async (user) => {
     try {
       const userRef = doc(db, "users", user.uid);
@@ -205,6 +213,7 @@ async function savePreviewedRecipe(id, addEntry) {
 
         if (savedArray.includes(id)) {
           if (!addEntry) {
+            // Remove favourite
             await updateDoc(userRef, { favouriteRecipeIDs: arrayRemove(id) });
             window.location.reload();
           } else {
@@ -212,6 +221,7 @@ async function savePreviewedRecipe(id, addEntry) {
           }
         } else {
           if (addEntry) {
+            // Add favourite
             await updateDoc(userRef, { favouriteRecipeIDs: arrayUnion(id) });
             window.location.reload();
           } else {
@@ -226,6 +236,7 @@ async function savePreviewedRecipe(id, addEntry) {
 }
 
 function recipeCanSave(id, savedArray) {
+  // Paint the heart icon based on whether the recipe is already saved
   const savedIcon = document.getElementById("recipe-save-icon");
   if (savedArray.includes(id)) {
     savedIcon.classList.remove("bi-heart");
@@ -240,6 +251,7 @@ displayRecipeInfo();
 
 // Connects the button to edit the recipe, only if the current user created the recipe.
 function linkEditButton(id) {
+  // Show edit button and navigate to edit page for recipe owner
   document.getElementById("recipe-preview-edit").style.display = "inline";
   document
     .getElementById("recipe-preview-edit")
@@ -272,6 +284,7 @@ function showDeleteButton(id) {
     confirmBtn.disabled = true;
 
     try {
+      // Delete recipe document and redirect to profile
       await deleteDoc(doc(db, "recipe", id));
 
       // Always redirect to Home so the deleted recipe doesn't reappear in history

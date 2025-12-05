@@ -10,11 +10,10 @@ let activeTag = null;
 import {updateRecipeCards} from "./preview.js";
 
 
-/**
- * Fetch all recipes and their author usernames
- */
+// Fetch all recipes and their author usernames
 async function loadRecipes() {
   try {
+    // Read all recipe docs (browse page)
     const snapshot = await getDocs(collection(db, "recipe"));
     const recipes = await Promise.all(
       snapshot.docs.map(async (docSnap) => {
@@ -46,6 +45,7 @@ async function loadRecipes() {
   const isBrowseStyle = !!document.querySelector(".browse-feed .row.g-3");
 
   if (isBrowseStyle) {
+    // Cache recipes in memory for filtering
     browseAllRecipes = recipes;
     renderBrowseFeed(browseAllRecipes);
     setupBrowseControls();
@@ -55,9 +55,7 @@ async function loadRecipes() {
   }
 }
 
-/**
- * Two-column browse feed
- */
+// Two-column browse feed
 function renderBrowseFeed(recipes) {
   const container = document.querySelector(".browse-feed .row.g-3");
   if (!container) return;
@@ -80,13 +78,12 @@ function renderBrowseFeed(recipes) {
     container.appendChild(col);
   });
 
+  // Bind click-through handlers for cards after rendering
   updateRecipeCards();
 
 }
 
-/**
- * Apply search + tag filters to browse recipes
- */
+// Apply search + tag filters to browse recipes
 function applyBrowseFilters() {
   let filtered = [...browseAllRecipes];
 
@@ -114,7 +111,7 @@ function applyBrowseFilters() {
     });
   }
 
-  // Tag filter
+  // Tag filter (supports 1 active tag chip/dropdown selection)
   if (activeTag) {
     filtered = filtered.filter(
       (r) => r.tags == activeTag
@@ -124,9 +121,7 @@ function applyBrowseFilters() {
   renderBrowseFeed(filtered);
 }
 
-/**
- * Set up search bar and tags on Browse page
- */
+// Set up search bar and tags on Browse page
 function setupBrowseControls() {
   const form = document.querySelector(".floating-search .search-form");
   const input = form?.querySelector('input[type="search"]');
@@ -143,7 +138,7 @@ function setupBrowseControls() {
     });
   }
 
-  // Tag filters
+  // Tag filters: derive unique tag list from recipe docs
   const tagHost = document.querySelector(".tag-filter");
   if (!tagHost) return;
 

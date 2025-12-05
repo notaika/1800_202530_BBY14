@@ -1,9 +1,11 @@
-<%- include('partials/head') %> <%- include('partials/header') %>
+<%- include('partials/head') %>
+<%- include('partials/header') %>
 
+<!-- Floating search + tag filter (browse-style feed) -->
 <div class="floating-search px-2">
-  <!-- Search form container (pill shape handled in CSS) -->
+  <!-- Search form (visual pill styling handled in CSS) -->
   <form class="search-form d-flex align-items-center">
-    <!-- Search icon on the left -->
+    <!-- Leading search icon -->
     <i class="bi bi-search fs-5 ms-2"></i>
 
     <!-- Search text input -->
@@ -13,26 +15,25 @@
       placeholder="Search"
       aria-label="Search" />
 
-    <!-- Search button on the right (return icon) -->
+    <!-- Trailing submit icon -->
     <button class="btn btn-link me-2" type="submit" aria-label="Search">
       <i class="bi bi-arrow-return-left"></i>
     </button>
   </form>
 
-  <!-- Tags + Favourites -->
+  <!-- Tag filter row -->
   <div class="d-flex align-items-center justify-content-between mt-2 mb-1 px-1">
     <div class="tag-filter flex-grow-1 me-2"></div>
   </div>
 </div>
 
-<!-- ===================================================
-     Recipe Feed Area (Home Page)
-     Shows 2 cards per row, alternating layout
-     =================================================== -->
+<!-- Browse-style recipe feed: two columns, alternating image position -->
 <div class="pt-2 pb-2 browse-feed px-1">
   <div class="row row-cols-2 g-3" id="browse-grid"></div>
 </div>
 
+<!-- Bottom navigation, preview panel, and scripts -->
 <%- include('partials/navbar', {active: 'home'}) %>
-<%- include('partials/footer') %> <%- include('partials/preview') %>
+<%- include('partials/footer') %>
+<%- include('partials/preview') %>
 <%- include('partials/scripts') %>

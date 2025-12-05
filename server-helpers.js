@@ -1,6 +1,6 @@
 // Server-side helper functions.
 const fs = require("fs");
-const path = require("path"); // <-- Added back
+const path = require("path");
 
 // Paths
 const recipesPath = path.join(__dirname, "data", "recipes.json");
