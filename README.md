@@ -221,7 +221,7 @@ Each document ID is automatically generated. The `favouriteRecipeIDs` field cont
 
 **Fields:**
 - `username` (string)
-- firstName` (string)
+- `firstName` (string)
 - `lastName` (string)
 - `bio` (string)
 - `email` (string)
