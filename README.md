@@ -73,11 +73,15 @@ Project Root
 ├── app.js                     # Express app entry point
 ├── package.json
 ├── package-lock.json
-│
+├── server.js
 ├── /public                    # Static assets
-│     ├── css/                 
-│     ├── images/              
-│     └── js/                  
+│     ├── /css
+│          ├── styles.css              
+│     ├── /assets
+│     │    ├── /fonts
+│     │    ├── /images
+│     │    ├── /logos   
+│     └── /js                  
 │          ├── authentication.js
 │          ├── firebaseConfig.js
 │          ├── recipesFeed.js
@@ -97,7 +101,13 @@ Project Root
       ├── createRecipe.ejs
       ├── profile.ejs
       ├── community.ejs
-      └── partials/            
+      └── partials/
+          ├── footer.ejs
+          ├── head.ejs
+          ├── header.ejs
+          ├── navbar.ejs
+          ├── preview.ejs
+          ├── script.ejs
 ```
 
 
